@@ -385,23 +385,30 @@ body::before {
 @media(min-width:769px){
   .app-header h1 span.short-title { display:none; }
 }
+/* Quit modal */
+.modal-overlay {
+  position:fixed; top:0; left:0; right:0; bottom:0;
+  background:rgba(10,5,20,0.85); backdrop-filter:blur(8px);
+  z-index:1000; display:flex; align-items:center; justify-content:center;
+  animation:fadeIn 0.25s ease;
+}
+.modal-box {
+  background:#1e1040; border:1px solid rgba(124,58,237,0.3);
+  border-radius:20px; padding:2.5rem; max-width:420px; width:90%;
+  text-align:center; animation:scaleIn 0.3s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+.modal-icon { font-size:2.5rem; margin-bottom:1rem; }
+.modal-box h3 { color:var(--text-bright); font-size:1.2rem; margin-bottom:0.8rem; }
+.modal-box p { color:var(--text-muted); font-size:0.92rem; line-height:1.6; margin-bottom:1.5rem; }
+.modal-actions { display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; }
 </style>
 </head>
 <body>
 
 <header class="app-header">
   <h1 onclick="navigateTo('home')">
-    <svg class="header-logo" width="28" height="28" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
-      <defs><clipPath id="headClipH"><path d="M120 10 C155 10 180 30 190 55 C200 80 195 105 185 125 C175 145 160 155 155 170 C150 185 155 195 155 205 L55 205 C55 195 50 185 50 175 C50 165 40 160 35 150 C25 135 15 115 15 95 C15 50 55 10 100 10 Z"/></clipPath></defs>
-      <path d="M120 10 C155 10 180 30 190 55 C200 80 195 105 185 125 C175 145 160 155 155 170 C150 185 155 195 155 205 L55 205 C55 195 50 185 50 175 C50 165 40 160 35 150 C25 135 15 115 15 95 C15 50 55 10 100 10 Z" fill="none" stroke="rgba(167,139,250,0.6)" stroke-width="4"/>
-      <g clip-path="url(#headClipH)">
-        <rect x="10" y="5" width="45" height="45" fill="#e74c3c" opacity=".85" rx="2"/><rect x="55" y="5" width="45" height="45" fill="#3498db" opacity=".85" rx="2"/><rect x="100" y="5" width="45" height="45" fill="#f5c842" opacity=".85" rx="2"/><rect x="145" y="5" width="50" height="45" fill="#e74c3c" opacity=".7" rx="2"/>
-        <rect x="10" y="52" width="45" height="45" fill="#f5c842" opacity=".8" rx="2"/><rect x="55" y="52" width="45" height="45" fill="#2ecc71" opacity=".85" rx="2"/><rect x="100" y="52" width="45" height="45" fill="#e74c3c" opacity=".8" rx="2"/><rect x="145" y="52" width="50" height="45" fill="#3498db" opacity=".85" rx="2"/>
-        <rect x="10" y="99" width="45" height="45" fill="#3498db" opacity=".8" rx="2"/><rect x="55" y="99" width="45" height="45" fill="#f5c842" opacity=".85" rx="2"/><rect x="100" y="99" width="45" height="45" fill="#2ecc71" opacity=".8" rx="2"/><rect x="145" y="99" width="50" height="45" fill="#f5c842" opacity=".85" rx="2"/>
-        <rect x="10" y="146" width="45" height="45" fill="#2ecc71" opacity=".85" rx="2"/><rect x="55" y="146" width="45" height="45" fill="#e74c3c" opacity=".75" rx="2"/><rect x="100" y="146" width="45" height="45" fill="#3498db" opacity=".85" rx="2"/><rect x="145" y="146" width="50" height="45" fill="#2ecc71" opacity=".8" rx="2"/>
-        <rect x="10" y="193" width="45" height="20" fill="#3498db" opacity=".8" rx="2"/><rect x="55" y="193" width="45" height="20" fill="#f5c842" opacity=".8" rx="2"/><rect x="100" y="193" width="45" height="20" fill="#e74c3c" opacity=".85" rx="2"/><rect x="145" y="193" width="50" height="20" fill="#2ecc71" opacity=".8" rx="2"/>
-      </g>
-    </svg>
+    <canvas id="header-logo-canvas" width="56" height="56" style="width:28px;height:28px;"></canvas>
     <span class="full-title">Mon Profil Psychologique</span>
     <span class="short-title">Profil Psy</span>
   </h1>
@@ -414,75 +421,14 @@ body::before {
 <div class="container">
 <div id="page-home" class="page active">
   <div class="hero">
-    <div class="hero-visual" style="width:260px;height:280px;">
-      <!-- Floating puzzle pieces around the head -->
-      <svg class="float-piece" width="40" height="40" viewBox="0 0 50 50"><path d="M2 8 L2 2 L18 2 C18 2 18 0 21 0 S24 2 24 2 L40 2 L40 18 C40 18 42 18 42 21 S40 24 40 24 L40 40 L24 40 C24 40 24 42 21 42 S18 40 18 40 L2 40 L2 24 C2 24 0 24 0 21 S2 18 2 18 Z" fill="#e74c3c" opacity="0.9" stroke="#c0392b" stroke-width="0.5"/></svg>
-      <svg class="float-piece" width="35" height="35" viewBox="0 0 50 50"><path d="M2 8 L2 2 L18 2 C18 2 18 0 21 0 S24 2 24 2 L40 2 L40 18 C40 18 42 18 42 21 S40 24 40 24 L40 40 L24 40 C24 40 24 42 21 42 S18 40 18 40 L2 40 L2 24 C2 24 0 24 0 21 S2 18 2 18 Z" fill="#3498db" opacity="0.9" stroke="#2980b9" stroke-width="0.5"/></svg>
-      <svg class="float-piece" width="32" height="32" viewBox="0 0 50 50"><path d="M2 8 L2 2 L18 2 C18 2 18 0 21 0 S24 2 24 2 L40 2 L40 18 C40 18 42 18 42 21 S40 24 40 24 L40 40 L24 40 C24 40 24 42 21 42 S18 40 18 40 L2 40 L2 24 C2 24 0 24 0 21 S2 18 2 18 Z" fill="#f5c842" opacity="0.9" stroke="#d4a017" stroke-width="0.5"/></svg>
-      <svg class="float-piece" width="30" height="30" viewBox="0 0 50 50"><path d="M2 8 L2 2 L18 2 C18 2 18 0 21 0 S24 2 24 2 L40 2 L40 18 C40 18 42 18 42 21 S40 24 40 24 L40 40 L24 40 C24 40 24 42 21 42 S18 40 18 40 L2 40 L2 24 C2 24 0 24 0 21 S2 18 2 18 Z" fill="#2ecc71" opacity="0.9" stroke="#27ae60" stroke-width="0.5"/></svg>
-      <!-- Human head profile silhouette with puzzle pieces inside -->
-      <svg class="puzzle-head" viewBox="0 0 260 280" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <clipPath id="headClip">
-            <!-- Human head profile facing right -->
-            <path d="M130 12 C165 12 195 30 210 58 C220 78 222 95 218 115 C215 130 205 142 200 148 L195 155 L200 160 C205 168 208 178 205 188 L200 200 L185 208 L175 215 C170 218 168 222 168 228 L168 252 L62 252 L62 228 C62 218 58 210 52 202 C42 188 30 170 25 148 C18 120 20 95 32 70 C48 35 80 12 130 12 Z"/>
-          </clipPath>
-        </defs>
-        <!-- Head outline with white/light stroke -->
-        <path d="M130 12 C165 12 195 30 210 58 C220 78 222 95 218 115 C215 130 205 142 200 148 L195 155 L200 160 C205 168 208 178 205 188 L200 200 L185 208 L175 215 C170 218 168 222 168 228 L168 252 L62 252 L62 228 C62 218 58 210 52 202 C42 188 30 170 25 148 C18 120 20 95 32 70 C48 35 80 12 130 12 Z" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="3"/>
-        <!-- Puzzle grid inside head -->
-        <g clip-path="url(#headClip)">
-          <!-- Row 1 (top of head) -->
-          <rect x="20" y="8" width="56" height="52" fill="#e74c3c" opacity="0.88"/>
-          <rect x="76" y="8" width="56" height="52" fill="#3498db" opacity="0.88"/>
-          <rect x="132" y="8" width="56" height="52" fill="#f5c842" opacity="0.88"/>
-          <rect x="188" y="8" width="56" height="52" fill="#e74c3c" opacity="0.75"/>
-          <!-- Row 2 -->
-          <rect x="20" y="60" width="56" height="52" fill="#3498db" opacity="0.82"/>
-          <rect x="76" y="60" width="56" height="52" fill="#f5c842" opacity="0.88"/>
-          <rect x="132" y="60" width="56" height="52" fill="#e74c3c" opacity="0.85"/>
-          <rect x="188" y="60" width="56" height="52" fill="#3498db" opacity="0.88"/>
-          <!-- Row 3 -->
-          <rect x="20" y="112" width="56" height="52" fill="#f5c842" opacity="0.85"/>
-          <rect x="76" y="112" width="56" height="52" fill="#2ecc71" opacity="0.88"/>
-          <rect x="132" y="112" width="56" height="52" fill="#3498db" opacity="0.82"/>
-          <rect x="188" y="112" width="56" height="52" fill="#f5c842" opacity="0.88"/>
-          <!-- Row 4 -->
-          <rect x="20" y="164" width="56" height="52" fill="#2ecc71" opacity="0.88"/>
-          <rect x="76" y="164" width="56" height="52" fill="#e74c3c" opacity="0.82"/>
-          <rect x="132" y="164" width="56" height="52" fill="#2ecc71" opacity="0.85"/>
-          <rect x="188" y="164" width="56" height="52" fill="#3498db" opacity="0.78"/>
-          <!-- Row 5 (neck/jaw) -->
-          <rect x="20" y="216" width="56" height="44" fill="#3498db" opacity="0.82"/>
-          <rect x="76" y="216" width="56" height="44" fill="#f5c842" opacity="0.82"/>
-          <rect x="132" y="216" width="56" height="44" fill="#e74c3c" opacity="0.88"/>
-          <rect x="188" y="216" width="56" height="44" fill="#2ecc71" opacity="0.85"/>
-          <!-- Grid lines (dark gaps between puzzle pieces) -->
-          <line x1="76" y1="5" x2="76" y2="260" stroke="rgba(26,10,46,0.7)" stroke-width="3"/>
-          <line x1="132" y1="5" x2="132" y2="260" stroke="rgba(26,10,46,0.7)" stroke-width="3"/>
-          <line x1="188" y1="5" x2="188" y2="260" stroke="rgba(26,10,46,0.7)" stroke-width="3"/>
-          <line x1="15" y1="60" x2="240" y2="60" stroke="rgba(26,10,46,0.7)" stroke-width="3"/>
-          <line x1="15" y1="112" x2="240" y2="112" stroke="rgba(26,10,46,0.7)" stroke-width="3"/>
-          <line x1="15" y1="164" x2="240" y2="164" stroke="rgba(26,10,46,0.7)" stroke-width="3"/>
-          <line x1="15" y1="216" x2="240" y2="216" stroke="rgba(26,10,46,0.7)" stroke-width="3"/>
-          <!-- Puzzle connectors (knobs/tabs) on vertical lines -->
-          <circle cx="76" cy="34" r="8" fill="#3498db" opacity="0.92" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-          <circle cx="132" cy="86" r="8" fill="#e74c3c" opacity="0.92" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-          <circle cx="188" cy="138" r="8" fill="#2ecc71" opacity="0.92" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-          <circle cx="76" cy="190" r="8" fill="#f5c842" opacity="0.92" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-          <circle cx="132" cy="240" r="8" fill="#3498db" opacity="0.92" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-          <!-- Puzzle connectors on horizontal lines -->
-          <circle cx="48" cy="60" r="8" fill="#f5c842" opacity="0.92" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-          <circle cx="104" cy="112" r="8" fill="#e74c3c" opacity="0.92" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-          <circle cx="160" cy="164" r="8" fill="#3498db" opacity="0.92" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-          <circle cx="104" cy="216" r="8" fill="#2ecc71" opacity="0.92" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-          <circle cx="188" cy="60" r="8" fill="#e74c3c" opacity="0.88" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-          <circle cx="48" cy="164" r="8" fill="#2ecc71" opacity="0.88" stroke="rgba(26,10,46,0.5)" stroke-width="1.5"/>
-        </g>
-        <!-- Facial features hint (subtle) -->
-        <circle cx="165" cy="105" r="4" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-        <path d="M160 145 C165 150 175 150 180 145" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
+    <div class="hero-visual" style="width:300px;height:320px;">
+      <!-- Floating puzzle pieces -->
+      <canvas class="float-piece" id="fp1" width="80" height="80" style="width:40px;height:40px;"></canvas>
+      <canvas class="float-piece" id="fp2" width="70" height="70" style="width:35px;height:35px;"></canvas>
+      <canvas class="float-piece" id="fp3" width="64" height="64" style="width:32px;height:32px;"></canvas>
+      <canvas class="float-piece" id="fp4" width="60" height="60" style="width:30px;height:30px;"></canvas>
+      <!-- Main head canvas -->
+      <canvas id="hero-head-canvas" width="600" height="640" style="width:300px;height:320px;"></canvas>
     </div>
     <h2>Mon Profil Psychologique</h2>
     <p>Apprenez a mieux vous connaitre grace a des tests reconnus et validés scientifiquement</p>
@@ -550,7 +496,10 @@ body::before {
 <!-- DISC TEST PAGE -->
 <div id="page-disc-test" class="page">
   <div class="test-header">
-    <h3>Test DISC</h3>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h3 style="margin:0;">Test DISC</h3>
+      <button class="btn btn-danger btn-sm" onclick="confirmQuitTest()">Quitter le test</button>
+    </div>
     <div class="progress-container"><div class="progress-bar" id="disc-progress" style="width:0%"></div></div>
     <div class="progress-text" id="disc-progress-text">Question 1 / 28</div>
   </div>
@@ -558,6 +507,19 @@ body::before {
   <div class="test-nav">
     <button class="btn btn-secondary btn-sm" id="btn-prev" onclick="discPrev()">&#8592; Précédent</button>
     <button class="btn btn-primary btn-sm" id="btn-next" onclick="discNext()">Suivant &#8594;</button>
+  </div>
+</div>
+
+<!-- QUIT CONFIRMATION MODAL -->
+<div id="quit-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-icon">&#x26A0;</div>
+    <h3>Quitter le test ?</h3>
+    <p>Vos réponses ne seront pas sauvegardées et votre progression sera perdue.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary btn-sm" onclick="closeQuitModal()">Continuer le test</button>
+      <button class="btn btn-danger btn-sm" onclick="quitTest()">Quitter</button>
+    </div>
   </div>
 </div>
 
@@ -1269,13 +1231,199 @@ function retakeDisc() {
   navigateTo('disc-intro');
 }
 
+// ===== QUIT TEST MODAL =====
+function confirmQuitTest() {
+  document.getElementById('quit-modal').style.display = 'flex';
+}
+function closeQuitModal() {
+  document.getElementById('quit-modal').style.display = 'none';
+}
+function quitTest() {
+  document.getElementById('quit-modal').style.display = 'none';
+  DISC.answers = {};
+  DISC.currentQ = 0;
+  navigateTo('home');
+  renderHome();
+}
+
 // ===== SHAKE ANIMATION =====
 const shakeStyle = document.createElement('style');
 shakeStyle.textContent = `@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}`;
 document.head.appendChild(shakeStyle);
 
+// ===== PUZZLE HEAD DRAWING =====
+function getHeadPath(ctx, ox, oy, s) {
+  // Human head profile facing right - with forehead, brow, nose, lips, chin, neck
+  ctx.beginPath();
+  // Start at top of head (back)
+  ctx.moveTo(ox + 55*s, oy + 15*s);
+  // Top of skull
+  ctx.bezierCurveTo(ox+75*s,oy+2*s, ox+120*s,oy+0*s, ox+140*s,oy+10*s);
+  // Forehead
+  ctx.bezierCurveTo(ox+160*s,oy+20*s, ox+172*s,oy+35*s, ox+175*s,oy+55*s);
+  // Brow ridge
+  ctx.bezierCurveTo(ox+177*s,oy+65*s, ox+178*s,oy+72*s, ox+175*s,oy+78*s);
+  // Nose bridge
+  ctx.bezierCurveTo(ox+173*s,oy+82*s, ox+174*s,oy+88*s, ox+180*s,oy+100*s);
+  // Nose tip
+  ctx.bezierCurveTo(ox+184*s,oy+108*s, ox+186*s,oy+112*s, ox+184*s,oy+116*s);
+  // Under nose
+  ctx.bezierCurveTo(ox+182*s,oy+119*s, ox+175*s,oy+120*s, ox+172*s,oy+120*s);
+  // Upper lip
+  ctx.bezierCurveTo(ox+170*s,oy+122*s, ox+172*s,oy+126*s, ox+174*s,oy+129*s);
+  // Lower lip
+  ctx.bezierCurveTo(ox+176*s,oy+133*s, ox+175*s,oy+138*s, ox+170*s,oy+142*s);
+  // Chin
+  ctx.bezierCurveTo(ox+165*s,oy+148*s, ox+158*s,oy+158*s, ox+148*s,oy+165*s);
+  // Under chin to neck front
+  ctx.bezierCurveTo(ox+140*s,oy+170*s, ox+135*s,oy+178*s, ox+135*s,oy+195*s);
+  // Neck front down
+  ctx.lineTo(ox+135*s, oy+215*s);
+  // Across bottom (neck)
+  ctx.lineTo(ox+65*s, oy+215*s);
+  // Neck back up
+  ctx.lineTo(ox+65*s, oy+195*s);
+  // Back of neck
+  ctx.bezierCurveTo(ox+65*s,oy+180*s, ox+55*s,oy+170*s, ox+48*s,oy+160*s);
+  // Back of head
+  ctx.bezierCurveTo(ox+35*s,oy+140*s, ox+28*s,oy+110*s, ox+30*s,oy+80*s);
+  // Back of skull up
+  ctx.bezierCurveTo(ox+32*s,oy+50*s, ox+38*s,oy+30*s, ox+55*s,oy+15*s);
+  ctx.closePath();
+}
+
+function drawPuzzlePiece(ctx, x, y, w, h, color, tabs) {
+  // tabs = {top:1/-1/0, right:1/-1/0, bottom:1/-1/0, left:1/-1/0}
+  // 1 = tab out, -1 = hole in, 0 = flat
+  const tabSize = Math.min(w,h) * 0.2;
+  ctx.beginPath();
+  // Top edge
+  ctx.moveTo(x, y);
+  if (tabs.top !== 0) {
+    ctx.lineTo(x + w*0.35, y);
+    const ty = tabs.top === 1 ? y - tabSize : y + tabSize;
+    ctx.bezierCurveTo(x+w*0.35,ty, x+w*0.65,ty, x+w*0.65,y);
+  }
+  ctx.lineTo(x + w, y);
+  // Right edge
+  if (tabs.right !== 0) {
+    ctx.lineTo(x+w, y+h*0.35);
+    const rx = tabs.right === 1 ? x+w+tabSize : x+w-tabSize;
+    ctx.bezierCurveTo(rx,y+h*0.35, rx,y+h*0.65, x+w,y+h*0.65);
+  }
+  ctx.lineTo(x+w, y+h);
+  // Bottom edge
+  if (tabs.bottom !== 0) {
+    ctx.lineTo(x+w*0.65, y+h);
+    const by = tabs.bottom === 1 ? y+h+tabSize : y+h-tabSize;
+    ctx.bezierCurveTo(x+w*0.65,by, x+w*0.35,by, x+w*0.35,y+h);
+  }
+  ctx.lineTo(x, y+h);
+  // Left edge
+  if (tabs.left !== 0) {
+    ctx.lineTo(x, y+h*0.65);
+    const lx = tabs.left === 1 ? x-tabSize : x+tabSize;
+    ctx.bezierCurveTo(lx,y+h*0.65, lx,y+h*0.35, x,y+h*0.35);
+  }
+  ctx.lineTo(x, y);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(26,10,46,0.5)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+function drawPuzzleHead(canvas, scale) {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const s = scale || 1;
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+
+  // Clip to head shape
+  ctx.save();
+  getHeadPath(ctx, 0, 0, W/200);
+  ctx.clip();
+
+  // Draw puzzle grid 4 cols x 5 rows
+  const colors = [
+    ['#e74c3c','#3498db','#f5c842','#e74c3c'],
+    ['#3498db','#f5c842','#e74c3c','#3498db'],
+    ['#f5c842','#2ecc71','#3498db','#f5c842'],
+    ['#2ecc71','#e74c3c','#2ecc71','#3498db'],
+    ['#3498db','#f5c842','#e74c3c','#2ecc71']
+  ];
+  // Tab patterns: alternate 1 and -1 for interlocking
+  const cols = 4, rows = 5;
+  const pw = W / cols, ph = H / rows;
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const tabs = {
+        top: r === 0 ? 0 : ((r+c) % 2 === 0 ? 1 : -1),
+        bottom: r === rows-1 ? 0 : ((r+c) % 2 === 0 ? -1 : 1),
+        left: c === 0 ? 0 : ((r+c) % 2 === 0 ? 1 : -1),
+        right: c === cols-1 ? 0 : ((r+c) % 2 === 0 ? -1 : 1)
+      };
+      drawPuzzlePiece(ctx, c*pw, r*ph, pw, ph, colors[r][c], tabs);
+    }
+  }
+  ctx.restore();
+
+  // Draw head outline
+  getHeadPath(ctx, 0, 0, W/200);
+  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  ctx.lineWidth = W * 0.015;
+  ctx.stroke();
+}
+
+function drawFloatingPiece(canvasId, color, darkColor) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const tab = w * 0.18;
+  ctx.clearRect(0,0,w,h);
+  const m = w*0.08; // margin for tabs
+  const bx=m, by=m, bw=w-2*m, bh=h-2*m;
+
+  ctx.beginPath();
+  ctx.moveTo(bx, by);
+  // top with tab
+  ctx.lineTo(bx+bw*0.35, by);
+  ctx.bezierCurveTo(bx+bw*0.35,by-tab, bx+bw*0.65,by-tab, bx+bw*0.65,by);
+  ctx.lineTo(bx+bw, by);
+  // right with tab
+  ctx.lineTo(bx+bw, by+bh*0.35);
+  ctx.bezierCurveTo(bx+bw+tab,by+bh*0.35, bx+bw+tab,by+bh*0.65, bx+bw,by+bh*0.65);
+  ctx.lineTo(bx+bw, by+bh);
+  // bottom with hole
+  ctx.lineTo(bx+bw*0.65, by+bh);
+  ctx.bezierCurveTo(bx+bw*0.65,by+bh-tab, bx+bw*0.35,by+bh-tab, bx+bw*0.35,by+bh);
+  ctx.lineTo(bx, by+bh);
+  // left with hole
+  ctx.lineTo(bx, by+bh*0.65);
+  ctx.bezierCurveTo(bx-tab,by+bh*0.65, bx-tab,by+bh*0.35, bx,by+bh*0.35);
+  ctx.lineTo(bx, by);
+  ctx.closePath();
+  ctx.fillStyle = color;
+  ctx.fill();
+  ctx.strokeStyle = darkColor;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
 // ===== INIT =====
 renderHome();
+// Draw head illustrations
+drawPuzzleHead(document.getElementById('hero-head-canvas'));
+drawPuzzleHead(document.getElementById('header-logo-canvas'));
+// Draw floating pieces
+drawFloatingPiece('fp1','#e74c3c','#a93226');
+drawFloatingPiece('fp2','#3498db','#2471a3');
+drawFloatingPiece('fp3','#f5c842','#c9a515');
+drawFloatingPiece('fp4','#2ecc71','#1e8449');
 </script>
 </body>
 </html>
