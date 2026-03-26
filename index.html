@@ -408,7 +408,7 @@ body::before {
 
 <header class="app-header">
   <h1 onclick="navigateTo('home')">
-    <canvas id="header-logo-canvas" width="56" height="56" style="width:28px;height:28px;"></canvas>
+    <canvas id="header-logo-canvas" width="46" height="46" style="width:23px;height:23px;"></canvas>
     <span class="full-title">Mon Profil Psychologique</span>
     <span class="short-title">Profil Psy</span>
   </h1>
@@ -427,7 +427,7 @@ body::before {
       <canvas class="float-piece" id="fp2" width="70" height="70" style="width:35px;height:35px;"></canvas>
       <canvas class="float-piece" id="fp3" width="64" height="64" style="width:32px;height:32px;"></canvas>
       <canvas class="float-piece" id="fp4" width="60" height="60" style="width:30px;height:30px;"></canvas>
-      <!-- Main brain canvas -->
+      <!-- Main head canvas -->
       <canvas id="hero-head-canvas" width="560" height="560" style="width:280px;height:280px;"></canvas>
     </div>
     <h2>Mon Profil Psychologique</h2>
@@ -1253,41 +1253,75 @@ document.head.appendChild(shakeStyle);
 
 // ===== PUZZLE HEAD DRAWING =====
 function getHeadPath(ctx, ox, oy, s) {
-  // Brain profile — organic lobes shape
-  // Coordinate space: 200 wide x 200 tall (no neck)
+  // Real human head profile from Wikimedia Commons (public domain)
+  // Original viewBox: 0,0,935,935 — scaled by s factor
   ctx.beginPath();
-  // Start at bottom center (brain stem)
-  ctx.moveTo(ox+105*s, oy+190*s);
-  // Brain stem curves down
-  ctx.quadraticCurveTo(ox+100*s, oy+200*s, ox+90*s, oy+200*s);
-  ctx.quadraticCurveTo(ox+80*s, oy+200*s, ox+78*s, oy+190*s);
-  // Cerebellum (bottom back bump)
-  ctx.quadraticCurveTo(ox+72*s, oy+175*s, ox+55*s, oy+168*s);
-  ctx.quadraticCurveTo(ox+38*s, oy+160*s, ox+28*s, oy+148*s);
-  // Back lower lobe — occipital
-  ctx.quadraticCurveTo(ox+15*s, oy+132*s, ox+10*s, oy+110*s);
-  // Back upper — parietal
-  ctx.quadraticCurveTo(ox+5*s, oy+85*s, ox+12*s, oy+62*s);
-  // Top back bump
-  ctx.quadraticCurveTo(ox+18*s, oy+42*s, ox+35*s, oy+28*s);
-  // Top — crown bump
-  ctx.quadraticCurveTo(ox+50*s, oy+15*s, ox+72*s, oy+8*s);
-  // Top front bump
-  ctx.quadraticCurveTo(ox+92*s, oy+2*s, ox+115*s, oy+5*s);
-  // Frontal lobe — big bump forward
-  ctx.quadraticCurveTo(ox+138*s, oy+8*s, ox+158*s, oy+22*s);
-  ctx.quadraticCurveTo(ox+175*s, oy+35*s, ox+185*s, oy+55*s);
-  // Front face of frontal lobe
-  ctx.quadraticCurveTo(ox+192*s, oy+72*s, ox+190*s, oy+92*s);
-  // Temporal lobe — indent then bump
-  ctx.quadraticCurveTo(ox+188*s, oy+108*s, ox+178*s, oy+120*s);
-  // Lateral sulcus (Sylvian fissure indent)
-  ctx.quadraticCurveTo(ox+170*s, oy+128*s, ox+168*s, oy+135*s);
-  // Temporal lobe lower bump
-  ctx.quadraticCurveTo(ox+165*s, oy+145*s, ox+155*s, oy+155*s);
-  // Bottom of temporal lobe curves to brain stem
-  ctx.quadraticCurveTo(ox+140*s, oy+168*s, ox+125*s, oy+178*s);
-  ctx.quadraticCurveTo(ox+115*s, oy+185*s, ox+105*s, oy+190*s);
+  ctx.moveTo(ox+462.27*s, oy+37*s);
+  // Use the SVG path converted to canvas commands
+  // Top of head
+  ctx.quadraticCurveTo(ox+488.67*s,oy+37*s, ox+503.52*s,oy+38.65*s);
+  ctx.bezierCurveTo(ox+503.52*s,oy+38.65*s, ox+588.15*s,oy+47.6*s, ox+665.22*s,oy+99.7*s);
+  ctx.quadraticCurveTo(ox+686.67*s,oy+112.9*s, ox+704.82*s,oy+127.75*s);
+  ctx.quadraticCurveTo(ox+724.62*s,oy+144.25*s, ox+729.57*s,oy+154.15*s);
+  ctx.quadraticCurveTo(ox+734.52*s,oy+164.05*s, ox+737.82*s,oy+167.35*s);
+  ctx.quadraticCurveTo(ox+742.77*s,oy+172.3*s, ox+742.77*s,oy+182.2*s);
+  ctx.quadraticCurveTo(ox+744.42*s,oy+193.75*s, ox+742.77*s,oy+195.4*s);
+  ctx.quadraticCurveTo(ox+741.12*s,oy+198.7*s, ox+746.07*s,oy+205.3*s);
+  ctx.quadraticCurveTo(ox+751.02*s,oy+211.9*s, ox+754.32*s,oy+220.15*s);
+  ctx.quadraticCurveTo(ox+759.27*s,oy+230.05*s, ox+765.87*s,oy+266.35*s);
+  ctx.quadraticCurveTo(ox+772.47*s,oy+302.65*s, ox+775.77*s,oy+314.2*s);
+  ctx.quadraticCurveTo(ox+780.72*s,oy+325.75*s, ox+780.72*s,oy+334*s);
+  ctx.quadraticCurveTo(ox+780.72*s,oy+342.25*s, ox+770.82*s,oy+353.8*s);
+  ctx.quadraticCurveTo(ox+762.57*s,oy+367*s, ox+759.27*s,oy+375.25*s);
+  ctx.quadraticCurveTo(ox+757.62*s,oy+385.15*s, ox+762.57*s,oy+393.4*s);
+  ctx.quadraticCurveTo(ox+767.52*s,oy+401.65*s, ox+779.07*s,oy+414.85*s);
+  ctx.quadraticCurveTo(ox+792.27*s,oy+428.05*s, ox+797.22*s,oy+436.3*s);
+  ctx.quadraticCurveTo(ox+803.82*s,oy+444.55*s, ox+805.47*s,oy+447.85*s);
+  ctx.quadraticCurveTo(ox+807.12*s,oy+452.8*s, ox+807.12*s,oy+459.4*s);
+  ctx.quadraticCurveTo(ox+807.12*s,oy+466*s, ox+803.82*s,oy+470.95*s);
+  ctx.quadraticCurveTo(ox+802.17*s,oy+475.9*s, ox+797.22*s,oy+479.2*s);
+  ctx.quadraticCurveTo(ox+793.92*s,oy+484.15*s, ox+788.97*s,oy+485.8*s);
+  ctx.quadraticCurveTo(ox+784.02*s,oy+489.1*s, ox+777.42*s,oy+489.1*s);
+  ctx.quadraticCurveTo(ox+772.47*s,oy+490.75*s, ox+770.82*s,oy+492.4*s);
+  ctx.quadraticCurveTo(ox+769.17*s,oy+494.05*s, ox+770.82*s,oy+510.55*s);
+  ctx.quadraticCurveTo(ox+774.12*s,oy+528.7*s, ox+772.47*s,oy+535.3*s);
+  ctx.quadraticCurveTo(ox+770.82*s,oy+541.9*s, ox+765.87*s,oy+546.85*s);
+  ctx.quadraticCurveTo(ox+762.57*s,oy+553.45*s, ox+762.57*s,oy+561.7*s);
+  ctx.quadraticCurveTo(ox+764.22*s,oy+571.6*s, ox+762.57*s,oy+574.9*s);
+  ctx.quadraticCurveTo(ox+760.92*s,oy+579.85*s, ox+749.37*s,oy+589.75*s);
+  ctx.quadraticCurveTo(ox+737.82*s,oy+601.3*s, ox+736.17*s,oy+614.5*s);
+  ctx.quadraticCurveTo(ox+734.52*s,oy+629.35*s, ox+729.57*s,oy+639.25*s);
+  ctx.quadraticCurveTo(ox+724.62*s,oy+650.8*s, ox+714.72*s,oy+659.05*s);
+  ctx.quadraticCurveTo(ox+704.82*s,oy+667.3*s, ox+683.37*s,oy+672.25*s);
+  ctx.quadraticCurveTo(ox+661.92*s,oy+678.85*s, ox+652.02*s,oy+678.85*s);
+  ctx.quadraticCurveTo(ox+643.77*s,oy+678.85*s, ox+642.12*s,oy+682.15*s);
+  ctx.quadraticCurveTo(ox+640.47*s,oy+685.45*s, ox+660.27*s,oy+723.4*s);
+  ctx.bezierCurveTo(ox+757.1*s,oy+867.7*s, ox+673.1*s,oy+879.7*s, ox+649.1*s,oy+879.7*s);
+  ctx.bezierCurveTo(ox+625.1*s,oy+879.7*s, ox+341.49*s,oy+879.7*s, ox+301.1*s,oy+879.7*s);
+  ctx.bezierCurveTo(ox+193.1*s,oy+879.7*s, ox+217.1*s,oy+651.7*s, ox+253.29*s,oy+629.7*s);
+  ctx.bezierCurveTo(ox+253.29*s,oy+629.7*s, ox+266.55*s,oy+621.89*s, ox+282.42*s,oy+617.8*s);
+  ctx.quadraticCurveTo(ox+297.27*s,oy+614.5*s, ox+303.87*s,oy+601.3*s);
+  ctx.quadraticCurveTo(ox+312.12*s,oy+589.75*s, ox+312.12*s,oy+579.85*s);
+  ctx.quadraticCurveTo(ox+312.12*s,oy+571.6*s, ox+308.82*s,oy+568.3*s);
+  ctx.quadraticCurveTo(ox+307.17*s,oy+566.65*s, ox+303.87*s,oy+565*s);
+  ctx.quadraticCurveTo(ox+300.57*s,oy+565*s, ox+297.27*s,oy+560.05*s);
+  ctx.quadraticCurveTo(ox+293.97*s,oy+556.75*s, ox+292.32*s,oy+540.25*s);
+  ctx.quadraticCurveTo(ox+290.67*s,oy+523.75*s, ox+287.37*s,oy+508.9*s);
+  ctx.quadraticCurveTo(ox+284.07*s,oy+494.05*s, ox+260.97*s,oy+461.05*s);
+  ctx.quadraticCurveTo(ox+239.52*s,oy+428.05*s, ox+229.62*s,oy+408.25*s);
+  ctx.quadraticCurveTo(ox+221.37*s,oy+390.1*s, ox+216.42*s,oy+376.9*s);
+  ctx.quadraticCurveTo(ox+213.12*s,oy+365.35*s, ox+208.17*s,oy+342.25*s);
+  ctx.quadraticCurveTo(ox+204.87*s,oy+320.8*s, ox+204.87*s,oy+294.4*s);
+  ctx.quadraticCurveTo(ox+204.87*s,oy+269.65*s, ox+208.17*s,oy+246.55*s);
+  ctx.quadraticCurveTo(ox+213.12*s,oy+225.1*s, ox+219.72*s,oy+206.95*s);
+  ctx.quadraticCurveTo(ox+226.32*s,oy+188.8*s, ox+236.22*s,oy+169*s);
+  ctx.quadraticCurveTo(ox+247.77*s,oy+149.2*s, ox+257.67*s,oy+136*s);
+  ctx.quadraticCurveTo(ox+267.57*s,oy+122.8*s, ox+282.42*s,oy+107.95*s);
+  ctx.quadraticCurveTo(ox+297.27*s,oy+94.75*s, ox+313.77*s,oy+83.2*s);
+  ctx.quadraticCurveTo(ox+330.27*s,oy+71.65*s, ox+348.42*s,oy+61.75*s);
+  ctx.quadraticCurveTo(ox+368.22*s,oy+53.5*s, ox+386.37*s,oy+46.9*s);
+  ctx.quadraticCurveTo(ox+406.17*s,oy+41.95*s, ox+421.02*s,oy+40.3*s);
+  ctx.lineTo(ox+462.27*s, oy+37*s);
   ctx.closePath();
 }
 
@@ -1340,19 +1374,25 @@ function drawPuzzleHead(canvas, scale) {
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0,0,W,H);
 
+  // Scale factor: SVG viewBox is 935x935
+  const sf = W / 935;
+
   // Clip to head shape
   ctx.save();
-  getHeadPath(ctx, 0, 0, W/200);
+  getHeadPath(ctx, 0, 0, sf);
   ctx.clip();
 
-  // Draw puzzle grid 4 cols x 4 rows
-  const colors = [
-    ['#e74c3c','#3498db','#f5c842','#e74c3c'],
-    ['#3498db','#f5c842','#e74c3c','#3498db'],
-    ['#f5c842','#2ecc71','#3498db','#f5c842'],
-    ['#2ecc71','#e74c3c','#2ecc71','#3498db']
-  ];
-  const cols = 4, rows = 4;
+  // Draw puzzle grid 8x8 — small pieces filling the head
+  const palette = ['#e74c3c','#3498db','#f5c842','#2ecc71'];
+  const colors = [];
+  const cols = 8, rows = 8;
+  for (let r = 0; r < rows; r++) {
+    const row = [];
+    for (let c = 0; c < cols; c++) {
+      row.push(palette[(r*3 + c*2 + r*c) % 4]);
+    }
+    colors.push(row);
+  }
   const pw = W / cols, ph = H / rows;
 
   for (let r = 0; r < rows; r++) {
@@ -1368,65 +1408,11 @@ function drawPuzzleHead(canvas, scale) {
   }
   ctx.restore();
 
-  // Draw brain outline
-  getHeadPath(ctx, 0, 0, W/200);
-  ctx.strokeStyle = 'rgba(255,255,255,0.45)';
-  ctx.lineWidth = W * 0.015;
-  ctx.stroke();
-
-  // Draw brain folds/sulci over the puzzle pieces
-  const sc = W/200;
-  ctx.save();
-  getHeadPath(ctx, 0, 0, sc);
-  ctx.clip();
-  ctx.strokeStyle = 'rgba(26,10,46,0.35)';
+  // Draw head outline
+  getHeadPath(ctx, 0, 0, sf);
+  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
   ctx.lineWidth = W * 0.008;
-  ctx.lineCap = 'round';
-  // Central sulcus (divides frontal from parietal)
-  ctx.beginPath();
-  ctx.moveTo(110*sc, 12*sc);
-  ctx.quadraticCurveTo(105*sc, 50*sc, 115*sc, 85*sc);
-  ctx.quadraticCurveTo(120*sc, 110*sc, 130*sc, 130*sc);
   ctx.stroke();
-  // Lateral/Sylvian fissure
-  ctx.beginPath();
-  ctx.moveTo(170*sc, 125*sc);
-  ctx.quadraticCurveTo(140*sc, 115*sc, 110*sc, 120*sc);
-  ctx.quadraticCurveTo(80*sc, 128*sc, 60*sc, 135*sc);
-  ctx.stroke();
-  // Frontal lobe folds
-  ctx.beginPath();
-  ctx.moveTo(145*sc, 35*sc);
-  ctx.quadraticCurveTo(160*sc, 55*sc, 170*sc, 80*sc);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(155*sc, 55*sc);
-  ctx.quadraticCurveTo(175*sc, 75*sc, 180*sc, 100*sc);
-  ctx.stroke();
-  // Parietal folds
-  ctx.beginPath();
-  ctx.moveTo(75*sc, 20*sc);
-  ctx.quadraticCurveTo(70*sc, 45*sc, 78*sc, 70*sc);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(50*sc, 35*sc);
-  ctx.quadraticCurveTo(42*sc, 60*sc, 48*sc, 90*sc);
-  ctx.stroke();
-  // Occipital fold
-  ctx.beginPath();
-  ctx.moveTo(30*sc, 110*sc);
-  ctx.quadraticCurveTo(40*sc, 130*sc, 55*sc, 148*sc);
-  ctx.stroke();
-  // Temporal folds
-  ctx.beginPath();
-  ctx.moveTo(160*sc, 140*sc);
-  ctx.quadraticCurveTo(145*sc, 155*sc, 125*sc, 165*sc);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(90*sc, 140*sc);
-  ctx.quadraticCurveTo(80*sc, 155*sc, 70*sc, 165*sc);
-  ctx.stroke();
-  ctx.restore();
 }
 
 function drawFloatingPiece(canvasId, color, darkColor) {
