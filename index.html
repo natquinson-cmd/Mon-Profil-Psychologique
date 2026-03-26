@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Profil Psychologique</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a0a2e'/%3E%3Cpath d='M32 6C18 6 10 18 10 30c0 8 3 14 5 18 2 4-1 8-1 12v4c0 2 2 4 4 4h28c2 0 4-2 4-4v-4c0-4-3-8-1-12 2-4 5-10 5-18C54 18 46 6 32 6z' fill='none' stroke='%237c3aed' stroke-width='2'/%3E%3CclipPath id='h'%3E%3Cpath d='M32 6C18 6 10 18 10 30c0 8 3 14 5 18 2 4-1 8-1 12v4c0 2 2 4 4 4h28c2 0 4-2 4-4v-4c0-4-3-8-1-12 2-4 5-10 5-18C54 18 46 6 32 6z'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23h)'%3E%3Crect x='8' y='6' width='16' height='16' fill='%23e74c3c' opacity='.85'/%3E%3Crect x='24' y='6' width='16' height='16' fill='%233498db' opacity='.85'/%3E%3Crect x='40' y='6' width='16' height='16' fill='%23f5c842' opacity='.85'/%3E%3Crect x='8' y='22' width='16' height='16' fill='%23f5c842' opacity='.8'/%3E%3Crect x='24' y='22' width='16' height='16' fill='%232ecc71' opacity='.85'/%3E%3Crect x='40' y='22' width='16' height='16' fill='%23e74c3c' opacity='.8'/%3E%3Crect x='8' y='38' width='16' height='16' fill='%233498db' opacity='.85'/%3E%3Crect x='24' y='38' width='16' height='16' fill='%23e74c3c' opacity='.8'/%3E%3Crect x='40' y='38' width='16' height='16' fill='%232ecc71' opacity='.85'/%3E%3Crect x='8' y='54' width='16' height='16' fill='%232ecc71' opacity='.8'/%3E%3Crect x='24' y='54' width='16' height='16' fill='%23f5c842' opacity='.85'/%3E%3Crect x='40' y='54' width='16' height='16' fill='%233498db' opacity='.8'/%3E%3C/g%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a0a2e;
+  --bg-gradient: linear-gradient(145deg, #1a0a2e 0%, #2d1b69 40%, #1a0a2e 100%);
+  --card: rgba(255,255,255,0.07);
+  --card-border: rgba(255,255,255,0.12);
+  --card-hover: rgba(255,255,255,0.12);
+  --text: #d4c8e8;
+  --text-muted: #9b8bb8;
+  --text-bright: #ffffff;
+  --red: #e74c3c;
+  --yellow: #f5c842;
+  --green: #2ecc71;
+  --blue: #3498db;
+  --purple: #7c3aed;
+  --purple-light: #a78bfa;
+  --red-bg: rgba(231,76,60,0.15);
+  --yellow-bg: rgba(245,200,66,0.15);
+  --green-bg: rgba(46,204,113,0.15);
+  --blue-bg: rgba(52,152,219,0.15);
+  --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  background-image:var(--bg-gradient);
+  background-attachment:fixed;
+  color:var(--text);
+  min-height:100vh;
+  line-height:1.6;
+  position:relative;
+}
+body::before {
+  content:'';
+  position:fixed; top:0; left:0; right:0; bottom:0;
+  background:
+    radial-gradient(ellipse 600px 400px at 10% 20%, rgba(231,76,60,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 85% 15%, rgba(52,152,219,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 400px at 70% 80%, rgba(245,200,66,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 300px at 20% 85%, rgba(46,204,113,0.05) 0%, transparent 70%);
+  pointer-events:none; z-index:0;
+}
+/* Scrollbar */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:rgba(124,58,237,0.4); border-radius:3px; }
+/* Header */
+.app-header {
+  position:sticky; top:0; z-index:100;
+  background:rgba(26,10,46,0.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(124,58,237,0.2);
+  padding:0.8rem 1.5rem;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.app-header h1 {
+  font-size:1.2rem; font-weight:700; color:var(--text-bright);
+  display:flex; align-items:center; gap:0.5rem; cursor:pointer;
+}
+.app-header h1 .icon { font-size:1.4rem; }
+.header-nav { display:flex; gap:0.5rem; }
+.header-nav button {
+  background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.25); color:var(--text);
+  padding:0.4rem 1rem; border-radius:8px; font-size:0.85rem; cursor:pointer;
+  font-family:inherit; transition:var(--transition);
+}
+.header-nav button:hover, .header-nav button.active {
+  background:rgba(124,58,237,0.3); border-color:rgba(124,58,237,0.5); color:var(--text-bright);
+}
+/* Main container */
+.container {
+  max-width:960px; margin:0 auto; padding:2rem 1.5rem;
+  position:relative; z-index:1;
+}
+/* Page transitions */
+.page { display:none; animation:fadeIn 0.4s ease; }
+.page.active { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes scaleIn { from{opacity:0;transform:scale(0.9)} to{opacity:1;transform:scale(1)} }
+@keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes countUp { from{opacity:0} to{opacity:1} }
+/* Hero */
+.hero { text-align:center; margin-bottom:3rem; position:relative; }
+.hero-visual {
+  width:200px; height:200px; margin:0 auto 1.5rem;
+  position:relative;
+}
+.puzzle-head {
+  width:100%; height:100%;
+}
+.hero h2 {
+  font-size:2.2rem; font-weight:800; color:var(--text-bright);
+  margin-bottom:0.5rem;
+  background:linear-gradient(135deg,var(--red),var(--yellow),var(--green),var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero p { color:var(--text-muted); font-size:1.05rem; max-width:500px; margin:0 auto; }
+/* Floating puzzle pieces */
+@keyframes floatPuzzle1 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(-8px,-12px) rotate(8deg)} }
+@keyframes floatPuzzle2 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(10px,-8px) rotate(-10deg)} }
+@keyframes floatPuzzle3 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(-5px,10px) rotate(5deg)} }
+@keyframes floatPuzzle4 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(8px,6px) rotate(-8deg)} }
+.float-piece { position:absolute; opacity:0.6; animation-duration:4s; animation-iteration-count:infinite; animation-timing-function:ease-in-out; }
+.float-piece:nth-child(1) { top:-15px; left:-25px; animation-name:floatPuzzle1; }
+.float-piece:nth-child(2) { top:-20px; right:-30px; animation-name:floatPuzzle2; animation-delay:1s; }
+.float-piece:nth-child(3) { bottom:10px; left:-35px; animation-name:floatPuzzle3; animation-delay:0.5s; }
+.float-piece:nth-child(4) { bottom:-5px; right:-25px; animation-name:floatPuzzle4; animation-delay:1.5s; }
+/* Cards grid */
+.cards-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1.2rem; margin-top:1.5rem;
+}
+.card {
+  background:var(--card); border:1px solid var(--card-border);
+  border-radius:16px; padding:1.5rem; transition:var(--transition);
+  cursor:pointer; position:relative; overflow:hidden;
+}
+.card:hover { transform:translateY(-3px); border-color:rgba(124,58,237,0.35); box-shadow:0 8px 32px rgba(124,58,237,0.15); }
+.card.locked { opacity:0.5; cursor:default; }
+.card.locked:hover { transform:none; }
+.card .card-icon {
+  width:48px; height:48px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem; margin-bottom:1rem;
+}
+.card h3 { font-size:1.1rem; font-weight:700; color:var(--text-bright); margin-bottom:0.4rem; }
+.card p { font-size:0.88rem; color:var(--text-muted); }
+.card .badge {
+  position:absolute; top:1rem; right:1rem;
+  font-size:0.72rem; font-weight:600; padding:0.25rem 0.6rem;
+  border-radius:20px; text-transform:uppercase; letter-spacing:0.5px;
+}
+.badge-available { background:rgba(46,204,113,0.15); color:var(--green); }
+.badge-soon { background:rgba(136,136,170,0.15); color:var(--text-muted); }
+.badge-done { background:rgba(52,152,219,0.15); color:var(--blue); }
+/* DISC specific card colors */
+.card-disc { border-left:3px solid var(--red); }
+.card-disc .card-icon { background:var(--red-bg); }
+.card-bigfive { border-left:3px solid var(--blue); }
+.card-bigfive .card-icon { background:var(--blue-bg); }
+.card-via { border-left:3px solid var(--green); }
+.card-via .card-icon { background:var(--green-bg); }
+.card-enneagramme { border-left:3px solid var(--yellow); }
+.card-enneagramme .card-icon { background:var(--yellow-bg); }
+.card-ei { border-left:3px solid #9b59b6; }
+.card-ei .card-icon { background:rgba(155,89,182,0.12); }
+/* Completed test mini card */
+.completed-section { margin-top:2.5rem; }
+.completed-section h3 { font-size:1.1rem; color:var(--text-bright); margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+.completed-card {
+  background:var(--card); border:1px solid var(--card-border);
+  border-radius:16px; padding:1.5rem; cursor:pointer;
+  transition:var(--transition); display:flex; align-items:center; gap:1.5rem;
+}
+.completed-card:hover { transform:translateY(-2px); border-color:rgba(124,58,237,0.35); }
+.completed-card .mini-chart { width:70px; height:70px; flex-shrink:0; }
+.completed-card .info h4 { color:var(--text-bright); margin-bottom:0.3rem; }
+.completed-card .info p { font-size:0.85rem; color:var(--text-muted); }
+/* Diagnostic section */
+.diagnostic-section {
+  margin-top:2.5rem; background:var(--card); border:1px solid var(--card-border);
+  border-radius:16px; padding:2rem; text-align:center;
+}
+.diagnostic-section h3 { color:var(--text-bright); margin-bottom:0.5rem; }
+.diagnostic-section p { color:var(--text-muted); font-size:0.9rem; }
+.diagnostic-section .lock-icon { font-size:2rem; margin-bottom:1rem; opacity:0.4; }
+/* Intro page */
+.intro-content { max-width:700px; margin:0 auto; }
+.intro-content h2 { font-size:1.8rem; font-weight:800; color:var(--text-bright); margin-bottom:1rem; }
+.intro-content .disc-colors {
+  display:flex; gap:1rem; margin:2rem 0; flex-wrap:wrap; justify-content:center;
+}
+.disc-color-card {
+  flex:1; min-width:140px; max-width:200px; padding:1.2rem;
+  border-radius:12px; text-align:center;
+}
+.disc-color-card h4 { font-size:1rem; font-weight:700; margin-bottom:0.3rem; }
+.disc-color-card p { font-size:0.78rem; opacity:0.85; }
+.disc-color-card.dc-d { background:var(--red-bg); color:var(--red); border:1px solid rgba(231,76,60,0.25); }
+.disc-color-card.dc-i { background:var(--yellow-bg); color:var(--yellow); border:1px solid rgba(241,196,15,0.25); }
+.disc-color-card.dc-s { background:var(--green-bg); color:var(--green); border:1px solid rgba(46,204,113,0.25); }
+.disc-color-card.dc-c { background:var(--blue-bg); color:var(--blue); border:1px solid rgba(52,152,219,0.25); }
+.intro-info {
+  background:rgba(124,58,237,0.08); border:1px solid rgba(124,58,237,0.2);
+  border-radius:12px; padding:1.5rem; margin:2rem 0; text-align:left;
+}
+.intro-info h4 { color:var(--purple-light); margin-bottom:0.5rem; }
+.intro-info ul { list-style:none; }
+.intro-info li { padding:0.3rem 0; color:var(--text-muted); font-size:0.9rem; }
+.intro-info li::before { content:"→ "; color:var(--purple-light); }
+/* Buttons */
+.btn {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  padding:0.75rem 2rem; border-radius:12px; font-size:1rem;
+  font-weight:600; border:none; cursor:pointer; font-family:inherit;
+  transition:var(--transition); text-decoration:none;
+}
+.btn-primary {
+  background:linear-gradient(135deg,var(--purple),#5b21b6);
+  color:white;
+  box-shadow:0 4px 15px rgba(124,58,237,0.3);
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(124,58,237,0.45); }
+.btn-secondary {
+  background:rgba(124,58,237,0.1); border:1px solid rgba(124,58,237,0.25); color:var(--text);
+}
+.btn-secondary:hover { border-color:rgba(124,58,237,0.5); color:var(--text-bright); background:rgba(124,58,237,0.2); }
+.btn-danger {
+  background:rgba(231,76,60,0.15); border:1px solid rgba(231,76,60,0.3); color:var(--red);
+}
+.btn-danger:hover { background:rgba(231,76,60,0.25); }
+.btn-sm { padding:0.5rem 1.2rem; font-size:0.85rem; border-radius:8px; }
+.btn-center { display:flex; justify-content:center; margin-top:2rem; }
+/* Test page */
+.test-header {
+  text-align:center; margin-bottom:2rem;
+}
+.test-header h3 { color:var(--text-muted); font-size:0.9rem; font-weight:500; }
+.progress-container {
+  background:var(--card); border-radius:20px; height:8px;
+  margin:1rem 0 0.5rem; overflow:hidden;
+}
+.progress-bar {
+  height:100%; border-radius:20px; transition:width 0.5s ease;
+  background:linear-gradient(90deg,var(--red),var(--yellow),var(--green),var(--blue));
+}
+.progress-text { font-size:0.8rem; color:var(--text-muted); text-align:center; }
+/* Question card */
+.question-card {
+  background:var(--card); border:1px solid var(--card-border);
+  border-radius:20px; padding:2rem; max-width:700px; margin:0 auto;
+  animation:scaleIn 0.35s ease;
+}
+.question-card h3 {
+  text-align:center; color:var(--text-bright); font-size:1.15rem;
+  margin-bottom:0.5rem;
+}
+.question-card .instruction {
+  text-align:center; color:var(--text-muted); font-size:0.85rem; margin-bottom:1.5rem;
+}
+.statements { display:flex; flex-direction:column; gap:0.8rem; }
+.statement {
+  background:rgba(255,255,255,0.03); border:1px solid var(--card-border);
+  border-radius:12px; padding:1rem 1.2rem;
+  display:flex; align-items:center; justify-content:space-between;
+  transition:var(--transition); gap:0.8rem;
+}
+.statement .text { flex:1; font-size:0.95rem; color:var(--text); }
+.statement .choices { display:flex; gap:0.6rem; flex-shrink:0; }
+.choice-btn {
+  width:40px; height:40px; border-radius:10px; border:2px solid var(--card-border);
+  background:transparent; cursor:pointer; display:flex;
+  align-items:center; justify-content:center; font-size:0.75rem;
+  font-weight:700; color:var(--text-muted); transition:var(--transition);
+  font-family:inherit;
+}
+.choice-btn:hover { border-color:rgba(124,58,237,0.4); }
+.choice-btn.selected-most {
+  background:rgba(46,204,113,0.2); border-color:var(--green); color:var(--green);
+}
+.choice-btn.selected-least {
+  background:rgba(231,76,60,0.2); border-color:var(--red); color:var(--red);
+}
+.statement.highlight-most { border-color:rgba(46,204,113,0.3); background:rgba(46,204,113,0.05); }
+.statement.highlight-least { border-color:rgba(231,76,60,0.3); background:rgba(231,76,60,0.05); }
+/* Nav buttons */
+.test-nav {
+  display:flex; justify-content:space-between; align-items:center;
+  max-width:700px; margin:1.5rem auto 0;
+}
+/* Results page */
+.results-container { max-width:800px; margin:0 auto; }
+.results-header {
+  text-align:center; margin-bottom:2.5rem; animation:slideUp 0.6s ease;
+}
+.results-header h2 {
+  font-size:2rem; font-weight:800; color:var(--text-bright); margin-bottom:0.5rem;
+}
+.results-header p { color:var(--text-muted); font-size:1rem; }
+.profile-summary {
+  background:var(--card); border:1px solid var(--card-border);
+  border-radius:20px; padding:2rem; text-align:center;
+  margin-bottom:2rem; animation:slideUp 0.6s ease 0.1s both;
+}
+.profile-summary .primary-label {
+  font-size:1.3rem; font-weight:700; margin-bottom:0.5rem;
+}
+.profile-summary .secondary-label {
+  font-size:0.95rem; color:var(--text-muted);
+}
+/* Chart area */
+.charts-row {
+  display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;
+  margin-bottom:2rem;
+}
+.chart-card {
+  background:var(--card); border:1px solid var(--card-border);
+  border-radius:20px; padding:1.5rem; animation:slideUp 0.6s ease 0.2s both;
+}
+.chart-card h3 { color:var(--text-bright); font-size:1rem; margin-bottom:1rem; text-align:center; }
+.chart-card canvas { display:block; margin:0 auto; }
+/* Bar chart */
+.bar-chart { display:flex; flex-direction:column; gap:1rem; }
+.bar-item { display:flex; align-items:center; gap:0.8rem; }
+.bar-label {
+  width:24px; height:24px; border-radius:6px; display:flex;
+  align-items:center; justify-content:center; font-weight:800;
+  font-size:0.75rem; flex-shrink:0;
+}
+.bar-track {
+  flex:1; height:28px; background:rgba(255,255,255,0.05);
+  border-radius:8px; overflow:hidden; position:relative;
+}
+.bar-fill {
+  height:100%; border-radius:8px; transition:width 1.5s ease;
+  display:flex; align-items:center; justify-content:flex-end;
+  padding-right:0.6rem; font-size:0.8rem; font-weight:700; color:white;
+  min-width:fit-content;
+}
+.bar-fill span { padding-left:0.5rem; }
+/* Detail sections */
+.detail-section {
+  background:var(--card); border:1px solid var(--card-border);
+  border-radius:20px; padding:2rem; margin-bottom:1.5rem;
+  animation:slideUp 0.6s ease 0.3s both;
+}
+.detail-section h3 {
+  font-size:1.15rem; font-weight:700; color:var(--text-bright);
+  margin-bottom:1.2rem; display:flex; align-items:center; gap:0.5rem;
+}
+.detail-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;
+}
+.detail-block h4 {
+  font-size:0.9rem; font-weight:600; margin-bottom:0.8rem; color:var(--text-bright);
+}
+.detail-block ul { list-style:none; }
+.detail-block li {
+  padding:0.35rem 0; font-size:0.88rem; color:var(--text-muted);
+  display:flex; align-items:flex-start; gap:0.5rem;
+}
+.detail-block li .dot {
+  width:6px; height:6px; border-radius:50%; margin-top:0.5rem; flex-shrink:0;
+}
+.detail-text { color:var(--text-muted); font-size:0.9rem; line-height:1.7; }
+/* Compatibility cards */
+.compat-cards { display:grid; grid-template-columns:1fr; gap:1rem; }
+.compat-card {
+  background:rgba(255,255,255,0.03); border:1px solid var(--card-border);
+  border-radius:14px; padding:1.3rem;
+}
+.compat-card h4 { font-size:0.95rem; font-weight:700; margin-bottom:0.6rem; display:flex; align-items:center; gap:0.5rem; }
+.compat-card p { font-size:0.85rem; color:var(--text-muted); margin-bottom:0.3rem; }
+.compat-card .tip { color:var(--green); }
+.compat-card .tension { color:var(--red); }
+/* Results actions */
+.results-actions {
+  display:flex; justify-content:center; gap:1rem; margin-top:2rem;
+  flex-wrap:wrap; animation:slideUp 0.6s ease 0.5s both;
+}
+/* Responsive */
+@media(max-width:768px){
+  .hero h2 { font-size:1.6rem; }
+  .cards-grid { grid-template-columns:1fr; }
+  .charts-row { grid-template-columns:1fr; }
+  .detail-grid { grid-template-columns:1fr; }
+  .container { padding:1.2rem 1rem; }
+  .question-card { padding:1.2rem; }
+  .statement { flex-direction:column; align-items:stretch; }
+  .statement .choices { justify-content:flex-end; }
+  .disc-color-card { min-width:120px; }
+  .app-header h1 span.full-title { display:none; }
+  .app-header h1 span.short-title { display:inline; }
+}
+@media(min-width:769px){
+  .app-header h1 span.short-title { display:none; }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1 onclick="navigateTo('home')">
+    <span class="icon">&#x1f9e0;</span>
+    <span class="full-title">Mon Profil Psychologique</span>
+    <span class="short-title">Profil Psy</span>
+  </h1>
+  <div class="header-nav">
+    <button onclick="navigateTo('home')" id="nav-home" class="active">Accueil</button>
+  </div>
+</header>
+
+<!-- HOME PAGE -->
+<div class="container">
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-visual">
+      <!-- Floating puzzle pieces -->
+      <svg class="float-piece" width="35" height="35" viewBox="0 0 40 40"><path d="M5 0h12c0 0 0 4 4 4s4-4 4-4h12c2.5 0 3 1 3 3v12c0 0-4 0-4 4s4 4 4 4v12c0 2.5-1 3-3 3H25c0 0 0-4-4-4s-4 4-4 4H5c-2.5 0-3-1-3-3V25c0 0 4 0 4-4s-4-4-4-4V5c0-2.5 1-3 3-3z" fill="#e74c3c" opacity="0.85"/></svg>
+      <svg class="float-piece" width="30" height="30" viewBox="0 0 40 40"><path d="M5 0h12c0 0 0 4 4 4s4-4 4-4h12c2.5 0 3 1 3 3v12c0 0-4 0-4 4s4 4 4 4v12c0 2.5-1 3-3 3H25c0 0 0-4-4-4s-4 4-4 4H5c-2.5 0-3-1-3-3V25c0 0 4 0 4-4s-4-4-4-4V5c0-2.5 1-3 3-3z" fill="#3498db" opacity="0.85"/></svg>
+      <svg class="float-piece" width="28" height="28" viewBox="0 0 40 40"><path d="M5 0h12c0 0 0 4 4 4s4-4 4-4h12c2.5 0 3 1 3 3v12c0 0-4 0-4 4s4 4 4 4v12c0 2.5-1 3-3 3H25c0 0 0-4-4-4s-4 4-4 4H5c-2.5 0-3-1-3-3V25c0 0 4 0 4-4s-4-4-4-4V5c0-2.5 1-3 3-3z" fill="#f5c842" opacity="0.85"/></svg>
+      <svg class="float-piece" width="25" height="25" viewBox="0 0 40 40"><path d="M5 0h12c0 0 0 4 4 4s4-4 4-4h12c2.5 0 3 1 3 3v12c0 0-4 0-4 4s4 4 4 4v12c0 2.5-1 3-3 3H25c0 0 0-4-4-4s-4 4-4 4H5c-2.5 0-3-1-3-3V25c0 0 4 0 4-4s-4-4-4-4V5c0-2.5 1-3 3-3z" fill="#2ecc71" opacity="0.85"/></svg>
+      <!-- Head silhouette with puzzle pieces inside -->
+      <svg class="puzzle-head" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="headClip">
+            <path d="M100 15 C55 15 30 50 30 85 C30 105 38 120 42 130 C46 140 40 150 40 160 L40 175 C40 180 45 185 50 185 L150 185 C155 185 160 180 160 175 L160 160 C160 150 154 140 158 130 C162 120 170 105 170 85 C170 50 145 15 100 15Z"/>
+          </clipPath>
+        </defs>
+        <!-- Head outline glow -->
+        <path d="M100 15 C55 15 30 50 30 85 C30 105 38 120 42 130 C46 140 40 150 40 160 L40 175 C40 180 45 185 50 185 L150 185 C155 185 160 180 160 175 L160 160 C160 150 154 140 158 130 C162 120 170 105 170 85 C170 50 145 15 100 15Z" fill="none" stroke="rgba(167,139,250,0.4)" stroke-width="2.5"/>
+        <!-- Puzzle grid inside head -->
+        <g clip-path="url(#headClip)">
+          <!-- Row 1 -->
+          <rect x="30" y="15" width="35" height="35" rx="3" fill="#e74c3c" opacity="0.85"/>
+          <rect x="65" y="15" width="35" height="35" rx="3" fill="#3498db" opacity="0.85"/>
+          <rect x="100" y="15" width="35" height="35" rx="3" fill="#f5c842" opacity="0.85"/>
+          <rect x="135" y="15" width="35" height="35" rx="3" fill="#e74c3c" opacity="0.7"/>
+          <!-- Row 2 -->
+          <rect x="30" y="52" width="35" height="35" rx="3" fill="#3498db" opacity="0.75"/>
+          <rect x="65" y="52" width="35" height="35" rx="3" fill="#f5c842" opacity="0.85"/>
+          <rect x="100" y="52" width="35" height="35" rx="3" fill="#e74c3c" opacity="0.8"/>
+          <rect x="135" y="52" width="35" height="35" rx="3" fill="#3498db" opacity="0.85"/>
+          <!-- Row 3 -->
+          <rect x="30" y="89" width="35" height="35" rx="3" fill="#f5c842" opacity="0.8"/>
+          <rect x="65" y="89" width="35" height="35" rx="3" fill="#2ecc71" opacity="0.85"/>
+          <rect x="100" y="89" width="35" height="35" rx="3" fill="#3498db" opacity="0.75"/>
+          <rect x="135" y="89" width="35" height="35" rx="3" fill="#f5c842" opacity="0.85"/>
+          <!-- Row 4 -->
+          <rect x="30" y="126" width="35" height="35" rx="3" fill="#2ecc71" opacity="0.85"/>
+          <rect x="65" y="126" width="35" height="35" rx="3" fill="#e74c3c" opacity="0.75"/>
+          <rect x="100" y="126" width="35" height="35" rx="3" fill="#2ecc71" opacity="0.8"/>
+          <rect x="135" y="126" width="35" height="35" rx="3" fill="#3498db" opacity="0.7"/>
+          <!-- Row 5 -->
+          <rect x="30" y="163" width="35" height="35" rx="3" fill="#3498db" opacity="0.8"/>
+          <rect x="65" y="163" width="35" height="35" rx="3" fill="#f5c842" opacity="0.75"/>
+          <rect x="100" y="163" width="35" height="35" rx="3" fill="#e74c3c" opacity="0.85"/>
+          <rect x="135" y="163" width="35" height="35" rx="3" fill="#2ecc71" opacity="0.85"/>
+          <!-- Puzzle piece borders (grid lines) -->
+          <line x1="65" y1="15" x2="65" y2="200" stroke="rgba(26,10,46,0.6)" stroke-width="2"/>
+          <line x1="100" y1="15" x2="100" y2="200" stroke="rgba(26,10,46,0.6)" stroke-width="2"/>
+          <line x1="135" y1="15" x2="135" y2="200" stroke="rgba(26,10,46,0.6)" stroke-width="2"/>
+          <line x1="30" y1="52" x2="170" y2="52" stroke="rgba(26,10,46,0.6)" stroke-width="2"/>
+          <line x1="30" y1="89" x2="170" y2="89" stroke="rgba(26,10,46,0.6)" stroke-width="2"/>
+          <line x1="30" y1="126" x2="170" y2="126" stroke="rgba(26,10,46,0.6)" stroke-width="2"/>
+          <line x1="30" y1="163" x2="170" y2="163" stroke="rgba(26,10,46,0.6)" stroke-width="2"/>
+          <!-- Puzzle connectors (circles on grid lines) -->
+          <circle cx="65" cy="35" r="6" fill="#f5c842" opacity="0.9"/>
+          <circle cx="100" cy="70" r="6" fill="#e74c3c" opacity="0.9"/>
+          <circle cx="135" cy="107" r="6" fill="#2ecc71" opacity="0.9"/>
+          <circle cx="82" cy="52" r="6" fill="#3498db" opacity="0.9"/>
+          <circle cx="117" cy="126" r="6" fill="#f5c842" opacity="0.9"/>
+          <circle cx="82" cy="163" r="6" fill="#e74c3c" opacity="0.9"/>
+        </g>
+      </svg>
+    </div>
+    <h2>Mon Profil Psychologique</h2>
+    <p>Apprenez a mieux vous connaitre grace a des tests reconnus et validés scientifiquement</p>
+  </div>
+
+  <h3 style="color:var(--text-bright);margin-bottom:0.5rem;font-size:1rem;">Tests disponibles</h3>
+  <div class="cards-grid" id="tests-grid">
+    <!-- Generated by JS -->
+  </div>
+
+  <div class="completed-section" id="completed-section" style="display:none;">
+    <h3>&#x2705; Tests complétés</h3>
+    <div id="completed-list"></div>
+  </div>
+
+  <div class="diagnostic-section">
+    <div class="lock-icon">&#x1f512;</div>
+    <h3>Diagnostic complet</h3>
+    <p>Completez plusieurs tests pour debloquer une synthese globale de votre profil psychologique, croisant toutes les méthodologies.</p>
+  </div>
+</div>
+
+<!-- DISC INTRO PAGE -->
+<div id="page-disc-intro" class="page">
+  <div class="intro-content">
+    <h2>Test DISC</h2>
+    <p style="color:var(--text-muted);margin-bottom:1.5rem;">Le modele DISC est l'un des outils d'evaluation comportementale les plus utilisés au monde. Il identifie 4 styles de comportement dominants.</p>
+
+    <div class="disc-colors">
+      <div class="disc-color-card dc-d">
+        <h4>D</h4>
+        <p>Dominance<br>Direct, Décisif</p>
+      </div>
+      <div class="disc-color-card dc-i">
+        <h4>I</h4>
+        <p>Influence<br>Enthousiaste, Social</p>
+      </div>
+      <div class="disc-color-card dc-s">
+        <h4>S</h4>
+        <p>Stabilité<br>Patient, Fiable</p>
+      </div>
+      <div class="disc-color-card dc-c">
+        <h4>C</h4>
+        <p>Conformité<br>Précis, Analytique</p>
+      </div>
+    </div>
+
+    <div class="intro-info">
+      <h4>Comment ca marche ?</h4>
+      <ul>
+        <li>28 groupes de 4 affirmations vous seront présentés</li>
+        <li>Pour chaque groupe, choisissez celle qui vous ressemble le PLUS et celle qui vous ressemble le MOINS</li>
+        <li>Répondez spontanément, il n'y a pas de bonne ou mauvaise réponse</li>
+        <li>Durée estimée : environ 10 minutes</li>
+      </ul>
+    </div>
+
+    <div class="btn-center" style="gap:1rem;flex-wrap:wrap;">
+      <button class="btn btn-secondary" onclick="navigateTo('home')">Retour</button>
+      <button class="btn btn-primary" onclick="startDiscTest()">Commencer le test</button>
+    </div>
+  </div>
+</div>
+
+<!-- DISC TEST PAGE -->
+<div id="page-disc-test" class="page">
+  <div class="test-header">
+    <h3>Test DISC</h3>
+    <div class="progress-container"><div class="progress-bar" id="disc-progress" style="width:0%"></div></div>
+    <div class="progress-text" id="disc-progress-text">Question 1 / 28</div>
+  </div>
+  <div id="disc-question-area"></div>
+  <div class="test-nav">
+    <button class="btn btn-secondary btn-sm" id="btn-prev" onclick="discPrev()">&#8592; Précédent</button>
+    <button class="btn btn-primary btn-sm" id="btn-next" onclick="discNext()">Suivant &#8594;</button>
+  </div>
+</div>
+
+<!-- DISC RESULTS PAGE -->
+<div id="page-disc-results" class="page">
+  <div class="results-container" id="disc-results-container">
+    <!-- Generated by JS -->
+  </div>
+</div>
+</div>
+
+<script>
+// ===== APP STATE =====
+const APP = {
+  currentPage: 'home',
+  tests: {}
+};
+
+// ===== NAVIGATION =====
+function navigateTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  if (el) { el.classList.add('active'); APP.currentPage = page; }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===== METHODOLOGIES REGISTRY =====
+const METHODOLOGIES = {
+  disc: {
+    id:'disc', name:'DISC', icon:'\u{1F3AF}',
+    description:'Découvrez votre style comportemental dominant parmi 4 profils : Dominance, Influence, Stabilité, Conformité.',
+    cardClass:'card-disc', available:true, duration:'~10 min'
+  },
+  bigfive: {
+    id:'bigfive', name:'Big Five (OCEAN)', icon:'\u{1F30A}',
+    description:'Les 5 grands traits de personnalité : Ouverture, Conscienciosité, Extraversion, Agréabilité, Névrosisme.',
+    cardClass:'card-bigfive', available:false, duration:'~15 min'
+  },
+  via: {
+    id:'via', name:'VIA - Forces de caractere', icon:'\u{1F4AA}',
+    description:'Identifiez vos 24 forces de caractere et découvrez celles qui vous définissent le mieux.',
+    cardClass:'card-via', available:false, duration:'~20 min'
+  },
+  enneagramme: {
+    id:'enneagramme', name:'Ennéagramme', icon:'\u{2B50}',
+    description:'Explorez les 9 types de personnalité de l\'Ennéagramme et trouvez votre type dominant.',
+    cardClass:'card-enneagramme', available:false, duration:'~15 min'
+  },
+  ei: {
+    id:'ei', name:'Intelligence Émotionnelle', icon:'\u{2764}\u{FE0F}',
+    description:'Évaluez votre quotient émotionnel a travers 5 dimensions clés.',
+    cardClass:'card-ei', available:false, duration:'~12 min'
+  }
+};
+
+// ===== DISC MODULE =====
+const DISC = {
+  questions: [
+    {id:1, statements:[
+      {dim:'D',text:"Je suis direct et décisif"},
+      {dim:'I',text:"Je suis enthousiaste et optimiste"},
+      {dim:'S',text:"Je suis patient et coopératif"},
+      {dim:'C',text:"Je suis précis et analytique"}
+    ]},
+    {id:2, statements:[
+      {dim:'D',text:"J'aime relever des défis"},
+      {dim:'I',text:"J'aime convaincre les autres"},
+      {dim:'S',text:"J'aime aider les autres"},
+      {dim:'C',text:"J'aime analyser les données"}
+    ]},
+    {id:3, statements:[
+      {dim:'D',text:"Je prends des décisions rapidement"},
+      {dim:'I',text:"Je m'exprime facilement"},
+      {dim:'S',text:"Je suis un bon auditeur"},
+      {dim:'C',text:"Je suis organisé et méthodique"}
+    ]},
+    {id:4, statements:[
+      {dim:'D',text:"Je vais droit au but"},
+      {dim:'I',text:"Je motive les gens autour de moi"},
+      {dim:'S',text:"Je maintiens un environnement stable"},
+      {dim:'C',text:"Je vérifie les détails avec soin"}
+    ]},
+    {id:5, statements:[
+      {dim:'D',text:"Je suis compétitif"},
+      {dim:'I',text:"Je suis sociable"},
+      {dim:'S',text:"Je suis loyal"},
+      {dim:'C',text:"Je suis perfectionniste"}
+    ]},
+    {id:6, statements:[
+      {dim:'D',text:"J'assume le leadership naturellement"},
+      {dim:'I',text:"J'aime travailler en équipe de maniere dynamique"},
+      {dim:'S',text:"Je soutiens les décisions du groupe"},
+      {dim:'C',text:"Je respecte les regles et procédures"}
+    ]},
+    {id:7, statements:[
+      {dim:'D',text:"Je suis orienté résultats"},
+      {dim:'I',text:"Je suis créatif et innovant"},
+      {dim:'S',text:"Je suis fiable et constant"},
+      {dim:'C',text:"Je suis rigoureux et exigeant"}
+    ]},
+    {id:8, statements:[
+      {dim:'D',text:"Je n'ai pas peur de la confrontation"},
+      {dim:'I',text:"Je vois le coté positif des choses"},
+      {dim:'S',text:"J'évite les conflits"},
+      {dim:'C',text:"Je cherche la solution logique"}
+    ]},
+    {id:9, statements:[
+      {dim:'D',text:"Je prends des risques calculés"},
+      {dim:'I',text:"Je fais confiance aux autres facilement"},
+      {dim:'S',text:"Je préfere la routine et la prévisibilité"},
+      {dim:'C',text:"Je me fie aux faits et aux preuves"}
+    ]},
+    {id:10, statements:[
+      {dim:'D',text:"Je suis déterminé et persévérant"},
+      {dim:'I',text:"Je suis spontané et flexible"},
+      {dim:'S',text:"Je suis calme sous pression"},
+      {dim:'C',text:"Je suis prudent et réfléchi"}
+    ]},
+    {id:11, statements:[
+      {dim:'D',text:"Je veux avoir le controle"},
+      {dim:'I',text:"Je veux etre reconnu"},
+      {dim:'S',text:"Je veux la sécurité"},
+      {dim:'C',text:"Je veux la qualité"}
+    ]},
+    {id:12, statements:[
+      {dim:'D',text:"J'agis vite et avec assurance"},
+      {dim:'I',text:"Je communique avec passion"},
+      {dim:'S',text:"J'écoute avant de parler"},
+      {dim:'C',text:"Je planifie avant d'agir"}
+    ]},
+    {id:13, statements:[
+      {dim:'D',text:"Je suis indépendant"},
+      {dim:'I',text:"Je suis persuasif"},
+      {dim:'S',text:"Je suis accommodant"},
+      {dim:'C',text:"Je suis systématique"}
+    ]},
+    {id:14, statements:[
+      {dim:'D',text:"Je me concentre sur les objectifs"},
+      {dim:'I',text:"Je me concentre sur les relations"},
+      {dim:'S',text:"Je me concentre sur l'harmonie"},
+      {dim:'C',text:"Je me concentre sur la précision"}
+    ]},
+    {id:15, statements:[
+      {dim:'D',text:"J'aime commander"},
+      {dim:'I',text:"J'aime inspirer"},
+      {dim:'S',text:"J'aime accompagner"},
+      {dim:'C',text:"J'aime structurer"}
+    ]},
+    {id:16, statements:[
+      {dim:'D',text:"Je suis ambitieux"},
+      {dim:'I',text:"Je suis charmeur"},
+      {dim:'S',text:"Je suis modeste"},
+      {dim:'C',text:"Je suis consciencieux"}
+    ]},
+    {id:17, statements:[
+      {dim:'D',text:"Je préfere agir plutot que discuter"},
+      {dim:'I',text:"Je préfere discuter et brainstormer"},
+      {dim:'S',text:"Je préfere réfléchir calmement"},
+      {dim:'C',text:"Je préfere rechercher et analyser"}
+    ]},
+    {id:18, statements:[
+      {dim:'D',text:"Je suis exigeant envers les autres"},
+      {dim:'I',text:"Je suis encourageant envers les autres"},
+      {dim:'S',text:"Je suis compréhensif envers les autres"},
+      {dim:'C',text:"Je suis critique constructif envers les autres"}
+    ]},
+    {id:19, statements:[
+      {dim:'D',text:"Face a un probleme, je fonce"},
+      {dim:'I',text:"Face a un probleme, j'en parle"},
+      {dim:'S',text:"Face a un probleme, je temporise"},
+      {dim:'C',text:"Face a un probleme, j'analyse"}
+    ]},
+    {id:20, statements:[
+      {dim:'D',text:"On me dit autoritaire parfois"},
+      {dim:'I',text:"On me dit bavard parfois"},
+      {dim:'S',text:"On me dit trop passif parfois"},
+      {dim:'C',text:"On me dit trop critique parfois"}
+    ]},
+    {id:21, statements:[
+      {dim:'D',text:"Je déteste perdre mon temps"},
+      {dim:'I',text:"Je déteste etre ignoré"},
+      {dim:'S',text:"Je déteste les changements brusques"},
+      {dim:'C',text:"Je déteste le travail baclé"}
+    ]},
+    {id:22, statements:[
+      {dim:'D',text:"Mon point fort est ma volonté"},
+      {dim:'I',text:"Mon point fort est mon charisme"},
+      {dim:'S',text:"Mon point fort est ma patience"},
+      {dim:'C',text:"Mon point fort est ma rigueur"}
+    ]},
+    {id:23, statements:[
+      {dim:'D',text:"Sous stress, je deviens autoritaire"},
+      {dim:'I',text:"Sous stress, je deviens désorganisé"},
+      {dim:'S',text:"Sous stress, je me replie"},
+      {dim:'C',text:"Sous stress, je deviens rigide"}
+    ]},
+    {id:24, statements:[
+      {dim:'D',text:"Je valorise l'efficacité"},
+      {dim:'I',text:"Je valorise l'ambiance"},
+      {dim:'S',text:"Je valorise la stabilité"},
+      {dim:'C',text:"Je valorise l'exactitude"}
+    ]},
+    {id:25, statements:[
+      {dim:'D',text:"J'apprends en faisant"},
+      {dim:'I',text:"J'apprends en échangeant"},
+      {dim:'S',text:"J'apprends en observant"},
+      {dim:'C',text:"J'apprends en lisant"}
+    ]},
+    {id:26, statements:[
+      {dim:'D',text:"Je suis pragmatique"},
+      {dim:'I',text:"Je suis idéaliste"},
+      {dim:'S',text:"Je suis réaliste"},
+      {dim:'C',text:"Je suis méticuleux"}
+    ]},
+    {id:27, statements:[
+      {dim:'D',text:"Je communique de maniere directe"},
+      {dim:'I',text:"Je communique de maniere expressive"},
+      {dim:'S',text:"Je communique de maniere douce"},
+      {dim:'C',text:"Je communique de maniere factuelle"}
+    ]},
+    {id:28, statements:[
+      {dim:'D',text:'Mon motto : agir maintenant'},
+      {dim:'I',text:'Mon motto : ensemble on va plus loin'},
+      {dim:'S',text:'Mon motto : doucement mais surement'},
+      {dim:'C',text:'Mon motto : bien faire les choses'}
+    ]}
+  ],
+
+  answers: {}, // { questionId: { most: dimLetter, least: dimLetter } }
+  currentQ: 0,
+
+  profiles: {
+    D: {
+      name:'Dominance', color:'Rouge', colorVar:'var(--red)', hex:'#e74c3c',
+      pointsForts:["Leader naturel","Orienté résultats","Décisif","Persévérant","Autonome","Efficace"],
+      pointsFaibles:["Impatient","Peut paraitre autoritaire","Peu a l'écoute parfois","Intolérant face a la lenteur","Peut négliger les sentiments","Tendance a tout controler"],
+      communication:"Direct, concis, va droit au but. Préfere les faits aux émotions.",
+      environnement:"Compétitif, rapide, avec de l'autonomie et des défis a relever.",
+      stress:"Devient autoritaire, impatient, peut s'emporter.",
+      motivations:"Pouvoir, résultats, victoire, autonomie, défis.",
+      compatibility: {
+        I:{tips:"Le D apporte la direction, le I l'énergie sociale. Ensemble ils font avancer les projets rapidement.",tensions:"Le D peut trouver le I trop bavard ; le I peut trouver le D trop brusque.",conseil:"D : laissez le I s'exprimer. I : allez a l'essentiel avec le D."},
+        S:{tips:"Le S apporte la stabilité dont le D a besoin pour construire dans la durée.",tensions:"Le D peut bousculer le S ; le S peut frustrer le D par sa lenteur.",conseil:"D : soyez patient et rassurant. S : osez exprimer vos idées."},
+        C:{tips:"Le C fournit l'analyse rigoureuse qui rend les décisions du D plus solides.",tensions:"Le D veut aller vite, le C veut tout vérifier. Friction fréquente.",conseil:"D : respectez le besoin de données du C. C : proposez des solutions, pas que des problemes."},
+        D:{tips:"Deux D ensemble peuvent accomplir énormément... ou s'affronter.",tensions:"Lutte de pouvoir fréquente, chacun veut diriger.",conseil:"Définissez clairement les roles et zones de responsabilité."}
+      }
+    },
+    I: {
+      name:'Influence', color:'Jaune', colorVar:'var(--yellow)', hex:'#f1c40f',
+      pointsForts:["Excellent communicant","Créatif","Enthousiaste","Fédérateur","Optimiste","Adaptable"],
+      pointsFaibles:["Manque de rigueur dans les détails","Peut etre désorganisé","Parle parfois trop","Difficulté a se concentrer longtemps","Peut manquer de suivi","Trop confiant parfois"],
+      communication:"Expressif, chaleureux, utilise beaucoup d'anecdotes et d'humour.",
+      environnement:"Collaboratif, dynamique, social, avec de la reconnaissance.",
+      stress:"Devient désorganisé, émotionnel, peut fuir les problemes.",
+      motivations:"Reconnaissance, relations, popularité, fun, nouvelles expériences.",
+      compatibility: {
+        D:{tips:"Le D canalise l'énergie du I et apporte de la structure.",tensions:"Le D peut couper la parole au I ; le I peut agacer le D par son manque de focus.",conseil:"I : préparez vos arguments. D : laissez de la place a la créativité."},
+        S:{tips:"Le I apporte du dynamisme, le S de la fiabilité. Bon binome.",tensions:"Le I peut etre trop changeant pour le S qui aime la stabilité.",conseil:"I : tenez vos engagements. S : sortez de votre zone de confort avec le I."},
+        C:{tips:"Le I apporte la vision, le C la rigueur d'exécution.",tensions:"Le I trouve le C trop rigide ; le C trouve le I trop dispersé.",conseil:"I : écoutez les analyses du C. C : appréciez la créativité du I."},
+        I:{tips:"Deux I ensemble créent une ambiance fantastique et débordent d'idées.",tensions:"Risque de manquer de structure et de suivi.",conseil:"Désignez un I pour suivre les détails a tour de role."}
+      }
+    },
+    S: {
+      name:'Stabilité', color:'Vert', colorVar:'var(--green)', hex:'#2ecc71',
+      pointsForts:["Excellent coéquipier","Patient","Fiable","A l'écoute","Diplomate","Persévérant dans la durée"],
+      pointsFaibles:["Résiste au changement","Peut etre trop passif","Difficulté a dire non","Évite les confrontations","Peut accumuler du ressentiment","Lent a prendre des décisions"],
+      communication:"Doux, attentionné, prend le temps d'écouter. Pose des questions.",
+      environnement:"Stable, prévisible, harmonieux, avec des relations de confiance.",
+      stress:"Se replie, devient passif-agressif, accumule sans exprimer.",
+      motivations:"Sécurité, harmonie, relations sinceres, routine, appartenance.",
+      compatibility: {
+        D:{tips:"Le S tempere le D et apporte de la diplomatie.",tensions:"Le D peut écraser le S qui n'ose pas s'affirmer.",conseil:"S : exprimez vos désaccords calmement mais clairement. D : demandez l'avis du S."},
+        I:{tips:"Le S apporte l'ancrage dont le I a besoin.",tensions:"Le I peut trouver le S trop lent ; le S peut etre submergé par l'énergie du I.",conseil:"S : participez activement. I : respectez le rythme du S."},
+        C:{tips:"Excellente alliance : le S assure l'harmonie, le C la qualité.",tensions:"Tous deux peuvent manquer d'initiative et éviter les décisions difficiles.",conseil:"Encouragez-vous mutuellement a prendre des décisions et a agir."},
+        S:{tips:"Duo tres harmonieux, fiable et coopératif.",tensions:"Risque d'immobilisme et d'évitement des problemes.",conseil:"Fixez-vous des deadlines et osez aborder les sujets difficiles."}
+      }
+    },
+    C: {
+      name:'Conformité', color:'Bleu', colorVar:'var(--blue)', hex:'#3498db',
+      pointsForts:["Tres rigoureux","Analytique","Organisé","Fiable","Soucieux de la qualité","Expert dans son domaine"],
+      pointsFaibles:["Perfectionniste excessif","Peut paraitre froid","Analyse trop avant d'agir","Critique envers les autres","Rigide face au changement","Peut se perdre dans les détails"],
+      communication:"Factuel, précis, structuré. Préfere l'écrit et les données.",
+      environnement:"Structuré, calme, avec des standards clairs et du temps pour bien faire.",
+      stress:"Devient rigide, hyper-critique, se noie dans les détails.",
+      motivations:"Qualité, exactitude, compétence, logique, expertise.",
+      compatibility: {
+        D:{tips:"Le C apporte la rigueur, le D la capacité de décision.",tensions:"Le D trouve le C trop lent ; le C trouve le D trop impulsif.",conseil:"C : proposez des recommandations claires. D : prenez le temps de lire les analyses."},
+        I:{tips:"Complémentarité forte : le I vend l'idée, le C la construit.",tensions:"Le I improvise, le C planifie. Frustration mutuelle possible.",conseil:"C : acceptez l'imprévu. I : documentez vos idées pour le C."},
+        S:{tips:"Alliance naturelle basée sur le respect mutuel et la fiabilité.",tensions:"Peuvent manquer de prise de risque et d'audace.",conseil:"Challengez-vous mutuellement pour sortir de la zone de confort."},
+        C:{tips:"Duo ultra-rigoureux, tres haute qualité de production.",tensions:"Risque de paralysie par l'analyse et de perfectionnisme excessif.",conseil:"Fixez des criteres de 'assez bien' et des délais fermes."}
+      }
+    }
+  }
+};
+
+// ===== RENDER HOME =====
+function renderHome() {
+  const grid = document.getElementById('tests-grid');
+  grid.innerHTML = '';
+  const saved = JSON.parse(localStorage.getItem('psyProfile_disc') || 'null');
+
+  Object.values(METHODOLOGIES).forEach(m => {
+    const done = m.id === 'disc' && saved;
+    const card = document.createElement('div');
+    card.className = `card ${m.cardClass} ${!m.available ? 'locked' : ''}`;
+    card.innerHTML = `
+      <div class="card-icon">${m.icon}</div>
+      <span class="badge ${done ? 'badge-done' : m.available ? 'badge-available' : 'badge-soon'}">
+        ${done ? 'Completé' : m.available ? 'Disponible' : 'Bientot'}
+      </span>
+      <h3>${m.name}</h3>
+      <p>${m.description}</p>
+      <p style="margin-top:0.6rem;font-size:0.8rem;color:var(--text-muted)">${m.available ? m.duration : '\u{1F512} Bientot disponible'}</p>
+    `;
+    if (m.available) {
+      card.onclick = () => {
+        if (done) { showDiscResults(saved); }
+        else { navigateTo('disc-intro'); }
+      };
+    }
+    grid.appendChild(card);
+  });
+
+  // Completed section
+  const compSection = document.getElementById('completed-section');
+  const compList = document.getElementById('completed-list');
+  if (saved) {
+    compSection.style.display = 'block';
+    compList.innerHTML = '';
+    const cc = document.createElement('div');
+    cc.className = 'completed-card';
+    cc.onclick = () => showDiscResults(saved);
+    const primary = DISC.profiles[saved.primary];
+    cc.innerHTML = `
+      <canvas class="mini-chart" id="mini-disc-canvas" width="70" height="70"></canvas>
+      <div class="info">
+        <h4>DISC — Profil ${primary.color}</h4>
+        <p>D: ${saved.percentages.D}% &middot; I: ${saved.percentages.I}% &middot; S: ${saved.percentages.S}% &middot; C: ${saved.percentages.C}%</p>
+        <p style="font-size:0.78rem;margin-top:0.3rem;">Completé le ${saved.date}</p>
+      </div>
+    `;
+    compList.appendChild(cc);
+    setTimeout(() => drawMiniDisc(saved.percentages), 50);
+  } else {
+    compSection.style.display = 'none';
+  }
+}
+
+function drawMiniDisc(pcts) {
+  const canvas = document.getElementById('mini-disc-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cx = 35, cy = 35, r = 28;
+  const colors = {D:'#e74c3c',I:'#f1c40f',S:'#2ecc71',C:'#3498db'};
+  const dims = ['D','I','S','C'];
+  const total = dims.reduce((s,d) => s + pcts[d], 0) || 1;
+  let angle = -Math.PI/2;
+  dims.forEach(d => {
+    const slice = (pcts[d]/total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+slice);
+    ctx.closePath();
+    ctx.fillStyle = colors[d];
+    ctx.fill();
+    angle += slice;
+  });
+  ctx.beginPath();
+  ctx.arc(cx,cy,12,0,Math.PI*2);
+  ctx.fillStyle = '#1a0a2e';
+  ctx.fill();
+}
+
+// ===== DISC TEST LOGIC =====
+function startDiscTest() {
+  DISC.currentQ = 0;
+  DISC.answers = {};
+  // Restore any saved in-progress answers
+  navigateTo('disc-test');
+  renderDiscQuestion();
+}
+
+function renderDiscQuestion() {
+  const q = DISC.questions[DISC.currentQ];
+  const ans = DISC.answers[q.id] || {};
+  const pct = Math.round(((DISC.currentQ) / 28) * 100);
+  document.getElementById('disc-progress').style.width = pct + '%';
+  document.getElementById('disc-progress-text').textContent = `Question ${DISC.currentQ+1} / 28`;
+
+  const area = document.getElementById('disc-question-area');
+  let html = `<div class="question-card">
+    <h3>Groupe ${q.id}</h3>
+    <p class="instruction">Sélectionnez l'affirmation qui vous ressemble le <strong style="color:var(--green)">PLUS</strong> et celle qui vous ressemble le <strong style="color:var(--red)">MOINS</strong></p>
+    <div class="statements">`;
+
+  q.statements.forEach((s, i) => {
+    const isMost = ans.most === s.dim;
+    const isLeast = ans.least === s.dim;
+    const hlClass = isMost ? 'highlight-most' : isLeast ? 'highlight-least' : '';
+    html += `<div class="statement ${hlClass}" id="stmt-${q.id}-${i}">
+      <span class="text">${s.text}</span>
+      <div class="choices">
+        <button class="choice-btn ${isMost ? 'selected-most' : ''}"
+          onclick="selectDisc(${q.id},'${s.dim}','most',${i})" title="Me ressemble le PLUS">+</button>
+        <button class="choice-btn ${isLeast ? 'selected-least' : ''}"
+          onclick="selectDisc(${q.id},'${s.dim}','least',${i})" title="Me ressemble le MOINS">&minus;</button>
+      </div>
+    </div>`;
+  });
+
+  html += `</div></div>`;
+  area.innerHTML = html;
+
+  document.getElementById('btn-prev').style.visibility = DISC.currentQ === 0 ? 'hidden' : 'visible';
+  const btnNext = document.getElementById('btn-next');
+  if (DISC.currentQ === 27) {
+    btnNext.textContent = 'Voir les résultats \u{2192}';
+  } else {
+    btnNext.innerHTML = 'Suivant &#8594;';
+  }
+}
+
+function selectDisc(qId, dim, type, idx) {
+  if (!DISC.answers[qId]) DISC.answers[qId] = {};
+  const ans = DISC.answers[qId];
+
+  // If clicking same that's already selected, deselect
+  if (ans[type] === dim) {
+    delete ans[type];
+  } else {
+    // If this dim is already used for the other type, swap or clear
+    const other = type === 'most' ? 'least' : 'most';
+    if (ans[other] === dim) { delete ans[other]; }
+    ans[type] = dim;
+  }
+  renderDiscQuestion();
+}
+
+function discPrev() {
+  if (DISC.currentQ > 0) { DISC.currentQ--; renderDiscQuestion(); }
+}
+
+function discNext() {
+  const q = DISC.questions[DISC.currentQ];
+  const ans = DISC.answers[q.id];
+  if (!ans || !ans.most || !ans.least) {
+    // Shake effect
+    const card = document.querySelector('.question-card');
+    card.style.animation = 'none';
+    card.offsetHeight;
+    card.style.animation = 'shake 0.4s ease';
+    return;
+  }
+  if (DISC.currentQ < 27) {
+    DISC.currentQ++;
+    renderDiscQuestion();
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else {
+    calculateDiscResults();
+  }
+}
+
+function calculateDiscResults() {
+  const scores = {D:28, I:28, S:28, C:28}; // base offset to avoid negatives
+
+  Object.values(DISC.answers).forEach(ans => {
+    if (ans.most) scores[ans.most] += 2;
+    if (ans.least) scores[ans.least] -= 1;
+  });
+
+  // Ensure no negative
+  ['D','I','S','C'].forEach(d => { if (scores[d] < 0) scores[d] = 0; });
+
+  const total = scores.D + scores.I + scores.S + scores.C || 1;
+  const percentages = {
+    D: Math.round((scores.D / total) * 100),
+    I: Math.round((scores.I / total) * 100),
+    S: Math.round((scores.S / total) * 100),
+    C: Math.round((scores.C / total) * 100)
+  };
+
+  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+  const primary = sorted[0][0];
+  const secondary = sorted[1][0];
+
+  const result = {
+    scores, percentages, primary, secondary,
+    date: new Date().toLocaleDateString('fr-FR'),
+    answers: DISC.answers
+  };
+
+  localStorage.setItem('psyProfile_disc', JSON.stringify(result));
+  showDiscResults(result);
+}
+
+function showDiscResults(result) {
+  navigateTo('disc-results');
+  const container = document.getElementById('disc-results-container');
+  const p1 = DISC.profiles[result.primary];
+  const p2 = DISC.profiles[result.secondary];
+
+  let html = `
+  <div class="results-header">
+    <h2>Vos Résultats DISC</h2>
+    <p>Découvrez votre profil comportemental</p>
+  </div>
+
+  <div class="profile-summary">
+    <div class="primary-label" style="color:${p1.colorVar}">
+      Profil principal : ${p1.color} (${p1.name})
+    </div>
+    <div class="secondary-label">
+      avec une tendance <span style="color:${p2.colorVar};font-weight:600">${p2.color} (${p2.name})</span>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3>Répartition DISC</h3>
+      <canvas id="radar-canvas" width="280" height="280"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Scores détaillés</h3>
+      <div class="bar-chart">
+        ${buildBar('D','Dominance',result.percentages.D,'#e74c3c')}
+        ${buildBar('I','Influence',result.percentages.I,'#f1c40f')}
+        ${buildBar('S','Stabilité',result.percentages.S,'#2ecc71')}
+        ${buildBar('C','Conformité',result.percentages.C,'#3498db')}
+      </div>
+    </div>
+  </div>
+
+  <!-- Detailed profile -->
+  <div class="detail-section" style="border-left:3px solid ${p1.hex}">
+    <h3><span style="color:${p1.colorVar}">\u{25CF}</span> Profil ${p1.color} — ${p1.name}</h3>
+    <div class="detail-grid">
+      <div class="detail-block">
+        <h4 style="color:var(--green)">Points forts</h4>
+        <ul>${p1.pointsForts.map(f => `<li><span class="dot" style="background:var(--green)"></span>${f}</li>`).join('')}</ul>
+      </div>
+      <div class="detail-block">
+        <h4 style="color:var(--red)">Zones de vigilance</h4>
+        <ul>${p1.pointsFaibles.map(f => `<li><span class="dot" style="background:var(--red)"></span>${f}</li>`).join('')}</ul>
+      </div>
+    </div>
+    <div style="margin-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+      <div>
+        <h4 style="color:var(--text-bright);font-size:0.9rem;margin-bottom:0.5rem">\u{1F4AC} Style de communication</h4>
+        <p class="detail-text">${p1.communication}</p>
+      </div>
+      <div>
+        <h4 style="color:var(--text-bright);font-size:0.9rem;margin-bottom:0.5rem">\u{1F3E2} Environnement idéal</h4>
+        <p class="detail-text">${p1.environnement}</p>
+      </div>
+      <div>
+        <h4 style="color:var(--text-bright);font-size:0.9rem;margin-bottom:0.5rem">\u{26A1} Sous stress</h4>
+        <p class="detail-text">${p1.stress}</p>
+      </div>
+      <div>
+        <h4 style="color:var(--text-bright);font-size:0.9rem;margin-bottom:0.5rem">\u{1F3AF} Motivations profondes</h4>
+        <p class="detail-text">${p1.motivations}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compatibility -->
+  <div class="detail-section">
+    <h3>\u{1F91D} Compatibilité avec les autres profils</h3>
+    <div class="compat-cards">
+      ${buildCompatCards(result.primary)}
+    </div>
+  </div>
+
+  <div class="results-actions">
+    <button class="btn btn-secondary" onclick="navigateTo('home');renderHome();">Retour a l'accueil</button>
+    <button class="btn btn-danger btn-sm" onclick="retakeDisc()">Refaire le test</button>
+  </div>`;
+
+  container.innerHTML = html;
+
+  // Draw radar chart after DOM update
+  setTimeout(() => drawRadarChart(result.percentages), 100);
+}
+
+function buildBar(letter, label, pct, color) {
+  return `<div class="bar-item">
+    <div class="bar-label" style="background:${color}22;color:${color}">${letter}</div>
+    <div class="bar-track">
+      <div class="bar-fill" style="width:${pct}%;background:${color}" id="bar-${letter}">
+        <span>${pct}%</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildCompatCards(primaryDim) {
+  const profile = DISC.profiles[primaryDim];
+  const dims = ['D','I','S','C'];
+  const colorMap = {D:'var(--red)',I:'var(--yellow)',S:'var(--green)',C:'var(--blue)'};
+  const nameMap = {D:'Rouge (Dominance)',I:'Jaune (Influence)',S:'Vert (Stabilité)',C:'Bleu (Conformité)'};
+
+  return dims.map(d => {
+    const c = profile.compatibility[d];
+    return `<div class="compat-card">
+      <h4><span style="color:${colorMap[d]};">\u{25CF}</span> Avec un profil ${nameMap[d]}</h4>
+      <p class="tip"><strong>Synergie :</strong> ${c.tips}</p>
+      <p class="tension"><strong>Tensions possibles :</strong> ${c.tensions}</p>
+      <p><strong>Conseil :</strong> ${c.conseil}</p>
+    </div>`;
+  }).join('');
+}
+
+function drawRadarChart(pcts) {
+  const canvas = document.getElementById('radar-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cx = 140, cy = 140, maxR = 110;
+  const colors = {D:'#e74c3c',I:'#f1c40f',S:'#2ecc71',C:'#3498db'};
+  const labels = [{dim:'D',label:'D',angle:-Math.PI/2},{dim:'I',label:'I',angle:0},{dim:'S',label:'S',angle:Math.PI/2},{dim:'C',label:'C',angle:Math.PI}];
+
+  // Background circles
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  [0.25,0.5,0.75,1].forEach(f => {
+    ctx.beginPath();
+    ctx.arc(cx,cy,maxR*f,0,Math.PI*2);
+    ctx.stroke();
+  });
+
+  // Axes
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  labels.forEach(l => {
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(l.angle)*maxR, cy+Math.sin(l.angle)*maxR);
+    ctx.stroke();
+  });
+
+  // Colored quadrant backgrounds
+  const quadrants = [
+    {start:-Math.PI/2, end:0, color:colors.D, color2:colors.I},
+    {start:0, end:Math.PI/2, color:colors.I, color2:colors.S},
+    {start:Math.PI/2, end:Math.PI, color:colors.S, color2:colors.C},
+    {start:Math.PI, end:3*Math.PI/2, color:colors.C, color2:colors.D}
+  ];
+  const bgColors = [colors.D, colors.I, colors.S, colors.C];
+  const bgAngles = [-Math.PI/2, 0, Math.PI/2, Math.PI];
+  bgAngles.forEach((a,i) => {
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,maxR,a,a+Math.PI/2);
+    ctx.closePath();
+    ctx.fillStyle = bgColors[i] + '15';
+    ctx.fill();
+  });
+
+  // Data polygon
+  const maxPct = Math.max(pcts.D,pcts.I,pcts.S,pcts.C,1);
+  const points = labels.map(l => {
+    const val = pcts[l.dim] / maxPct;
+    return {
+      x: cx + Math.cos(l.angle) * maxR * val,
+      y: cy + Math.sin(l.angle) * maxR * val,
+      dim: l.dim
+    };
+  });
+
+  // Fill
+  ctx.beginPath();
+  points.forEach((p,i) => i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y));
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(255,255,255,0.08)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Points and labels
+  points.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,5,0,Math.PI*2);
+    ctx.fillStyle = colors[p.dim];
+    ctx.fill();
+    ctx.strokeStyle = '#1a0a2e';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // Labels
+  ctx.font = '700 16px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  labels.forEach(l => {
+    const lx = cx + Math.cos(l.angle) * (maxR + 18);
+    const ly = cy + Math.sin(l.angle) * (maxR + 18);
+    ctx.fillStyle = colors[l.dim];
+    ctx.fillText(l.label, lx, ly);
+    // Percentage below
+    ctx.font = '500 11px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.fillText(pcts[l.dim]+'%', lx, ly+16);
+    ctx.font = '700 16px Inter, sans-serif';
+  });
+}
+
+function retakeDisc() {
+  localStorage.removeItem('psyProfile_disc');
+  DISC.answers = {};
+  DISC.currentQ = 0;
+  navigateTo('disc-intro');
+}
+
+// ===== SHAKE ANIMATION =====
+const shakeStyle = document.createElement('style');
+shakeStyle.textContent = `@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}`;
+document.head.appendChild(shakeStyle);
+
+// ===== INIT =====
+renderHome();
+</script>
+</body>
+</html>
