@@ -1253,47 +1253,54 @@ document.head.appendChild(shakeStyle);
 
 // ===== PUZZLE HEAD DRAWING =====
 function getHeadPath(ctx, ox, oy, s) {
-  // Human head profile facing right — anatomically accurate
+  // Human head profile facing right — refined anatomy
   ctx.beginPath();
   // Start at back top of skull
-  ctx.moveTo(ox + 45*s, oy + 20*s);
-  // Top of skull — round arc
-  ctx.bezierCurveTo(ox+65*s,oy+4*s, ox+115*s,oy+0*s, ox+140*s,oy+8*s);
-  // Forehead — slopes forward and down
-  ctx.bezierCurveTo(ox+155*s,oy+14*s, ox+165*s,oy+28*s, ox+170*s,oy+48*s);
-  // Brow ridge — slight indent before nose
-  ctx.bezierCurveTo(ox+172*s,oy+56*s, ox+172*s,oy+62*s, ox+168*s,oy+70*s);
-  // Nose bridge — goes inward then forward
-  ctx.bezierCurveTo(ox+165*s,oy+76*s, ox+165*s,oy+85*s, ox+172*s,oy+95*s);
-  // Nose tip — pointy, sticking out
-  ctx.bezierCurveTo(ox+178*s,oy+102*s, ox+182*s,oy+106*s, ox+182*s,oy+110*s);
-  // Nostril — curves back under
-  ctx.bezierCurveTo(ox+182*s,oy+114*s, ox+176*s,oy+116*s, ox+170*s,oy+115*s);
-  // Philtrum (above lip) — indent
-  ctx.bezierCurveTo(ox+167*s,oy+115*s, ox+165*s,oy+118*s, ox+166*s,oy+121*s);
-  // Upper lip — slight bump forward
-  ctx.bezierCurveTo(ox+168*s,oy+124*s, ox+172*s,oy+127*s, ox+172*s,oy+130*s);
-  // Lower lip — curves back
-  ctx.bezierCurveTo(ox+172*s,oy+134*s, ox+170*s,oy+137*s, ox+166*s,oy+140*s);
-  // Chin — comes FORWARD prominently then curves down
-  ctx.bezierCurveTo(ox+162*s,oy+144*s, ox+160*s,oy+150*s, ox+162*s,oy+156*s);
-  ctx.bezierCurveTo(ox+164*s,oy+162*s, ox+166*s,oy+166*s, ox+164*s,oy+170*s);
-  // Under chin — curves back to throat
-  ctx.bezierCurveTo(ox+160*s,oy+176*s, ox+150*s,oy+182*s, ox+140*s,oy+186*s);
-  // Throat / front of neck
-  ctx.bezierCurveTo(ox+132*s,oy+190*s, ox+128*s,oy+196*s, ox+128*s,oy+205*s);
+  ctx.moveTo(ox + 42*s, oy + 25*s);
+  // Top of skull — nice round dome
+  ctx.bezierCurveTo(ox+55*s,oy+6*s, ox+110*s,oy-2*s, ox+138*s,oy+5*s);
+  // Forehead — smooth slope down, slightly convex
+  ctx.bezierCurveTo(ox+152*s,oy+10*s, ox+162*s,oy+22*s, ox+168*s,oy+42*s);
+  // Brow bone — protrudes slightly then DEEP indent for glabella
+  ctx.bezierCurveTo(ox+170*s,oy+50*s, ox+172*s,oy+56*s, ox+171*s,oy+62*s);
+  // Glabella indent — deep dip between brow and nose
+  ctx.bezierCurveTo(ox+169*s,oy+68*s, ox+162*s,oy+74*s, ox+160*s,oy+78*s);
+  // Nose bridge — rises forward from the indent
+  ctx.bezierCurveTo(ox+159*s,oy+82*s, ox+162*s,oy+90*s, ox+170*s,oy+98*s);
+  // Nose tip — prominent, sticks OUT clearly
+  ctx.bezierCurveTo(ox+176*s,oy+104*s, ox+185*s,oy+108*s, ox+186*s,oy+112*s);
+  // Nostril curve — sweeps back sharply under nose
+  ctx.bezierCurveTo(ox+186*s,oy+116*s, ox+180*s,oy+119*s, ox+172*s,oy+118*s);
+  // Philtrum — clear vertical indent above lip
+  ctx.bezierCurveTo(ox+168*s,oy+117*s, ox+164*s,oy+120*s, ox+164*s,oy+124*s);
+  // Upper lip — pushes forward
+  ctx.bezierCurveTo(ox+164*s,oy+126*s, ox+170*s,oy+129*s, ox+172*s,oy+132*s);
+  // Lower lip — fuller, curves out then back
+  ctx.bezierCurveTo(ox+174*s,oy+135*s, ox+174*s,oy+139*s, ox+170*s,oy+142*s);
+  // Lip to chin gap — curves inward
+  ctx.bezierCurveTo(ox+167*s,oy+145*s, ox+164*s,oy+148*s, ox+163*s,oy+152*s);
+  // Chin — pushes FORWARD strongly, angular
+  ctx.bezierCurveTo(ox+162*s,oy+157*s, ox+164*s,oy+163*s, ox+168*s,oy+168*s);
+  // Chin bottom — the lowest forward point
+  ctx.bezierCurveTo(ox+170*s,oy+171*s, ox+170*s,oy+174*s, ox+167*s,oy+177*s);
+  // Jaw line — sweeps back under toward neck
+  ctx.bezierCurveTo(ox+162*s,oy+182*s, ox+150*s,oy+188*s, ox+138*s,oy+192*s);
+  // Throat — slight Adam's apple curve
+  ctx.bezierCurveTo(ox+130*s,oy+195*s, ox+126*s,oy+200*s, ox+126*s,oy+208*s);
   // Neck front bottom
-  ctx.lineTo(ox+128*s, oy+215*s);
-  // Across bottom (between neck columns)
-  ctx.lineTo(ox+72*s, oy+215*s);
-  // Neck back bottom up
-  ctx.lineTo(ox+72*s, oy+200*s);
-  // Back of neck — curves up
-  ctx.bezierCurveTo(ox+72*s,oy+188*s, ox+62*s,oy+178*s, ox+55*s,oy+168*s);
-  // Back of skull — big round curve going up
-  ctx.bezierCurveTo(ox+40*s,oy+148*s, ox+28*s,oy+120*s, ox+27*s,oy+90*s);
-  // Back of skull top
-  ctx.bezierCurveTo(ox+27*s,oy+60*s, ox+32*s,oy+38*s, ox+45*s,oy+20*s);
+  ctx.lineTo(ox+126*s, oy+215*s);
+  // Across bottom (neck base)
+  ctx.lineTo(ox+74*s, oy+215*s);
+  // Neck back bottom
+  ctx.lineTo(ox+74*s, oy+202*s);
+  // Back of neck — curves up to skull base
+  ctx.bezierCurveTo(ox+74*s,oy+190*s, ox+62*s,oy+178*s, ox+52*s,oy+165*s);
+  // Skull base / occipital — bulges out at back
+  ctx.bezierCurveTo(ox+42*s,oy+152*s, ox+32*s,oy+135*s, ox+25*s,oy+110*s);
+  // Back of skull — maximum bulge point
+  ctx.bezierCurveTo(ox+20*s,oy+90*s, ox+20*s,oy+70*s, ox+25*s,oy+52*s);
+  // Back of skull top — curves up to crown
+  ctx.bezierCurveTo(ox+30*s,oy+38*s, ox+35*s,oy+32*s, ox+42*s,oy+25*s);
   ctx.closePath();
 }
 
