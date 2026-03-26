@@ -421,14 +421,14 @@ body::before {
 <div class="container">
 <div id="page-home" class="page active">
   <div class="hero">
-    <div class="hero-visual" style="width:300px;height:350px;">
+    <div class="hero-visual" style="width:280px;height:280px;">
       <!-- Floating puzzle pieces -->
       <canvas class="float-piece" id="fp1" width="80" height="80" style="width:40px;height:40px;"></canvas>
       <canvas class="float-piece" id="fp2" width="70" height="70" style="width:35px;height:35px;"></canvas>
       <canvas class="float-piece" id="fp3" width="64" height="64" style="width:32px;height:32px;"></canvas>
       <canvas class="float-piece" id="fp4" width="60" height="60" style="width:30px;height:30px;"></canvas>
-      <!-- Main head canvas -->
-      <canvas id="hero-head-canvas" width="600" height="700" style="width:300px;height:350px;"></canvas>
+      <!-- Main brain canvas -->
+      <canvas id="hero-head-canvas" width="560" height="560" style="width:280px;height:280px;"></canvas>
     </div>
     <h2>Mon Profil Psychologique</h2>
     <p>Apprenez a mieux vous connaitre grace a des tests reconnus et validés scientifiquement</p>
@@ -1253,44 +1253,41 @@ document.head.appendChild(shakeStyle);
 
 // ===== PUZZLE HEAD DRAWING =====
 function getHeadPath(ctx, ox, oy, s) {
-  // Clean human silhouette profile facing right
-  // Based on reference: smooth curves, recognizable human shape
-  // Coordinate space: 200 wide x 230 tall
+  // Brain profile — organic lobes shape
+  // Coordinate space: 200 wide x 200 tall (no neck)
   ctx.beginPath();
-  ctx.moveTo(ox+90*s, oy+8*s);
-  // Top of skull — smooth arc right
-  ctx.quadraticCurveTo(ox+140*s, oy+0*s, ox+155*s, oy+18*s);
-  // Forehead — slopes down smoothly
-  ctx.quadraticCurveTo(ox+168*s, oy+35*s, ox+165*s, oy+60*s);
-  // Brow to nose bridge — gentle inward curve
-  ctx.quadraticCurveTo(ox+162*s, oy+72*s, ox+155*s, oy+82*s);
-  // Nose — sticks out clearly
-  ctx.quadraticCurveTo(ox+155*s, oy+90*s, ox+168*s, oy+100*s);
-  ctx.quadraticCurveTo(ox+175*s, oy+105*s, ox+172*s, oy+112*s);
-  // Under nose — tucks back in
-  ctx.quadraticCurveTo(ox+165*s, oy+116*s, ox+158*s, oy+114*s);
-  // Mouth area — subtle forward curve
-  ctx.quadraticCurveTo(ox+153*s, oy+118*s, ox+156*s, oy+125*s);
-  ctx.quadraticCurveTo(ox+160*s, oy+130*s, ox+157*s, oy+136*s);
-  // Chin — clear forward point
-  ctx.quadraticCurveTo(ox+152*s, oy+145*s, ox+155*s, oy+155*s);
-  ctx.quadraticCurveTo(ox+158*s, oy+162*s, ox+155*s, oy+168*s);
-  // Jaw sweeps back gracefully
-  ctx.quadraticCurveTo(ox+145*s, oy+180*s, ox+128*s, oy+188*s);
-  // Neck front — elegant slope
-  ctx.quadraticCurveTo(ox+115*s, oy+194*s, ox+108*s, oy+215*s);
-  ctx.lineTo(ox+105*s, oy+230*s);
-  // Base
-  ctx.lineTo(ox+72*s, oy+230*s);
-  // Neck back
-  ctx.lineTo(ox+75*s, oy+210*s);
-  ctx.quadraticCurveTo(ox+78*s, oy+195*s, ox+65*s, oy+178*s);
-  // Back of head — smooth big curve
-  ctx.quadraticCurveTo(ox+45*s, oy+155*s, ox+30*s, oy+120*s);
-  ctx.quadraticCurveTo(ox+18*s, oy+85*s, ox+25*s, oy+50*s);
-  // Back to top
-  ctx.quadraticCurveTo(ox+32*s, oy+25*s, ox+55*s, oy+12*s);
-  ctx.quadraticCurveTo(ox+72*s, oy+5*s, ox+90*s, oy+8*s);
+  // Start at bottom center (brain stem)
+  ctx.moveTo(ox+105*s, oy+190*s);
+  // Brain stem curves down
+  ctx.quadraticCurveTo(ox+100*s, oy+200*s, ox+90*s, oy+200*s);
+  ctx.quadraticCurveTo(ox+80*s, oy+200*s, ox+78*s, oy+190*s);
+  // Cerebellum (bottom back bump)
+  ctx.quadraticCurveTo(ox+72*s, oy+175*s, ox+55*s, oy+168*s);
+  ctx.quadraticCurveTo(ox+38*s, oy+160*s, ox+28*s, oy+148*s);
+  // Back lower lobe — occipital
+  ctx.quadraticCurveTo(ox+15*s, oy+132*s, ox+10*s, oy+110*s);
+  // Back upper — parietal
+  ctx.quadraticCurveTo(ox+5*s, oy+85*s, ox+12*s, oy+62*s);
+  // Top back bump
+  ctx.quadraticCurveTo(ox+18*s, oy+42*s, ox+35*s, oy+28*s);
+  // Top — crown bump
+  ctx.quadraticCurveTo(ox+50*s, oy+15*s, ox+72*s, oy+8*s);
+  // Top front bump
+  ctx.quadraticCurveTo(ox+92*s, oy+2*s, ox+115*s, oy+5*s);
+  // Frontal lobe — big bump forward
+  ctx.quadraticCurveTo(ox+138*s, oy+8*s, ox+158*s, oy+22*s);
+  ctx.quadraticCurveTo(ox+175*s, oy+35*s, ox+185*s, oy+55*s);
+  // Front face of frontal lobe
+  ctx.quadraticCurveTo(ox+192*s, oy+72*s, ox+190*s, oy+92*s);
+  // Temporal lobe — indent then bump
+  ctx.quadraticCurveTo(ox+188*s, oy+108*s, ox+178*s, oy+120*s);
+  // Lateral sulcus (Sylvian fissure indent)
+  ctx.quadraticCurveTo(ox+170*s, oy+128*s, ox+168*s, oy+135*s);
+  // Temporal lobe lower bump
+  ctx.quadraticCurveTo(ox+165*s, oy+145*s, ox+155*s, oy+155*s);
+  // Bottom of temporal lobe curves to brain stem
+  ctx.quadraticCurveTo(ox+140*s, oy+168*s, ox+125*s, oy+178*s);
+  ctx.quadraticCurveTo(ox+115*s, oy+185*s, ox+105*s, oy+190*s);
   ctx.closePath();
 }
 
@@ -1348,16 +1345,14 @@ function drawPuzzleHead(canvas, scale) {
   getHeadPath(ctx, 0, 0, W/200);
   ctx.clip();
 
-  // Draw puzzle grid 4 cols x 5 rows
+  // Draw puzzle grid 4 cols x 4 rows
   const colors = [
     ['#e74c3c','#3498db','#f5c842','#e74c3c'],
     ['#3498db','#f5c842','#e74c3c','#3498db'],
     ['#f5c842','#2ecc71','#3498db','#f5c842'],
-    ['#2ecc71','#e74c3c','#2ecc71','#3498db'],
-    ['#3498db','#f5c842','#e74c3c','#2ecc71']
+    ['#2ecc71','#e74c3c','#2ecc71','#3498db']
   ];
-  // Tab patterns: alternate 1 and -1 for interlocking
-  const cols = 4, rows = 5;
+  const cols = 4, rows = 4;
   const pw = W / cols, ph = H / rows;
 
   for (let r = 0; r < rows; r++) {
@@ -1373,11 +1368,65 @@ function drawPuzzleHead(canvas, scale) {
   }
   ctx.restore();
 
-  // Draw head outline
+  // Draw brain outline
   getHeadPath(ctx, 0, 0, W/200);
-  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  ctx.strokeStyle = 'rgba(255,255,255,0.45)';
   ctx.lineWidth = W * 0.015;
   ctx.stroke();
+
+  // Draw brain folds/sulci over the puzzle pieces
+  const sc = W/200;
+  ctx.save();
+  getHeadPath(ctx, 0, 0, sc);
+  ctx.clip();
+  ctx.strokeStyle = 'rgba(26,10,46,0.35)';
+  ctx.lineWidth = W * 0.008;
+  ctx.lineCap = 'round';
+  // Central sulcus (divides frontal from parietal)
+  ctx.beginPath();
+  ctx.moveTo(110*sc, 12*sc);
+  ctx.quadraticCurveTo(105*sc, 50*sc, 115*sc, 85*sc);
+  ctx.quadraticCurveTo(120*sc, 110*sc, 130*sc, 130*sc);
+  ctx.stroke();
+  // Lateral/Sylvian fissure
+  ctx.beginPath();
+  ctx.moveTo(170*sc, 125*sc);
+  ctx.quadraticCurveTo(140*sc, 115*sc, 110*sc, 120*sc);
+  ctx.quadraticCurveTo(80*sc, 128*sc, 60*sc, 135*sc);
+  ctx.stroke();
+  // Frontal lobe folds
+  ctx.beginPath();
+  ctx.moveTo(145*sc, 35*sc);
+  ctx.quadraticCurveTo(160*sc, 55*sc, 170*sc, 80*sc);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(155*sc, 55*sc);
+  ctx.quadraticCurveTo(175*sc, 75*sc, 180*sc, 100*sc);
+  ctx.stroke();
+  // Parietal folds
+  ctx.beginPath();
+  ctx.moveTo(75*sc, 20*sc);
+  ctx.quadraticCurveTo(70*sc, 45*sc, 78*sc, 70*sc);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(50*sc, 35*sc);
+  ctx.quadraticCurveTo(42*sc, 60*sc, 48*sc, 90*sc);
+  ctx.stroke();
+  // Occipital fold
+  ctx.beginPath();
+  ctx.moveTo(30*sc, 110*sc);
+  ctx.quadraticCurveTo(40*sc, 130*sc, 55*sc, 148*sc);
+  ctx.stroke();
+  // Temporal folds
+  ctx.beginPath();
+  ctx.moveTo(160*sc, 140*sc);
+  ctx.quadraticCurveTo(145*sc, 155*sc, 125*sc, 165*sc);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(90*sc, 140*sc);
+  ctx.quadraticCurveTo(80*sc, 155*sc, 70*sc, 165*sc);
+  ctx.stroke();
+  ctx.restore();
 }
 
 function drawFloatingPiece(canvasId, color, darkColor) {
