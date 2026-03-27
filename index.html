@@ -22,6 +22,9 @@
   --blue: #3498db;
   --purple: #7c3aed;
   --purple-light: #a78bfa;
+  --orange: #f39c12;
+  --violet: #8b5cf6;
+  --crimson: #dc2626;
   --red-bg: rgba(231,76,60,0.15);
   --yellow-bg: rgba(245,200,66,0.15);
   --green-bg: rgba(46,204,113,0.15);
@@ -106,15 +109,16 @@ body::before {
 }
 .hero p { color:var(--text-muted); font-size:1.05rem; max-width:500px; margin:0 auto; }
 /* Floating puzzle pieces */
-@keyframes floatPuzzle1 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(-8px,-12px) rotate(8deg)} }
-@keyframes floatPuzzle2 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(10px,-8px) rotate(-10deg)} }
-@keyframes floatPuzzle3 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(-5px,10px) rotate(5deg)} }
-@keyframes floatPuzzle4 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(8px,6px) rotate(-8deg)} }
-.float-piece { position:absolute; opacity:0.6; animation-duration:4s; animation-iteration-count:infinite; animation-timing-function:ease-in-out; }
-.float-piece:nth-child(1) { top:-15px; left:-25px; animation-name:floatPuzzle1; }
-.float-piece:nth-child(2) { top:-20px; right:-30px; animation-name:floatPuzzle2; animation-delay:1s; }
-.float-piece:nth-child(3) { bottom:10px; left:-35px; animation-name:floatPuzzle3; animation-delay:0.5s; }
-.float-piece:nth-child(4) { bottom:-5px; right:-25px; animation-name:floatPuzzle4; animation-delay:1.5s; }
+@keyframes floatPuzzle1 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(-8px,-12px) rotate(12deg)} }
+@keyframes floatPuzzle2 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(10px,-10px) rotate(-15deg)} }
+@keyframes floatPuzzle3 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(-6px,8px) rotate(8deg)} }
+@keyframes floatPuzzle4 { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(8px,6px) rotate(-10deg)} }
+.float-piece { position:absolute; animation-duration:4s; animation-iteration-count:infinite; animation-timing-function:ease-in-out; }
+.float-piece:nth-child(1) { top:-10px; left:-20px; animation-name:floatPuzzle1; }
+.float-piece:nth-child(2) { top:-15px; right:-20px; animation-name:floatPuzzle2; animation-delay:1s; }
+.float-piece:nth-child(3) { bottom:15px; left:-25px; animation-name:floatPuzzle3; animation-delay:0.5s; }
+.float-piece:nth-child(4) { bottom:0px; right:-20px; animation-name:floatPuzzle4; animation-delay:1.5s; }
+.hero-visual img { width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 4px 20px rgba(124,58,237,0.3)); }
 /* Cards grid */
 .cards-grid {
   display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
@@ -150,6 +154,14 @@ body::before {
 .card-bigfive .card-icon { background:var(--blue-bg); }
 .card-via { border-left:3px solid var(--green); }
 .card-via .card-icon { background:var(--green-bg); }
+.via-virtues-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:0.8rem; margin:1.5rem 0; }
+.via-virtue-card { background:var(--card); border-radius:10px; padding:0.8rem; border-left:3px solid; }
+.via-virtue-card h4 { font-size:0.9rem; margin-bottom:0.3rem; }
+.via-virtue-card p { font-size:0.78rem; color:var(--text-muted); line-height:1.4; }
+.via-progress { background:linear-gradient(90deg,#2ecc71,#27ae60); }
+.via-strength-card { background:var(--card); border-radius:12px; padding:1.2rem; margin-bottom:1rem; border-left:3px solid; }
+.via-strength-rank { font-size:1.8rem; font-weight:800; opacity:0.3; float:right; }
+.via-bar-grid { display:grid; gap:0.5rem; margin:1rem 0; }
 .card-enneagramme { border-left:3px solid var(--yellow); }
 .card-enneagramme .card-icon { background:var(--yellow-bg); }
 .card-ei { border-left:3px solid #9b59b6; }
@@ -368,6 +380,49 @@ body::before {
   display:flex; justify-content:center; gap:1rem; margin-top:2rem;
   flex-wrap:wrap; animation:slideUp 0.6s ease 0.5s both;
 }
+/* Big Five color cards */
+.bf-colors { display:flex; gap:0.8rem; margin:2rem 0; flex-wrap:wrap; justify-content:center; }
+.bf-color-card {
+  flex:1; min-width:110px; max-width:160px; padding:1rem;
+  border-radius:12px; text-align:center;
+}
+.bf-color-card h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.2rem; }
+.bf-color-card p { font-size:0.72rem; opacity:0.85; }
+.bf-color-card.bf-o { background:rgba(139,92,246,0.15); color:#8b5cf6; border:1px solid rgba(139,92,246,0.25); }
+.bf-color-card.bf-c { background:rgba(52,152,219,0.15); color:#3498db; border:1px solid rgba(52,152,219,0.25); }
+.bf-color-card.bf-e { background:rgba(243,156,18,0.15); color:#f39c12; border:1px solid rgba(243,156,18,0.25); }
+.bf-color-card.bf-a { background:rgba(46,204,113,0.15); color:#2ecc71; border:1px solid rgba(46,204,113,0.25); }
+.bf-color-card.bf-n { background:rgba(220,38,38,0.15); color:#dc2626; border:1px solid rgba(220,38,38,0.25); }
+/* Likert scale */
+.likert-question {
+  text-align:center; font-size:1.1rem; color:var(--text-bright);
+  line-height:1.6; margin-bottom:2rem; padding:0 1rem;
+}
+.likert-scale {
+  display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap;
+}
+.likert-btn {
+  display:flex; flex-direction:column; align-items:center; gap:0.4rem;
+  padding:0.8rem 1rem; border-radius:12px;
+  border:2px solid var(--card-border); background:transparent;
+  cursor:pointer; transition:var(--transition); font-family:inherit;
+  min-width:80px; flex:1; max-width:140px;
+}
+.likert-btn .likert-num {
+  font-size:1.3rem; font-weight:700; color:var(--text-muted);
+}
+.likert-btn .likert-label {
+  font-size:0.7rem; color:var(--text-muted); line-height:1.2;
+}
+.likert-btn:hover { border-color:rgba(124,58,237,0.4); background:rgba(124,58,237,0.05); }
+.likert-btn.selected {
+  border-color:var(--purple); background:rgba(124,58,237,0.15);
+}
+.likert-btn.selected .likert-num { color:var(--purple-light); }
+.likert-btn.selected .likert-label { color:var(--purple-light); }
+.progress-bar.bf-progress {
+  background:linear-gradient(90deg,#8b5cf6,#3498db,#f39c12,#2ecc71,#dc2626);
+}
 /* Responsive */
 @media(max-width:768px){
   .hero h2 { font-size:1.6rem; }
@@ -379,6 +434,9 @@ body::before {
   .statement { flex-direction:column; align-items:stretch; }
   .statement .choices { justify-content:flex-end; }
   .disc-color-card { min-width:120px; }
+  .bf-color-card { min-width:90px; }
+  .likert-btn { min-width:60px; padding:0.6rem 0.5rem; }
+  .likert-btn .likert-label { font-size:0.6rem; }
   .app-header h1 span.full-title { display:none; }
   .app-header h1 span.short-title { display:inline; }
 }
@@ -406,9 +464,18 @@ body::before {
 </head>
 <body>
 
+<!-- SVG symbol for header logo reuse -->
+<svg style="display:none;">
+  <symbol id="puzzle-head-icon" viewBox="0 0 222.504 222.504">
+    <defs><clipPath id="head-clip-icon"><path d="M178.085,27.119C165.62,13.202,149.152,0.287,108.444,0.003C92.539-0.124,68.26,3.638,49.369,23.614 C37.938,35.677,29.53,50.918,31.92,75.829c0.521,5.406,8.237,11.659,2.814,22.091c0,0-11.65,20.502-11.24,23.912 c0,0-0.207,6.236,9.443,6.432c0,0,2.409,0.312,1.714,5.627l-0.115,7.748c0,0,0.307,2.306,4.528,3.707c0,0,0.804,0.804-0.396,2.322 c0,0-2.22,2.477,1.604,7.832c1.416,1.95,3.718,4.409,2.311,9.457c0,0-1.809,9.729,2.01,12.059c0,0,4.342,5.153,21.813,2.996 c6.109-0.75,17.384-3.706,24.104,4.734c0,0,16.068,30.535,17.292,37.758c0,0,27.423-48.822,60.896-56.358 c0,0-8.157-18.389,8.435-42.203c0,0,20.794-27.432,21.409-42.501C198.531,81.441,204.015,56.049,178.085,27.119z"/></clipPath></defs>
+    <g clip-path="url(#head-clip-icon)" id="puzzle-pieces-icon"></g>
+    <path d="M178.085,27.119C165.62,13.202,149.152,0.287,108.444,0.003C92.539-0.124,68.26,3.638,49.369,23.614 C37.938,35.677,29.53,50.918,31.92,75.829c0.521,5.406,8.237,11.659,2.814,22.091c0,0-11.65,20.502-11.24,23.912 c0,0-0.207,6.236,9.443,6.432c0,0,2.409,0.312,1.714,5.627l-0.115,7.748c0,0,0.307,2.306,4.528,3.707c0,0,0.804,0.804-0.396,2.322 c0,0-2.22,2.477,1.604,7.832c1.416,1.95,3.718,4.409,2.311,9.457c0,0-1.809,9.729,2.01,12.059c0,0,4.342,5.153,21.813,2.996 c6.109-0.75,17.384-3.706,24.104,4.734c0,0,16.068,30.535,17.292,37.758c0,0,27.423-48.822,60.896-56.358 c0,0-8.157-18.389,8.435-42.203c0,0,20.794-27.432,21.409-42.501C198.531,81.441,204.015,56.049,178.085,27.119z" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+  </symbol>
+</svg>
+
 <header class="app-header">
   <h1 onclick="navigateTo('home')">
-    <canvas id="header-logo-canvas" width="46" height="46" style="width:23px;height:23px;"></canvas>
+    <svg width="23" height="23" viewBox="0 0 222 222" style="flex-shrink:0;"><use href="#puzzle-head-icon"/></svg>
     <span class="full-title">Mon Profil Psychologique</span>
     <span class="short-title">Profil Psy</span>
   </h1>
@@ -423,12 +490,24 @@ body::before {
   <div class="hero">
     <div class="hero-visual" style="width:280px;height:280px;">
       <!-- Floating puzzle pieces -->
-      <canvas class="float-piece" id="fp1" width="80" height="80" style="width:40px;height:40px;"></canvas>
-      <canvas class="float-piece" id="fp2" width="70" height="70" style="width:35px;height:35px;"></canvas>
-      <canvas class="float-piece" id="fp3" width="64" height="64" style="width:32px;height:32px;"></canvas>
-      <canvas class="float-piece" id="fp4" width="60" height="60" style="width:30px;height:30px;"></canvas>
-      <!-- Main head canvas -->
-      <canvas id="hero-head-canvas" width="560" height="560" style="width:280px;height:280px;"></canvas>
+      <svg class="float-piece" width="35" height="35" viewBox="0 0 50 50"><path d="M5,5 L17,5 C17,1,23,1,23,5 L35,5 L35,17 C39,17,39,23,35,23 L35,35 L23,35 C23,31,17,31,17,35 L5,35 L5,23 C1,23,1,17,5,17 Z" fill="#f97316" stroke="#ea580c" stroke-width="1.5"/></svg>
+      <svg class="float-piece" width="30" height="30" viewBox="0 0 50 50"><path d="M5,5 L17,5 C17,1,23,1,23,5 L35,5 L35,17 C39,17,39,23,35,23 L35,35 L23,35 C23,31,17,31,17,35 L5,35 L5,23 C1,23,1,17,5,17 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/></svg>
+      <svg class="float-piece" width="28" height="28" viewBox="0 0 50 50"><path d="M5,5 L17,5 C17,1,23,1,23,5 L35,5 L35,17 C39,17,39,23,35,23 L35,35 L23,35 C23,31,17,31,17,35 L5,35 L5,23 C1,23,1,17,5,17 Z" fill="#22d3ee" stroke="#0891b2" stroke-width="1.5"/></svg>
+      <svg class="float-piece" width="25" height="25" viewBox="0 0 50 50"><path d="M5,5 L17,5 C17,1,23,1,23,5 L35,5 L35,17 C39,17,39,23,35,23 L35,35 L23,35 C23,31,17,31,17,35 L5,35 L5,23 C1,23,1,17,5,17 Z" fill="#4ade80" stroke="#16a34a" stroke-width="1.5"/></svg>
+      <!-- Main puzzle head SVG -->
+      <svg width="280" height="280" viewBox="0 0 222.504 222.504" style="filter:drop-shadow(0 4px 20px rgba(124,58,237,0.3));">
+        <defs>
+          <clipPath id="head-clip">
+            <path d="M178.085,27.119C165.62,13.202,149.152,0.287,108.444,0.003C92.539-0.124,68.26,3.638,49.369,23.614 C37.938,35.677,29.53,50.918,31.92,75.829c0.521,5.406,8.237,11.659,2.814,22.091c0,0-11.65,20.502-11.24,23.912 c0,0-0.207,6.236,9.443,6.432c0,0,2.409,0.312,1.714,5.627l-0.115,7.748c0,0,0.307,2.306,4.528,3.707c0,0,0.804,0.804-0.396,2.322 c0,0-2.22,2.477,1.604,7.832c1.416,1.95,3.718,4.409,2.311,9.457c0,0-1.809,9.729,2.01,12.059c0,0,4.342,5.153,21.813,2.996 c6.109-0.75,17.384-3.706,24.104,4.734c0,0,16.068,30.535,17.292,37.758c0,0,27.423-48.822,60.896-56.358 c0,0-8.157-18.389,8.435-42.203c0,0,20.794-27.432,21.409-42.501C198.531,81.441,204.015,56.049,178.085,27.119z"/>
+          </clipPath>
+          <!-- Puzzle piece shape for individual pieces -->
+          <path id="puzzle-tab" d="M0,0 L12,0 C12,-4,18,-4,18,0 L30,0 L30,12 C34,12,34,18,30,18 L30,30 L18,30 C18,26,12,26,12,30 L0,30 L0,18 C-4,18,-4,12,0,12 Z"/>
+        </defs>
+        <!-- Puzzle pieces generated by JS -->
+        <g clip-path="url(#head-clip)" id="puzzle-pieces-main"></g>
+        <!-- Head outline -->
+        <path d="M178.085,27.119C165.62,13.202,149.152,0.287,108.444,0.003C92.539-0.124,68.26,3.638,49.369,23.614 C37.938,35.677,29.53,50.918,31.92,75.829c0.521,5.406,8.237,11.659,2.814,22.091c0,0-11.65,20.502-11.24,23.912 c0,0-0.207,6.236,9.443,6.432c0,0,2.409,0.312,1.714,5.627l-0.115,7.748c0,0,0.307,2.306,4.528,3.707c0,0,0.804,0.804-0.396,2.322 c0,0-2.22,2.477,1.604,7.832c1.416,1.95,3.718,4.409,2.311,9.457c0,0-1.809,9.729,2.01,12.059c0,0,4.342,5.153,21.813,2.996 c6.109-0.75,17.384-3.706,24.104,4.734c0,0,16.068,30.535,17.292,37.758c0,0,27.423-48.822,60.896-56.358 c0,0-8.157-18.389,8.435-42.203c0,0,20.794-27.432,21.409-42.501C198.531,81.441,204.015,56.049,178.085,27.119z" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+      </svg>
     </div>
     <h2>Mon Profil Psychologique</h2>
     <p>Apprenez a mieux vous connaitre grace a des tests reconnus et validés scientifiquement</p>
@@ -523,6 +602,128 @@ body::before {
   </div>
 </div>
 
+<!-- BIG FIVE INTRO PAGE -->
+<div id="page-bigfive-intro" class="page">
+  <div class="intro-content">
+    <h2>Big Five (OCEAN)</h2>
+    <p>Le modele Big Five est le modele de personnalité le plus reconnu en psychologie scientifique. Il mesure 5 grands traits fondamentaux qui décrivent la personnalité humaine.</p>
+
+    <div class="bf-colors">
+      <div class="bf-color-card bf-o">
+        <h4>O</h4>
+        <p>Ouverture<br>Curiosité, Créativité</p>
+      </div>
+      <div class="bf-color-card bf-c">
+        <h4>C</h4>
+        <p>Conscienciosité<br>Organisation, Discipline</p>
+      </div>
+      <div class="bf-color-card bf-e">
+        <h4>E</h4>
+        <p>Extraversion<br>Sociabilité, Énergie</p>
+      </div>
+      <div class="bf-color-card bf-a">
+        <h4>A</h4>
+        <p>Agréabilité<br>Empathie, Coopération</p>
+      </div>
+      <div class="bf-color-card bf-n">
+        <h4>N</h4>
+        <p>Névrosisme<br>Sensibilité, Émotivité</p>
+      </div>
+    </div>
+
+    <div class="intro-info">
+      <h4>Comment ca marche ?</h4>
+      <ul>
+        <li>50 affirmations vous seront présentées une par une</li>
+        <li>Pour chacune, indiquez votre degré d'accord sur une échelle de 1 a 5</li>
+        <li>Répondez spontanément, il n'y a pas de bonne ou mauvaise réponse</li>
+        <li>Durée estimée : environ 12 minutes</li>
+      </ul>
+    </div>
+
+    <div class="btn-center" style="gap:1rem;flex-wrap:wrap;">
+      <button class="btn btn-secondary" onclick="navigateTo('home')">Retour</button>
+      <button class="btn btn-primary" onclick="startBigFiveTest()">Commencer le test</button>
+    </div>
+  </div>
+</div>
+
+<!-- BIG FIVE TEST PAGE -->
+<div id="page-bigfive-test" class="page">
+  <div class="test-header">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h3 style="margin:0;">Test Big Five</h3>
+      <button class="btn btn-danger btn-sm" onclick="confirmQuitTest()">Quitter le test</button>
+    </div>
+    <div class="progress-container"><div class="progress-bar bf-progress" id="bf-progress" style="width:0%"></div></div>
+    <div class="progress-text" id="bf-progress-text">Question 1 / 50</div>
+  </div>
+  <div id="bf-question-area"></div>
+  <div class="test-nav">
+    <button class="btn btn-secondary btn-sm" id="bf-btn-prev" onclick="bfPrev()">&#8592; Précédent</button>
+    <button class="btn btn-primary btn-sm" id="bf-btn-next" onclick="bfNext()">Suivant &#8594;</button>
+  </div>
+</div>
+
+<!-- BIG FIVE RESULTS PAGE -->
+<div id="page-bigfive-results" class="page">
+  <div class="results-container" id="bf-results-container"></div>
+</div>
+
+<!-- VIA INTRO PAGE -->
+<div id="page-via-intro" class="page">
+  <div class="intro-content">
+    <h2>VIA - Forces de Caractere</h2>
+    <p>Le questionnaire VIA (Values in Action) identifie vos forces de caractere parmi 24 forces réparties en 6 grandes vertus. Développé par Martin Seligman et Christopher Peterson, il est l'un des outils les plus utilisés en psychologie positive.</p>
+
+    <div class="via-virtues-grid">
+      <div class="via-virtue-card" style="border-color:#e74c3c"><h4 style="color:#e74c3c">Sagesse</h4><p>Créativité, Curiosité, Jugement, Amour de l'apprentissage, Perspective</p></div>
+      <div class="via-virtue-card" style="border-color:#f39c12"><h4 style="color:#f39c12">Courage</h4><p>Bravoure, Persévérance, Honneteté, Vitalité</p></div>
+      <div class="via-virtue-card" style="border-color:#e91e63"><h4 style="color:#e91e63">Humanité</h4><p>Amour, Gentillesse, Intelligence sociale</p></div>
+      <div class="via-virtue-card" style="border-color:#3498db"><h4 style="color:#3498db">Justice</h4><p>Travail d'équipe, Équité, Leadership</p></div>
+      <div class="via-virtue-card" style="border-color:#2ecc71"><h4 style="color:#2ecc71">Tempérance</h4><p>Pardon, Humilité, Prudence, Maitrise de soi</p></div>
+      <div class="via-virtue-card" style="border-color:#8b5cf6"><h4 style="color:#8b5cf6">Transcendance</h4><p>Appréciation de la beauté, Gratitude, Espoir, Humour, Spiritualité</p></div>
+    </div>
+
+    <div class="intro-info">
+      <h4>Comment ca marche ?</h4>
+      <ul>
+        <li>72 affirmations vous seront présentées (3 par force)</li>
+        <li>Pour chacune, indiquez votre degré d'accord de 1 a 5</li>
+        <li>Répondez spontanément et honnêtement</li>
+        <li>Durée estimée : environ 20 minutes</li>
+      </ul>
+    </div>
+
+    <div class="btn-center" style="gap:1rem;flex-wrap:wrap;">
+      <button class="btn btn-secondary" onclick="navigateTo('home')">Retour</button>
+      <button class="btn btn-primary" onclick="startVIATest()">Commencer le test</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIA TEST PAGE -->
+<div id="page-via-test" class="page">
+  <div class="test-header">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h3 style="margin:0;">Test VIA</h3>
+      <button class="btn btn-danger btn-sm" onclick="confirmQuitTest()">Quitter le test</button>
+    </div>
+    <div class="progress-container"><div class="progress-bar via-progress" id="via-progress" style="width:0%"></div></div>
+    <div class="progress-text" id="via-progress-text">Question 1 / 72</div>
+  </div>
+  <div id="via-question-area"></div>
+  <div class="test-nav">
+    <button class="btn btn-secondary btn-sm" id="via-btn-prev" onclick="viaPrev()">&#8592; Précédent</button>
+    <button class="btn btn-primary btn-sm" id="via-btn-next" onclick="viaNext()">Suivant &#8594;</button>
+  </div>
+</div>
+
+<!-- VIA RESULTS PAGE -->
+<div id="page-via-results" class="page">
+  <div class="results-container" id="via-results-container"></div>
+</div>
+
 <!-- DISC RESULTS PAGE -->
 <div id="page-disc-results" class="page">
   <div class="results-container" id="disc-results-container">
@@ -556,12 +757,12 @@ const METHODOLOGIES = {
   bigfive: {
     id:'bigfive', name:'Big Five (OCEAN)', icon:'\u{1F30A}',
     description:'Les 5 grands traits de personnalité : Ouverture, Conscienciosité, Extraversion, Agréabilité, Névrosisme.',
-    cardClass:'card-bigfive', available:false, duration:'~15 min'
+    cardClass:'card-bigfive', available:true, duration:'~12 min'
   },
   via: {
     id:'via', name:'VIA - Forces de caractere', icon:'\u{1F4AA}',
     description:'Identifiez vos 24 forces de caractere et découvrez celles qui vous définissent le mieux.',
-    cardClass:'card-via', available:false, duration:'~20 min'
+    cardClass:'card-via', available:true, duration:'~20 min'
   },
   enneagramme: {
     id:'enneagramme', name:'Ennéagramme', icon:'\u{2B50}',
@@ -819,10 +1020,12 @@ const DISC = {
 function renderHome() {
   const grid = document.getElementById('tests-grid');
   grid.innerHTML = '';
-  const saved = JSON.parse(localStorage.getItem('psyProfile_disc') || 'null');
+  const savedDisc = JSON.parse(localStorage.getItem('psyProfile_disc') || 'null');
+  const savedBF = JSON.parse(localStorage.getItem('psyProfile_bigfive') || 'null');
 
   Object.values(METHODOLOGIES).forEach(m => {
-    const done = m.id === 'disc' && saved;
+    const savedVIA = JSON.parse(localStorage.getItem('psyProfile_via') || 'null');
+    const done = (m.id === 'disc' && savedDisc) || (m.id === 'bigfive' && savedBF) || (m.id === 'via' && savedVIA);
     const card = document.createElement('div');
     card.className = `card ${m.cardClass} ${!m.available ? 'locked' : ''}`;
     card.innerHTML = `
@@ -836,8 +1039,14 @@ function renderHome() {
     `;
     if (m.available) {
       card.onclick = () => {
-        if (done) { showDiscResults(saved); }
-        else { navigateTo('disc-intro'); }
+        if (m.id === 'disc') {
+          if (savedDisc) showDiscResults(savedDisc); else navigateTo('disc-intro');
+        } else if (m.id === 'bigfive') {
+          if (savedBF) showBigFiveResults(savedBF); else navigateTo('bigfive-intro');
+        } else if (m.id === 'via') {
+          const savedVIAClick = JSON.parse(localStorage.getItem('psyProfile_via') || 'null');
+          if (savedVIAClick) showVIAResults(savedVIAClick); else navigateTo('via-intro');
+        }
       };
     }
     grid.appendChild(card);
@@ -846,23 +1055,62 @@ function renderHome() {
   // Completed section
   const compSection = document.getElementById('completed-section');
   const compList = document.getElementById('completed-list');
-  if (saved) {
+  const savedVIA = JSON.parse(localStorage.getItem('psyProfile_via') || 'null');
+  const hasCompleted = savedDisc || savedBF || savedVIA;
+  if (hasCompleted) {
     compSection.style.display = 'block';
     compList.innerHTML = '';
-    const cc = document.createElement('div');
-    cc.className = 'completed-card';
-    cc.onclick = () => showDiscResults(saved);
-    const primary = DISC.profiles[saved.primary];
-    cc.innerHTML = `
-      <canvas class="mini-chart" id="mini-disc-canvas" width="70" height="70"></canvas>
-      <div class="info">
-        <h4>DISC — Profil ${primary.color}</h4>
-        <p>D: ${saved.percentages.D}% &middot; I: ${saved.percentages.I}% &middot; S: ${saved.percentages.S}% &middot; C: ${saved.percentages.C}%</p>
-        <p style="font-size:0.78rem;margin-top:0.3rem;">Completé le ${saved.date}</p>
-      </div>
-    `;
-    compList.appendChild(cc);
-    setTimeout(() => drawMiniDisc(saved.percentages), 50);
+
+    if (savedDisc) {
+      const cc = document.createElement('div');
+      cc.className = 'completed-card';
+      cc.onclick = () => showDiscResults(savedDisc);
+      const primary = DISC.profiles[savedDisc.primary];
+      cc.innerHTML = `
+        <canvas class="mini-chart" id="mini-disc-canvas" width="70" height="70"></canvas>
+        <div class="info">
+          <h4>DISC — Profil ${primary.color}</h4>
+          <p>D: ${savedDisc.percentages.D}% &middot; I: ${savedDisc.percentages.I}% &middot; S: ${savedDisc.percentages.S}% &middot; C: ${savedDisc.percentages.C}%</p>
+          <p style="font-size:0.78rem;margin-top:0.3rem;">Completé le ${savedDisc.date}</p>
+        </div>
+      `;
+      compList.appendChild(cc);
+      setTimeout(() => drawMiniDisc(savedDisc.percentages), 50);
+    }
+
+    if (savedBF) {
+      const cc2 = document.createElement('div');
+      cc2.className = 'completed-card';
+      cc2.onclick = () => showBigFiveResults(savedBF);
+      const highest = Object.entries(savedBF.percentages).sort((a,b) => b[1] - a[1])[0][0];
+      const dimNames = {O:'Ouverture',C:'Conscienciosité',E:'Extraversion',A:'Agréabilité',N:'Névrosisme'};
+      cc2.innerHTML = `
+        <canvas class="mini-chart" id="mini-bf-canvas" width="70" height="70"></canvas>
+        <div class="info">
+          <h4>Big Five — ${dimNames[highest]} dominant</h4>
+          <p>O: ${savedBF.percentages.O}% &middot; C: ${savedBF.percentages.C}% &middot; E: ${savedBF.percentages.E}% &middot; A: ${savedBF.percentages.A}% &middot; N: ${savedBF.percentages.N}%</p>
+          <p style="font-size:0.78rem;margin-top:0.3rem;">Completé le ${savedBF.date}</p>
+        </div>
+      `;
+      compList.appendChild(cc2);
+      setTimeout(() => drawMiniBF(savedBF.percentages), 50);
+    }
+
+    if (savedVIA) {
+      const cc3 = document.createElement('div');
+      cc3.className = 'completed-card';
+      cc3.onclick = () => showVIAResults(savedVIA);
+      const topStr = VIA.strengths[savedVIA.top5[0]];
+      cc3.innerHTML = `
+        <div class="mini-chart" style="width:70px;height:70px;display:flex;align-items:center;justify-content:center;font-size:2rem;background:${topStr.hex}22;border-radius:50%;">${topStr.icon}</div>
+        <div class="info">
+          <h4>VIA — ${topStr.name}</h4>
+          <p>Top 5 : ${savedVIA.top5.map(k => VIA.strengths[k].name).join(', ')}</p>
+          <p style="font-size:0.78rem;margin-top:0.3rem;">Completé le ${savedVIA.date}</p>
+        </div>
+      `;
+      compList.appendChild(cc3);
+    }
   } else {
     compSection.style.display = 'none';
   }
@@ -1240,8 +1488,16 @@ function closeQuitModal() {
 }
 function quitTest() {
   document.getElementById('quit-modal').style.display = 'none';
-  DISC.answers = {};
-  DISC.currentQ = 0;
+  if (APP.currentPage.includes('via')) {
+    VIA.answers = {};
+    VIA.currentQ = 0;
+  } else if (APP.currentPage.includes('bigfive')) {
+    BIGFIVE.answers = {};
+    BIGFIVE.currentQ = 0;
+  } else {
+    DISC.answers = {};
+    DISC.currentQ = 0;
+  }
   navigateTo('home');
   renderHome();
 }
@@ -1251,216 +1507,863 @@ const shakeStyle = document.createElement('style');
 shakeStyle.textContent = `@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}`;
 document.head.appendChild(shakeStyle);
 
-// ===== PUZZLE HEAD DRAWING =====
-function getHeadPath(ctx, ox, oy, s) {
-  // Real human head profile from Wikimedia Commons (public domain)
-  // Original viewBox: 0,0,935,935 — scaled by s factor
-  ctx.beginPath();
-  ctx.moveTo(ox+462.27*s, oy+37*s);
-  // Use the SVG path converted to canvas commands
-  // Top of head
-  ctx.quadraticCurveTo(ox+488.67*s,oy+37*s, ox+503.52*s,oy+38.65*s);
-  ctx.bezierCurveTo(ox+503.52*s,oy+38.65*s, ox+588.15*s,oy+47.6*s, ox+665.22*s,oy+99.7*s);
-  ctx.quadraticCurveTo(ox+686.67*s,oy+112.9*s, ox+704.82*s,oy+127.75*s);
-  ctx.quadraticCurveTo(ox+724.62*s,oy+144.25*s, ox+729.57*s,oy+154.15*s);
-  ctx.quadraticCurveTo(ox+734.52*s,oy+164.05*s, ox+737.82*s,oy+167.35*s);
-  ctx.quadraticCurveTo(ox+742.77*s,oy+172.3*s, ox+742.77*s,oy+182.2*s);
-  ctx.quadraticCurveTo(ox+744.42*s,oy+193.75*s, ox+742.77*s,oy+195.4*s);
-  ctx.quadraticCurveTo(ox+741.12*s,oy+198.7*s, ox+746.07*s,oy+205.3*s);
-  ctx.quadraticCurveTo(ox+751.02*s,oy+211.9*s, ox+754.32*s,oy+220.15*s);
-  ctx.quadraticCurveTo(ox+759.27*s,oy+230.05*s, ox+765.87*s,oy+266.35*s);
-  ctx.quadraticCurveTo(ox+772.47*s,oy+302.65*s, ox+775.77*s,oy+314.2*s);
-  ctx.quadraticCurveTo(ox+780.72*s,oy+325.75*s, ox+780.72*s,oy+334*s);
-  ctx.quadraticCurveTo(ox+780.72*s,oy+342.25*s, ox+770.82*s,oy+353.8*s);
-  ctx.quadraticCurveTo(ox+762.57*s,oy+367*s, ox+759.27*s,oy+375.25*s);
-  ctx.quadraticCurveTo(ox+757.62*s,oy+385.15*s, ox+762.57*s,oy+393.4*s);
-  ctx.quadraticCurveTo(ox+767.52*s,oy+401.65*s, ox+779.07*s,oy+414.85*s);
-  ctx.quadraticCurveTo(ox+792.27*s,oy+428.05*s, ox+797.22*s,oy+436.3*s);
-  ctx.quadraticCurveTo(ox+803.82*s,oy+444.55*s, ox+805.47*s,oy+447.85*s);
-  ctx.quadraticCurveTo(ox+807.12*s,oy+452.8*s, ox+807.12*s,oy+459.4*s);
-  ctx.quadraticCurveTo(ox+807.12*s,oy+466*s, ox+803.82*s,oy+470.95*s);
-  ctx.quadraticCurveTo(ox+802.17*s,oy+475.9*s, ox+797.22*s,oy+479.2*s);
-  ctx.quadraticCurveTo(ox+793.92*s,oy+484.15*s, ox+788.97*s,oy+485.8*s);
-  ctx.quadraticCurveTo(ox+784.02*s,oy+489.1*s, ox+777.42*s,oy+489.1*s);
-  ctx.quadraticCurveTo(ox+772.47*s,oy+490.75*s, ox+770.82*s,oy+492.4*s);
-  ctx.quadraticCurveTo(ox+769.17*s,oy+494.05*s, ox+770.82*s,oy+510.55*s);
-  ctx.quadraticCurveTo(ox+774.12*s,oy+528.7*s, ox+772.47*s,oy+535.3*s);
-  ctx.quadraticCurveTo(ox+770.82*s,oy+541.9*s, ox+765.87*s,oy+546.85*s);
-  ctx.quadraticCurveTo(ox+762.57*s,oy+553.45*s, ox+762.57*s,oy+561.7*s);
-  ctx.quadraticCurveTo(ox+764.22*s,oy+571.6*s, ox+762.57*s,oy+574.9*s);
-  ctx.quadraticCurveTo(ox+760.92*s,oy+579.85*s, ox+749.37*s,oy+589.75*s);
-  ctx.quadraticCurveTo(ox+737.82*s,oy+601.3*s, ox+736.17*s,oy+614.5*s);
-  ctx.quadraticCurveTo(ox+734.52*s,oy+629.35*s, ox+729.57*s,oy+639.25*s);
-  ctx.quadraticCurveTo(ox+724.62*s,oy+650.8*s, ox+714.72*s,oy+659.05*s);
-  ctx.quadraticCurveTo(ox+704.82*s,oy+667.3*s, ox+683.37*s,oy+672.25*s);
-  ctx.quadraticCurveTo(ox+661.92*s,oy+678.85*s, ox+652.02*s,oy+678.85*s);
-  ctx.quadraticCurveTo(ox+643.77*s,oy+678.85*s, ox+642.12*s,oy+682.15*s);
-  ctx.quadraticCurveTo(ox+640.47*s,oy+685.45*s, ox+660.27*s,oy+723.4*s);
-  ctx.bezierCurveTo(ox+757.1*s,oy+867.7*s, ox+673.1*s,oy+879.7*s, ox+649.1*s,oy+879.7*s);
-  ctx.bezierCurveTo(ox+625.1*s,oy+879.7*s, ox+341.49*s,oy+879.7*s, ox+301.1*s,oy+879.7*s);
-  ctx.bezierCurveTo(ox+193.1*s,oy+879.7*s, ox+217.1*s,oy+651.7*s, ox+253.29*s,oy+629.7*s);
-  ctx.bezierCurveTo(ox+253.29*s,oy+629.7*s, ox+266.55*s,oy+621.89*s, ox+282.42*s,oy+617.8*s);
-  ctx.quadraticCurveTo(ox+297.27*s,oy+614.5*s, ox+303.87*s,oy+601.3*s);
-  ctx.quadraticCurveTo(ox+312.12*s,oy+589.75*s, ox+312.12*s,oy+579.85*s);
-  ctx.quadraticCurveTo(ox+312.12*s,oy+571.6*s, ox+308.82*s,oy+568.3*s);
-  ctx.quadraticCurveTo(ox+307.17*s,oy+566.65*s, ox+303.87*s,oy+565*s);
-  ctx.quadraticCurveTo(ox+300.57*s,oy+565*s, ox+297.27*s,oy+560.05*s);
-  ctx.quadraticCurveTo(ox+293.97*s,oy+556.75*s, ox+292.32*s,oy+540.25*s);
-  ctx.quadraticCurveTo(ox+290.67*s,oy+523.75*s, ox+287.37*s,oy+508.9*s);
-  ctx.quadraticCurveTo(ox+284.07*s,oy+494.05*s, ox+260.97*s,oy+461.05*s);
-  ctx.quadraticCurveTo(ox+239.52*s,oy+428.05*s, ox+229.62*s,oy+408.25*s);
-  ctx.quadraticCurveTo(ox+221.37*s,oy+390.1*s, ox+216.42*s,oy+376.9*s);
-  ctx.quadraticCurveTo(ox+213.12*s,oy+365.35*s, ox+208.17*s,oy+342.25*s);
-  ctx.quadraticCurveTo(ox+204.87*s,oy+320.8*s, ox+204.87*s,oy+294.4*s);
-  ctx.quadraticCurveTo(ox+204.87*s,oy+269.65*s, ox+208.17*s,oy+246.55*s);
-  ctx.quadraticCurveTo(ox+213.12*s,oy+225.1*s, ox+219.72*s,oy+206.95*s);
-  ctx.quadraticCurveTo(ox+226.32*s,oy+188.8*s, ox+236.22*s,oy+169*s);
-  ctx.quadraticCurveTo(ox+247.77*s,oy+149.2*s, ox+257.67*s,oy+136*s);
-  ctx.quadraticCurveTo(ox+267.57*s,oy+122.8*s, ox+282.42*s,oy+107.95*s);
-  ctx.quadraticCurveTo(ox+297.27*s,oy+94.75*s, ox+313.77*s,oy+83.2*s);
-  ctx.quadraticCurveTo(ox+330.27*s,oy+71.65*s, ox+348.42*s,oy+61.75*s);
-  ctx.quadraticCurveTo(ox+368.22*s,oy+53.5*s, ox+386.37*s,oy+46.9*s);
-  ctx.quadraticCurveTo(ox+406.17*s,oy+41.95*s, ox+421.02*s,oy+40.3*s);
-  ctx.lineTo(ox+462.27*s, oy+37*s);
-  ctx.closePath();
+// ===== BIG FIVE MODULE =====
+const BIGFIVE = {
+  questions: [
+    // Ouverture (O) - 10 questions
+    {id:1, dim:'O', text:"J'ai une imagination débordante", reverse:false},
+    {id:2, dim:'O', text:"Je suis curieux de découvrir de nouvelles choses", reverse:false},
+    {id:3, dim:'O', text:"J'apprécie l'art et la beauté sous toutes ses formes", reverse:false},
+    {id:4, dim:'O', text:"Je préfere la routine aux nouvelles expériences", reverse:true},
+    {id:5, dim:'O', text:"J'aime réfléchir a des concepts abstraits", reverse:false},
+    {id:6, dim:'O', text:"Je suis ouvert aux idées non conventionnelles", reverse:false},
+    {id:7, dim:'O', text:"Je préfere les choses concretes et pratiques", reverse:true},
+    {id:8, dim:'O', text:"J'aime explorer des cultures différentes de la mienne", reverse:false},
+    {id:9, dim:'O', text:"Je trouve les discussions philosophiques ennuyeuses", reverse:true},
+    {id:10, dim:'O', text:"J'aime essayer de nouvelles activités", reverse:false},
+    // Conscienciosité (C) - 10 questions
+    {id:11, dim:'C', text:"Je suis toujours bien organisé", reverse:false},
+    {id:12, dim:'C', text:"Je termine ce que j'ai commencé", reverse:false},
+    {id:13, dim:'C', text:"Je fais attention aux détails", reverse:false},
+    {id:14, dim:'C', text:"Il m'arrive souvent de procrastiner", reverse:true},
+    {id:15, dim:'C', text:"Je respecte mes engagements et mes délais", reverse:false},
+    {id:16, dim:'C', text:"Je planifie mes activités a l'avance", reverse:false},
+    {id:17, dim:'C', text:"Je suis parfois négligent dans mon travail", reverse:true},
+    {id:18, dim:'C', text:"J'aime que les choses soient a leur place", reverse:false},
+    {id:19, dim:'C', text:"J'ai du mal a me discipliner", reverse:true},
+    {id:20, dim:'C', text:"Je m'efforce de faire les choses correctement", reverse:false},
+    // Extraversion (E) - 10 questions
+    {id:21, dim:'E', text:"Je suis a l'aise dans les groupes", reverse:false},
+    {id:22, dim:'E', text:"J'aime etre le centre de l'attention", reverse:false},
+    {id:23, dim:'E', text:"Je démarre facilement les conversations", reverse:false},
+    {id:24, dim:'E', text:"Je préfere la solitude aux grandes réunions", reverse:true},
+    {id:25, dim:'E', text:"Je me sens plein d'énergie au contact des autres", reverse:false},
+    {id:26, dim:'E', text:"Je suis plutot réservé", reverse:true},
+    {id:27, dim:'E', text:"J'ai un large cercle d'amis", reverse:false},
+    {id:28, dim:'E', text:"Je me sens mal a l'aise quand je suis seul longtemps", reverse:false},
+    {id:29, dim:'E', text:"Je suis plutot silencieux en groupe", reverse:true},
+    {id:30, dim:'E', text:"J'aime les fetes et les événements sociaux", reverse:false},
+    // Agréabilité (A) - 10 questions
+    {id:31, dim:'A', text:"Je fais confiance aux autres", reverse:false},
+    {id:32, dim:'A', text:"Je me soucie du bien-etre des autres", reverse:false},
+    {id:33, dim:'A', text:"Je suis pret a aider sans rien attendre en retour", reverse:false},
+    {id:34, dim:'A', text:"Je peux etre dur et critique envers les autres", reverse:true},
+    {id:35, dim:'A', text:"Je pardonne facilement", reverse:false},
+    {id:36, dim:'A', text:"Je suis coopératif et conciliant", reverse:false},
+    {id:37, dim:'A', text:"Il m'arrive d'etre impoli avec les gens", reverse:true},
+    {id:38, dim:'A', text:"Je m'intéresse sincérement aux problemes des autres", reverse:false},
+    {id:39, dim:'A', text:"Je me méfie des intentions des autres", reverse:true},
+    {id:40, dim:'A', text:"J'essaie de voir le bon coté des gens", reverse:false},
+    // Névrosisme (N) - 10 questions
+    {id:41, dim:'N', text:"Je m'inquiete souvent", reverse:false},
+    {id:42, dim:'N', text:"Je suis facilement stressé", reverse:false},
+    {id:43, dim:'N', text:"Mon humeur change souvent", reverse:false},
+    {id:44, dim:'N', text:"Je reste calme meme dans les situations difficiles", reverse:true},
+    {id:45, dim:'N', text:"Je me sens souvent anxieux", reverse:false},
+    {id:46, dim:'N', text:"Je suis rarement triste ou déprimé", reverse:true},
+    {id:47, dim:'N', text:"Je me mets facilement en colere", reverse:false},
+    {id:48, dim:'N', text:"Je gere bien la pression", reverse:true},
+    {id:49, dim:'N', text:"Je suis souvent tendu ou nerveux", reverse:false},
+    {id:50, dim:'N', text:"Je me sens souvent dépassé par les événements", reverse:false}
+  ],
+  answers: {},
+  currentQ: 0,
+  profiles: {
+    O: {
+      name:'Ouverture', color:'Violet', hex:'#8b5cf6', colorVar:'var(--violet)',
+      descHigh:"Vous etes une personne tres ouverte d'esprit, créative et curieuse. Vous aimez explorer de nouvelles idées, cultures et expériences.",
+      descLow:"Vous etes une personne pragmatique et terre-a-terre. Vous préférez les approches éprouvées et les choses concretes.",
+      pointsForts:["Créativité et imagination","Curiosité intellectuelle","Ouverture culturelle","Pensée originale","Adaptabilité aux nouvelles idées","Sensibilité artistique"],
+      pointsFaibles:["Peut manquer de pragmatisme","Risque de dispersion","Peut négliger les aspects pratiques","Tendance a la reverie","Peut etre percu comme excentrique","Difficulté avec la routine"]
+    },
+    C: {
+      name:'Conscienciosité', color:'Bleu', hex:'#3498db', colorVar:'var(--blue)',
+      descHigh:"Vous etes une personne tres organisée, disciplinée et fiable. Vous planifiez soigneusement et respectez vos engagements.",
+      descLow:"Vous etes une personne flexible et spontanée. Vous préférez l'improvisation a la planification stricte.",
+      pointsForts:["Organisation et méthode","Fiabilité et constance","Persévérance","Sens du détail","Autodiscipline","Rigueur professionnelle"],
+      pointsFaibles:["Perfectionnisme excessif","Rigidité face au changement","Tendance au surmenage","Difficulté a déléguer","Peut manquer de spontanéité","Trop critique envers soi-meme"]
+    },
+    E: {
+      name:'Extraversion', color:'Orange', hex:'#f39c12', colorVar:'var(--orange)',
+      descHigh:"Vous etes une personne sociable, énergique et enthousiaste. Vous puisez votre énergie dans les interactions sociales.",
+      descLow:"Vous etes une personne introvertie et réfléchie. Vous préférez les interactions en petit comité et avez besoin de solitude pour vous ressourcer.",
+      pointsForts:["Aisance sociale","Énergie communicative","Leadership naturel","Capacité a fédérer","Optimisme","Réseau relationnel étendu"],
+      pointsFaibles:["Peut dominer les conversations","Difficulté avec la solitude","Tendance a l'impulsivité","Peut manquer de profondeur","Besoin constant de stimulation","Peut négliger l'introspection"]
+    },
+    A: {
+      name:'Agréabilité', color:'Vert', hex:'#2ecc71', colorVar:'var(--green)',
+      descHigh:"Vous etes une personne empathique, bienveillante et coopérative. Vous valorisez l'harmonie et le bien-etre collectif.",
+      descLow:"Vous etes une personne directe et compétitive. Vous n'hésitez pas a défendre vos positions fermement.",
+      pointsForts:["Empathie et compassion","Esprit d'équipe","Diplomatie","Patience","Générosité","Capacité d'écoute"],
+      pointsFaibles:["Difficulté a dire non","Peut se laisser exploiter","Évitement des conflits","Tendance a se sacrifier","Peut manquer d'assertivité","Trop confiant envers les autres"]
+    },
+    N: {
+      name:'Névrosisme', color:'Rouge', hex:'#dc2626', colorVar:'var(--crimson)',
+      descHigh:"Vous ressentez les émotions de maniere intense et etes sensible au stress. Cette sensibilité peut aussi etre une force pour percevoir les nuances émotionnelles.",
+      descLow:"Vous etes une personne émotionnellement stable et sereine. Vous gérez bien le stress et restez calme en toutes circonstances.",
+      pointsForts:["Sensibilité émotionnelle","Vigilance face aux risques","Capacité d'introspection","Empathie émotionnelle","Motivation par le perfectionnisme","Conscience des dangers"],
+      pointsFaibles:["Vulnérabilité au stress","Tendance a l'anxiété","Instabilité émotionnelle","Rumination mentale","Réactivité excessive","Difficulté a relativiser"]
+    }
+  }
+};
+
+// ===== BIG FIVE TEST LOGIC =====
+function startBigFiveTest() {
+  BIGFIVE.currentQ = 0;
+  BIGFIVE.answers = {};
+  navigateTo('bigfive-test');
+  renderBFQuestion();
 }
 
-function drawPuzzlePiece(ctx, x, y, w, h, color, tabs) {
-  // tabs = {top:1/-1/0, right:1/-1/0, bottom:1/-1/0, left:1/-1/0}
-  // 1 = tab out, -1 = hole in, 0 = flat
-  const tabSize = Math.min(w,h) * 0.2;
-  ctx.beginPath();
-  // Top edge
-  ctx.moveTo(x, y);
-  if (tabs.top !== 0) {
-    ctx.lineTo(x + w*0.35, y);
-    const ty = tabs.top === 1 ? y - tabSize : y + tabSize;
-    ctx.bezierCurveTo(x+w*0.35,ty, x+w*0.65,ty, x+w*0.65,y);
+function renderBFQuestion() {
+  const q = BIGFIVE.questions[BIGFIVE.currentQ];
+  const ans = BIGFIVE.answers[q.id];
+  const total = BIGFIVE.questions.length;
+  const pct = Math.round((BIGFIVE.currentQ / total) * 100);
+  document.getElementById('bf-progress').style.width = pct + '%';
+  document.getElementById('bf-progress-text').textContent = `Question ${BIGFIVE.currentQ+1} / ${total}`;
+
+  const labels = ["Pas du tout\nd'accord","Pas\nd'accord","Neutre","D'accord","Tout a fait\nd'accord"];
+  const area = document.getElementById('bf-question-area');
+  let html = `<div class="question-card">
+    <h3>Question ${BIGFIVE.currentQ+1}</h3>
+    <p class="likert-question">${q.text}</p>
+    <div class="likert-scale">`;
+
+  for (let v = 1; v <= 5; v++) {
+    html += `<button class="likert-btn ${ans === v ? 'selected' : ''}" onclick="selectBF(${q.id},${v})">
+      <span class="likert-num">${v}</span>
+      <span class="likert-label">${labels[v-1].replace('\n','<br>')}</span>
+    </button>`;
   }
-  ctx.lineTo(x + w, y);
-  // Right edge
-  if (tabs.right !== 0) {
-    ctx.lineTo(x+w, y+h*0.35);
-    const rx = tabs.right === 1 ? x+w+tabSize : x+w-tabSize;
-    ctx.bezierCurveTo(rx,y+h*0.35, rx,y+h*0.65, x+w,y+h*0.65);
-  }
-  ctx.lineTo(x+w, y+h);
-  // Bottom edge
-  if (tabs.bottom !== 0) {
-    ctx.lineTo(x+w*0.65, y+h);
-    const by = tabs.bottom === 1 ? y+h+tabSize : y+h-tabSize;
-    ctx.bezierCurveTo(x+w*0.65,by, x+w*0.35,by, x+w*0.35,y+h);
-  }
-  ctx.lineTo(x, y+h);
-  // Left edge
-  if (tabs.left !== 0) {
-    ctx.lineTo(x, y+h*0.65);
-    const lx = tabs.left === 1 ? x-tabSize : x+tabSize;
-    ctx.bezierCurveTo(lx,y+h*0.65, lx,y+h*0.35, x,y+h*0.35);
-  }
-  ctx.lineTo(x, y);
-  ctx.closePath();
-  ctx.fillStyle = color;
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(26,10,46,0.5)';
-  ctx.lineWidth = 2;
-  ctx.stroke();
+
+  html += `</div></div>`;
+  area.innerHTML = html;
+
+  document.getElementById('bf-btn-prev').style.visibility = BIGFIVE.currentQ === 0 ? 'hidden' : 'visible';
+  const btnNext = document.getElementById('bf-btn-next');
+  btnNext.textContent = BIGFIVE.currentQ === total - 1 ? 'Voir les résultats \u{2192}' : 'Suivant \u{2192}';
 }
 
-function drawPuzzleHead(canvas, scale) {
+function selectBF(qId, value) {
+  BIGFIVE.answers[qId] = value;
+  renderBFQuestion();
+}
+
+function bfPrev() {
+  if (BIGFIVE.currentQ > 0) { BIGFIVE.currentQ--; renderBFQuestion(); }
+}
+
+function bfNext() {
+  const q = BIGFIVE.questions[BIGFIVE.currentQ];
+  if (!BIGFIVE.answers[q.id]) {
+    const card = document.querySelector('.question-card');
+    card.style.animation = 'none';
+    card.offsetHeight;
+    card.style.animation = 'shake 0.4s ease';
+    return;
+  }
+  const total = BIGFIVE.questions.length;
+  if (BIGFIVE.currentQ < total - 1) {
+    BIGFIVE.currentQ++;
+    renderBFQuestion();
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else {
+    calculateBigFiveResults();
+  }
+}
+
+function calculateBigFiveResults() {
+  const dims = ['O','C','E','A','N'];
+  const scores = {};
+  dims.forEach(d => { scores[d] = 0; });
+
+  BIGFIVE.questions.forEach(q => {
+    let val = BIGFIVE.answers[q.id] || 3;
+    if (q.reverse) val = 6 - val;
+    scores[q.dim] += val;
+  });
+
+  // Convert to percentages: min=10 (all 1s), max=50 (all 5s)
+  const percentages = {};
+  dims.forEach(d => {
+    percentages[d] = Math.round(((scores[d] - 10) / 40) * 100);
+  });
+
+  const sorted = Object.entries(percentages).sort((a,b) => b[1] - a[1]);
+
+  const result = {
+    scores, percentages,
+    highest: sorted[0][0],
+    lowest: sorted[sorted.length-1][0],
+    date: new Date().toLocaleDateString('fr-FR'),
+    answers: BIGFIVE.answers
+  };
+
+  localStorage.setItem('psyProfile_bigfive', JSON.stringify(result));
+  showBigFiveResults(result);
+}
+
+function showBigFiveResults(result) {
+  navigateTo('bigfive-results');
+  const container = document.getElementById('bf-results-container');
+  const dims = ['O','C','E','A','N'];
+  const p = BIGFIVE.profiles;
+  const pcts = result.percentages;
+
+  let html = `
+  <div class="results-header">
+    <h2>Vos Résultats Big Five</h2>
+    <p>Découvrez vos 5 grands traits de personnalité</p>
+  </div>
+
+  <div class="profile-summary">
+    <div class="primary-label" style="color:${p[result.highest].colorVar}">
+      Trait dominant : ${p[result.highest].name}
+    </div>
+    <div class="secondary-label">
+      ${pcts[result.highest] >= 60 ? p[result.highest].descHigh : p[result.highest].descLow}
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3>Profil OCEAN</h3>
+      <canvas id="bf-radar-canvas" width="300" height="300"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Scores détaillés</h3>
+      <div class="bar-chart">
+        ${buildBFBar('O','Ouverture',pcts.O,'#8b5cf6')}
+        ${buildBFBar('C','Conscienciosité',pcts.C,'#3498db')}
+        ${buildBFBar('E','Extraversion',pcts.E,'#f39c12')}
+        ${buildBFBar('A','Agréabilité',pcts.A,'#2ecc71')}
+        ${buildBFBar('N','Névrosisme',pcts.N,'#dc2626')}
+      </div>
+    </div>
+  </div>`;
+
+  // Detail per dimension
+  dims.forEach(d => {
+    const prof = p[d];
+    const level = pcts[d] >= 60 ? 'Élevé' : pcts[d] >= 40 ? 'Modéré' : 'Faible';
+    const desc = pcts[d] >= 50 ? prof.descHigh : prof.descLow;
+    html += `
+    <div class="detail-section" style="border-left:3px solid ${prof.hex}">
+      <h3><span style="color:${prof.colorVar}">\u{25CF}</span> ${prof.name} — ${pcts[d]}% (${level})</h3>
+      <p class="detail-text" style="margin-bottom:1.2rem">${desc}</p>
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4 style="color:var(--green)">Points forts</h4>
+          <ul>${prof.pointsForts.map(f => `<li><span class="dot" style="background:var(--green)"></span>${f}</li>`).join('')}</ul>
+        </div>
+        <div class="detail-block">
+          <h4 style="color:var(--red)">Zones de vigilance</h4>
+          <ul>${prof.pointsFaibles.map(f => `<li><span class="dot" style="background:var(--red)"></span>${f}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  html += `
+  <div class="results-actions">
+    <button class="btn btn-secondary" onclick="navigateTo('home');renderHome();">Retour a l'accueil</button>
+    <button class="btn btn-danger btn-sm" onclick="retakeBigFive()">Refaire le test</button>
+  </div>`;
+
+  container.innerHTML = html;
+  setTimeout(() => drawBFRadarChart(pcts), 100);
+}
+
+function buildBFBar(letter, label, pct, color) {
+  return `<div class="bar-item">
+    <div class="bar-label" style="background:${color}22;color:${color}">${letter}</div>
+    <div class="bar-track">
+      <div class="bar-fill" style="width:${pct}%;background:${color}">
+        <span>${pct}%</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function drawBFRadarChart(pcts) {
+  const canvas = document.getElementById('bf-radar-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const s = scale || 1;
-  const W = canvas.width, H = canvas.height;
-  ctx.clearRect(0,0,W,H);
+  const cx = 150, cy = 150, maxR = 115;
+  const colors = {O:'#8b5cf6',C:'#3498db',E:'#f39c12',A:'#2ecc71',N:'#dc2626'};
+  const dims = ['O','C','E','A','N'];
+  const labels = dims.map((d,i) => ({
+    dim:d, label:d, angle: -Math.PI/2 + (i * 2 * Math.PI / 5)
+  }));
 
-  // Scale factor: SVG viewBox is 935x935
-  const sf = W / 935;
+  // Background pentagons
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  [0.25,0.5,0.75,1].forEach(f => {
+    ctx.beginPath();
+    labels.forEach((l,i) => {
+      const x = cx + Math.cos(l.angle) * maxR * f;
+      const y = cy + Math.sin(l.angle) * maxR * f;
+      i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    });
+    ctx.closePath();
+    ctx.stroke();
+  });
 
-  // Clip to head shape
-  ctx.save();
-  getHeadPath(ctx, 0, 0, sf);
-  ctx.clip();
+  // Axes
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  labels.forEach(l => {
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(l.angle)*maxR, cy+Math.sin(l.angle)*maxR);
+    ctx.stroke();
+  });
 
-  // Draw puzzle grid 8x8 — small pieces filling the head
-  const palette = ['#e74c3c','#3498db','#f5c842','#2ecc71'];
-  const colors = [];
-  const cols = 8, rows = 8;
+  // Colored section backgrounds
+  labels.forEach((l,i) => {
+    const next = labels[(i+1) % 5];
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(l.angle)*maxR, cy+Math.sin(l.angle)*maxR);
+    ctx.lineTo(cx+Math.cos(next.angle)*maxR, cy+Math.sin(next.angle)*maxR);
+    ctx.closePath();
+    ctx.fillStyle = colors[l.dim] + '10';
+    ctx.fill();
+  });
+
+  // Data polygon
+  const points = labels.map(l => ({
+    x: cx + Math.cos(l.angle) * maxR * (pcts[l.dim] / 100),
+    y: cy + Math.sin(l.angle) * maxR * (pcts[l.dim] / 100),
+    dim: l.dim
+  }));
+
+  ctx.beginPath();
+  points.forEach((p,i) => i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y));
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(255,255,255,0.08)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Points
+  points.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,5,0,Math.PI*2);
+    ctx.fillStyle = colors[p.dim];
+    ctx.fill();
+    ctx.strokeStyle = '#1a0a2e';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // Labels
+  ctx.font = '700 14px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  labels.forEach(l => {
+    const lx = cx + Math.cos(l.angle) * (maxR + 20);
+    const ly = cy + Math.sin(l.angle) * (maxR + 20);
+    ctx.fillStyle = colors[l.dim];
+    ctx.fillText(l.label, lx, ly);
+    ctx.font = '500 10px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.fillText(pcts[l.dim]+'%', lx, ly+14);
+    ctx.font = '700 14px Inter, sans-serif';
+  });
+}
+
+function drawMiniBF(pcts) {
+  const canvas = document.getElementById('mini-bf-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cx = 35, cy = 35, r = 28;
+  const colors = {O:'#8b5cf6',C:'#3498db',E:'#f39c12',A:'#2ecc71',N:'#dc2626'};
+  const dims = ['O','C','E','A','N'];
+  const total = dims.reduce((s,d) => s + pcts[d], 0) || 1;
+  let angle = -Math.PI/2;
+  dims.forEach(d => {
+    const slice = (pcts[d]/total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+slice);
+    ctx.closePath();
+    ctx.fillStyle = colors[d];
+    ctx.fill();
+    angle += slice;
+  });
+  ctx.beginPath();
+  ctx.arc(cx,cy,12,0,Math.PI*2);
+  ctx.fillStyle = '#1a0a2e';
+  ctx.fill();
+}
+
+function retakeBigFive() {
+  localStorage.removeItem('psyProfile_bigfive');
+  BIGFIVE.answers = {};
+  BIGFIVE.currentQ = 0;
+  navigateTo('bigfive-intro');
+}
+
+// ===== VIA MODULE =====
+const VIA = {
+  questions: [
+    // Sagesse - Créativité
+    {id:1, str:'creativity', text:"J'aime trouver de nouvelles facons de faire les choses", reverse:false},
+    {id:2, str:'creativity', text:"Je suis souvent décrit comme quelqu'un d'original", reverse:false},
+    {id:3, str:'creativity', text:"Je préfere suivre les méthodes éprouvées plutot qu'innover", reverse:true},
+    // Sagesse - Curiosité
+    {id:4, str:'curiosity', text:"Je suis toujours a la recherche de nouvelles connaissances", reverse:false},
+    {id:5, str:'curiosity', text:"J'aime poser des questions pour mieux comprendre le monde", reverse:false},
+    {id:6, str:'curiosity', text:"Je me contente facilement de ce que je sais déja", reverse:true},
+    // Sagesse - Jugement
+    {id:7, str:'judgment', text:"J'examine les choses sous tous les angles avant de décider", reverse:false},
+    {id:8, str:'judgment', text:"Je suis capable de changer d'avis face a de bons arguments", reverse:false},
+    {id:9, str:'judgment', text:"Je me fie souvent a ma premiere impression sans creuser", reverse:true},
+    // Sagesse - Amour de l'apprentissage
+    {id:10, str:'learning', text:"J'adore apprendre de nouvelles compétences", reverse:false},
+    {id:11, str:'learning', text:"Je lis ou étudie régulierement pour le plaisir", reverse:false},
+    {id:12, str:'learning', text:"Apprendre de nouvelles choses me semble souvent fastidieux", reverse:true},
+    // Sagesse - Perspective
+    {id:13, str:'perspective', text:"Les gens viennent souvent me demander conseil", reverse:false},
+    {id:14, str:'perspective', text:"Je sais prendre du recul face aux situations", reverse:false},
+    {id:15, str:'perspective', text:"J'ai du mal a voir la situation dans son ensemble", reverse:true},
+    // Courage - Bravoure
+    {id:16, str:'bravery', text:"Je défends mes convictions meme face a l'opposition", reverse:false},
+    {id:17, str:'bravery', text:"Je n'hésite pas a agir malgré la peur", reverse:false},
+    {id:18, str:'bravery', text:"J'évite les situations qui pourraient etre conflictuelles", reverse:true},
+    // Courage - Persévérance
+    {id:19, str:'perseverance', text:"Je termine toujours ce que j'ai commencé", reverse:false},
+    {id:20, str:'perseverance', text:"Je continue meme quand les choses deviennent difficiles", reverse:false},
+    {id:21, str:'perseverance', text:"J'abandonne assez facilement quand c'est trop dur", reverse:true},
+    // Courage - Honnêteté
+    {id:22, str:'honesty', text:"Je dis toujours la vérité, meme quand c'est difficile", reverse:false},
+    {id:23, str:'honesty', text:"Je suis authentique dans mes relations avec les autres", reverse:false},
+    {id:24, str:'honesty', text:"Il m'arrive de cacher mes vrais sentiments pour plaire", reverse:true},
+    // Courage - Vitalité
+    {id:25, str:'zest', text:"J'aborde chaque journée avec énergie et enthousiasme", reverse:false},
+    {id:26, str:'zest', text:"Je me sens vivant et plein de vitalité", reverse:false},
+    {id:27, str:'zest', text:"Je me sens souvent fatigué et sans motivation", reverse:true},
+    // Humanité - Amour
+    {id:28, str:'love', text:"Je cultive des relations profondes et sinceres", reverse:false},
+    {id:29, str:'love', text:"Je suis capable d'exprimer librement mon affection", reverse:false},
+    {id:30, str:'love', text:"J'ai du mal a me laisser aller dans les relations intimes", reverse:true},
+    // Humanité - Gentillesse
+    {id:31, str:'kindness', text:"J'aime rendre service aux autres sans rien attendre", reverse:false},
+    {id:32, str:'kindness', text:"Je suis attentif aux besoins des personnes autour de moi", reverse:false},
+    {id:33, str:'kindness', text:"Je pense d'abord a moi avant de penser aux autres", reverse:true},
+    // Humanité - Intelligence sociale
+    {id:34, str:'social_intel', text:"Je perçois facilement les émotions des autres", reverse:false},
+    {id:35, str:'social_intel', text:"Je m'adapte naturellement aux dynamiques de groupe", reverse:false},
+    {id:36, str:'social_intel', text:"Je ne remarque pas toujours quand quelqu'un est mal a l'aise", reverse:true},
+    // Justice - Travail d'équipe
+    {id:37, str:'teamwork', text:"Je contribue activement au succès de mon équipe", reverse:false},
+    {id:38, str:'teamwork', text:"Je fais passer les intérets du groupe avant les miens", reverse:false},
+    {id:39, str:'teamwork', text:"Je préfere travailler seul plutot qu'en équipe", reverse:true},
+    // Justice - Équité
+    {id:40, str:'fairness', text:"Je traite tout le monde de maniere juste et équitable", reverse:false},
+    {id:41, str:'fairness', text:"L'injustice me révolte profondément", reverse:false},
+    {id:42, str:'fairness', text:"Il m'arrive de favoriser certaines personnes", reverse:true},
+    // Justice - Leadership
+    {id:43, str:'leadership', text:"Je sais motiver et guider un groupe vers un objectif", reverse:false},
+    {id:44, str:'leadership', text:"Je prends naturellement les choses en main", reverse:false},
+    {id:45, str:'leadership', text:"Je préfere suivre les directives plutot que diriger", reverse:true},
+    // Tempérance - Pardon
+    {id:46, str:'forgiveness', text:"Je pardonne facilement a ceux qui m'ont blessé", reverse:false},
+    {id:47, str:'forgiveness', text:"Je ne garde pas rancune", reverse:false},
+    {id:48, str:'forgiveness', text:"J'ai du mal a oublier quand quelqu'un m'a fait du tort", reverse:true},
+    // Tempérance - Humilité
+    {id:49, str:'humility', text:"Je ne cherche pas a attirer l'attention sur moi", reverse:false},
+    {id:50, str:'humility', text:"Je reconnais facilement mes erreurs", reverse:false},
+    {id:51, str:'humility', text:"J'aime etre reconnu pour mes accomplissements", reverse:true},
+    // Tempérance - Prudence
+    {id:52, str:'prudence', text:"Je réfléchis aux conséquences avant d'agir", reverse:false},
+    {id:53, str:'prudence', text:"Je prends des décisions mesurées et réfléchies", reverse:false},
+    {id:54, str:'prudence', text:"Il m'arrive d'agir impulsivement", reverse:true},
+    // Tempérance - Maîtrise de soi
+    {id:55, str:'self_regulation', text:"Je contrôle bien mes émotions", reverse:false},
+    {id:56, str:'self_regulation', text:"Je suis discipliné dans mes habitudes", reverse:false},
+    {id:57, str:'self_regulation', text:"J'ai du mal a résister aux tentations", reverse:true},
+    // Transcendance - Appréciation de la beauté
+    {id:58, str:'beauty', text:"Je suis touché par la beauté de la nature ou de l'art", reverse:false},
+    {id:59, str:'beauty', text:"Je prends le temps d'apprécier les belles choses", reverse:false},
+    {id:60, str:'beauty', text:"Je passe rarement du temps a contempler ce qui m'entoure", reverse:true},
+    // Transcendance - Gratitude
+    {id:61, str:'gratitude', text:"Je suis reconnaissant pour les bonnes choses dans ma vie", reverse:false},
+    {id:62, str:'gratitude', text:"J'exprime régulierement ma gratitude aux autres", reverse:false},
+    {id:63, str:'gratitude', text:"Je prends rarement le temps de dire merci", reverse:true},
+    // Transcendance - Espoir
+    {id:64, str:'hope', text:"Je vois l'avenir avec optimisme", reverse:false},
+    {id:65, str:'hope', text:"Meme dans les moments difficiles, je garde espoir", reverse:false},
+    {id:66, str:'hope', text:"Je m'attends souvent au pire", reverse:true},
+    // Transcendance - Humour
+    {id:67, str:'humor', text:"J'aime faire rire les gens", reverse:false},
+    {id:68, str:'humor', text:"Je vois le coté amusant des situations", reverse:false},
+    {id:69, str:'humor', text:"Je suis plutot sérieux et je ris rarement", reverse:true},
+    // Transcendance - Spiritualité
+    {id:70, str:'spirituality', text:"J'ai un sens profond du but ou du sens de la vie", reverse:false},
+    {id:71, str:'spirituality', text:"Je me sens connecté a quelque chose de plus grand que moi", reverse:false},
+    {id:72, str:'spirituality', text:"Je ne réfléchis pas beaucoup au sens de l'existence", reverse:true}
+  ],
+  answers: {},
+  currentQ: 0,
+  strengths: {
+    creativity:    {name:'Créativité',         virtue:'Sagesse',      hex:'#e74c3c', icon:'\u{1F3A8}', desc:"Vous trouvez des facons nouvelles et originales de faire les choses. Votre imagination est une ressource précieuse."},
+    curiosity:     {name:'Curiosité',          virtue:'Sagesse',      hex:'#e74c3c', icon:'\u{1F50D}', desc:"Vous explorez, questionnez et cherchez a comprendre le monde qui vous entoure."},
+    judgment:      {name:'Jugement',           virtue:'Sagesse',      hex:'#e74c3c', icon:'\u{2696}\u{FE0F}', desc:"Vous analysez les situations sous tous les angles et pensez de maniere critique."},
+    learning:      {name:'Amour de l\'apprentissage', virtue:'Sagesse', hex:'#e74c3c', icon:'\u{1F4DA}', desc:"Vous aimez acquérir de nouvelles connaissances et compétences."},
+    perspective:   {name:'Perspective',        virtue:'Sagesse',      hex:'#e74c3c', icon:'\u{1F989}', desc:"Vous avez une vision sage et éclairée que les autres apprécient."},
+    bravery:       {name:'Bravoure',           virtue:'Courage',      hex:'#f39c12', icon:'\u{1F981}', desc:"Vous agissez selon vos convictions meme face a l'adversité."},
+    perseverance:  {name:'Persévérance',       virtue:'Courage',      hex:'#f39c12', icon:'\u{1F3D4}\u{FE0F}', desc:"Vous finissez ce que vous commencez, meme quand c'est difficile."},
+    honesty:       {name:'Honneteté',          virtue:'Courage',      hex:'#f39c12', icon:'\u{1F48E}', desc:"Vous vivez de maniere authentique et dites la vérité."},
+    zest:          {name:'Vitalité',           virtue:'Courage',      hex:'#f39c12', icon:'\u{26A1}', desc:"Vous abordez la vie avec énergie et enthousiasme."},
+    love:          {name:'Amour',              virtue:'Humanité',     hex:'#e91e63', icon:'\u{1F495}', desc:"Vous valorisez les relations proches et savez donner et recevoir de l'affection."},
+    kindness:      {name:'Gentillesse',        virtue:'Humanité',     hex:'#e91e63', icon:'\u{1F91D}', desc:"Vous etes généreux et attentionné envers les autres."},
+    social_intel:  {name:'Intelligence sociale', virtue:'Humanité',   hex:'#e91e63', icon:'\u{1F9E0}', desc:"Vous comprenez les dynamiques sociales et les émotions des autres."},
+    teamwork:      {name:'Travail d\'équipe',  virtue:'Justice',      hex:'#3498db', icon:'\u{1F465}', desc:"Vous etes un coéquipier loyal et dévoué."},
+    fairness:      {name:'Équité',             virtue:'Justice',      hex:'#3498db', icon:'\u{2696}\u{FE0F}', desc:"Vous traitez les gens de maniere juste et impartiale."},
+    leadership:    {name:'Leadership',         virtue:'Justice',      hex:'#3498db', icon:'\u{1F451}', desc:"Vous savez organiser et motiver un groupe."},
+    forgiveness:   {name:'Pardon',             virtue:'Tempérance',   hex:'#2ecc71', icon:'\u{1F54A}\u{FE0F}', desc:"Vous pardonnez a ceux qui vous ont fait du tort et laissez aller la rancune."},
+    humility:      {name:'Humilité',           virtue:'Tempérance',   hex:'#2ecc71', icon:'\u{1F331}', desc:"Vous etes modeste et laissez vos actions parler pour vous."},
+    prudence:      {name:'Prudence',           virtue:'Tempérance',   hex:'#2ecc71', icon:'\u{1F6E1}\u{FE0F}', desc:"Vous réfléchissez avant d'agir et prenez des décisions mesurées."},
+    self_regulation:{name:'Maitrise de soi',   virtue:'Tempérance',   hex:'#2ecc71', icon:'\u{1F9D8}', desc:"Vous gérez vos émotions et impulsions avec discipline."},
+    beauty:        {name:'Appréciation de la beauté', virtue:'Transcendance', hex:'#8b5cf6', icon:'\u{1F338}', desc:"Vous etes sensible a la beauté, a l'excellence et au talent."},
+    gratitude:     {name:'Gratitude',          virtue:'Transcendance', hex:'#8b5cf6', icon:'\u{1F64F}', desc:"Vous etes conscient et reconnaissant des bonnes choses dans votre vie."},
+    hope:          {name:'Espoir',             virtue:'Transcendance', hex:'#8b5cf6', icon:'\u{1F31F}', desc:"Vous attendez le meilleur de l'avenir et travaillez pour y arriver."},
+    humor:         {name:'Humour',             virtue:'Transcendance', hex:'#8b5cf6', icon:'\u{1F604}', desc:"Vous aimez rire et apporter de la légèreté aux situations."},
+    spirituality:  {name:'Spiritualité',       virtue:'Transcendance', hex:'#8b5cf6', icon:'\u{2728}', desc:"Vous avez des convictions profondes sur le sens et le but de la vie."}
+  }
+};
+
+// ===== VIA TEST LOGIC =====
+function startVIATest() {
+  VIA.currentQ = 0;
+  VIA.answers = {};
+  navigateTo('via-test');
+  renderVIAQuestion();
+}
+
+function renderVIAQuestion() {
+  const q = VIA.questions[VIA.currentQ];
+  const ans = VIA.answers[q.id];
+  const total = VIA.questions.length;
+  const pct = Math.round((VIA.currentQ / total) * 100);
+  document.getElementById('via-progress').style.width = pct + '%';
+  document.getElementById('via-progress-text').textContent = `Question ${VIA.currentQ+1} / ${total}`;
+
+  const labels = ["Pas du tout\nd'accord","Pas\nd'accord","Neutre","D'accord","Tout a fait\nd'accord"];
+  const area = document.getElementById('via-question-area');
+  const strength = VIA.strengths[q.str];
+  let html = `<div class="question-card">
+    <div style="font-size:0.8rem;color:${strength.hex};margin-bottom:0.5rem;opacity:0.7">${strength.virtue} \u2014 ${strength.name}</div>
+    <h3>Question ${VIA.currentQ+1}</h3>
+    <p class="likert-question">${q.text}</p>
+    <div class="likert-scale">`;
+
+  for (let v = 1; v <= 5; v++) {
+    html += `<button class="likert-btn ${ans === v ? 'selected' : ''}" onclick="selectVIA(${q.id},${v})">
+      <span class="likert-num">${v}</span>
+      <span class="likert-label">${labels[v-1].replace('\n','<br>')}</span>
+    </button>`;
+  }
+
+  html += `</div></div>`;
+  area.innerHTML = html;
+
+  document.getElementById('via-btn-prev').style.visibility = VIA.currentQ === 0 ? 'hidden' : 'visible';
+  const btnNext = document.getElementById('via-btn-next');
+  btnNext.textContent = VIA.currentQ === total - 1 ? 'Voir les r\u00e9sultats \u2192' : 'Suivant \u2192';
+}
+
+function selectVIA(qId, value) {
+  VIA.answers[qId] = value;
+  renderVIAQuestion();
+}
+
+function viaPrev() {
+  if (VIA.currentQ > 0) { VIA.currentQ--; renderVIAQuestion(); }
+}
+
+function viaNext() {
+  const q = VIA.questions[VIA.currentQ];
+  if (!VIA.answers[q.id]) {
+    const card = document.querySelector('.question-card');
+    card.style.animation = 'none';
+    card.offsetHeight;
+    card.style.animation = 'shake 0.4s ease';
+    return;
+  }
+  const total = VIA.questions.length;
+  if (VIA.currentQ < total - 1) {
+    VIA.currentQ++;
+    renderVIAQuestion();
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else {
+    calculateVIAResults();
+  }
+}
+
+function calculateVIAResults() {
+  const scores = {};
+  const strKeys = Object.keys(VIA.strengths);
+  strKeys.forEach(k => { scores[k] = 0; });
+
+  VIA.questions.forEach(q => {
+    let val = VIA.answers[q.id] || 3;
+    if (q.reverse) val = 6 - val;
+    scores[q.str] += val;
+  });
+
+  // Convert to percentages: min=3 (all 1s), max=15 (all 5s) per strength (3 questions each)
+  const percentages = {};
+  strKeys.forEach(k => {
+    percentages[k] = Math.round(((scores[k] - 3) / 12) * 100);
+  });
+
+  const sorted = Object.entries(percentages).sort((a,b) => b[1] - a[1]);
+  const top5 = sorted.slice(0, 5).map(s => s[0]);
+  const bottom5 = sorted.slice(-5).map(s => s[0]);
+
+  // Group by virtue
+  const virtueScores = {};
+  const virtueMap = {};
+  strKeys.forEach(k => {
+    const v = VIA.strengths[k].virtue;
+    if (!virtueScores[v]) { virtueScores[v] = 0; virtueMap[v] = []; }
+    virtueScores[v] += percentages[k];
+    virtueMap[v].push(k);
+  });
+  Object.keys(virtueScores).forEach(v => {
+    virtueScores[v] = Math.round(virtueScores[v] / virtueMap[v].length);
+  });
+
+  const result = {
+    scores, percentages, top5, bottom5,
+    virtueScores, sorted: sorted.map(s => s[0]),
+    date: new Date().toLocaleDateString('fr-FR'),
+    answers: VIA.answers
+  };
+
+  localStorage.setItem('psyProfile_via', JSON.stringify(result));
+  showVIAResults(result);
+}
+
+function showVIAResults(result) {
+  navigateTo('via-results');
+  const container = document.getElementById('via-results-container');
+  const pcts = result.percentages;
+
+  const virtueColors = {
+    'Sagesse':'#e74c3c','Courage':'#f39c12','Humanit\u00e9':'#e91e63',
+    'Justice':'#3498db','Temp\u00e9rance':'#2ecc71','Transcendance':'#8b5cf6'
+  };
+
+  let html = `
+  <div class="results-header">
+    <h2>Vos Forces de Caractere</h2>
+    <p>D\u00e9couvrez vos 24 forces class\u00e9es par intensit\u00e9</p>
+  </div>
+
+  <div class="profile-summary">
+    <div class="primary-label" style="color:${VIA.strengths[result.top5[0]].hex}">
+      ${VIA.strengths[result.top5[0]].icon} Force dominante : ${VIA.strengths[result.top5[0]].name}
+    </div>
+    <div class="secondary-label">${VIA.strengths[result.top5[0]].desc}</div>
+  </div>
+
+  <div class="detail-section" style="border-left:3px solid var(--green)">
+    <h3>Top 5 \u2014 Vos forces signature</h3>
+    <p class="detail-text" style="margin-bottom:1rem">Ces forces vous d\u00e9finissent le mieux. Elles sont naturelles, \u00e9nergisantes et authentiques.</p>`;
+
+  result.top5.forEach((k, i) => {
+    const s = VIA.strengths[k];
+    html += `
+    <div class="via-strength-card" style="border-color:${s.hex}">
+      <span class="via-strength-rank">#${i+1}</span>
+      <h4>${s.icon} ${s.name} \u2014 ${pcts[k]}%</h4>
+      <div style="font-size:0.78rem;color:${s.hex};margin-bottom:0.3rem">${s.virtue}</div>
+      <p class="detail-text">${s.desc}</p>
+      <div class="bar-track" style="margin-top:0.5rem"><div class="bar-fill" style="width:${pcts[k]}%;background:${s.hex}"><span>${pcts[k]}%</span></div></div>
+    </div>`;
+  });
+
+  html += `</div>
+
+  <div class="detail-section" style="border-left:3px solid var(--purple)">
+    <h3>Profil par Vertu</h3>
+    <div class="via-bar-grid">`;
+
+  Object.entries(result.virtueScores).sort((a,b) => b[1] - a[1]).forEach(([v, score]) => {
+    html += `<div class="bar-item">
+      <div class="bar-label" style="background:${virtueColors[v]}22;color:${virtueColors[v]};min-width:110px">${v}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${score}%;background:${virtueColors[v]}"><span>${score}%</span></div></div>
+    </div>`;
+  });
+
+  html += `</div></div>
+
+  <div class="detail-section" style="border-left:3px solid var(--blue)">
+    <h3>Toutes vos forces (class\u00e9es)</h3>
+    <div class="via-bar-grid">`;
+
+  result.sorted.forEach((k, i) => {
+    const s = VIA.strengths[k];
+    const isTop = i < 5;
+    const isBottom = i >= 19;
+    html += `<div class="bar-item">
+      <div class="bar-label" style="background:${s.hex}22;color:${s.hex};min-width:110px;font-size:0.75rem">${s.icon} ${s.name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pcts[k]}%;background:${s.hex}${isTop ? '' : isBottom ? '88' : 'cc'}"><span>${pcts[k]}%</span></div></div>
+    </div>`;
+  });
+
+  html += `</div></div>
+
+  <div class="detail-section" style="border-left:3px solid var(--orange)">
+    <h3>Pistes de d\u00e9veloppement</h3>
+    <p class="detail-text">Vos 5 forces les moins d\u00e9velopp\u00e9es repr\u00e9sentent des axes de croissance potentielle :</p>
+    <ul style="margin-top:0.8rem;">`;
+
+  result.bottom5.forEach(k => {
+    const s = VIA.strengths[k];
+    html += `<li style="margin-bottom:0.5rem"><span class="dot" style="background:${s.hex}"></span><strong>${s.name}</strong> (${pcts[k]}%) \u2014 ${s.desc}</li>`;
+  });
+
+  html += `</ul></div>
+
+  <div class="results-actions">
+    <button class="btn btn-secondary" onclick="navigateTo('home');renderHome();">Retour a l'accueil</button>
+    <button class="btn btn-danger btn-sm" onclick="retakeVIA()">Refaire le test</button>
+  </div>`;
+
+  container.innerHTML = html;
+}
+
+function retakeVIA() {
+  localStorage.removeItem('psyProfile_via');
+  VIA.answers = {};
+  VIA.currentQ = 0;
+  navigateTo('via-intro');
+}
+
+// ===== PUZZLE HEAD — SVG puzzle piece generator =====
+function puzzlePiecePath(x, y, w, h, tabs) {
+  // tabs: {top,right,bottom,left} — 1=tab out, -1=hole in, 0=flat
+  // Generates a realistic puzzle piece path with rounded tabs
+  const t = Math.min(w, h) * 0.22; // tab size
+  let d = `M${x},${y}`;
+  // Top edge
+  if (tabs.top === 0) {
+    d += ` L${x+w},${y}`;
+  } else {
+    const dir = tabs.top; // 1=up(out), -1=down(in)
+    d += ` L${x+w*0.34},${y}`;
+    d += ` C${x+w*0.34},${y-t*0.4*dir} ${x+w*0.38},${y-t*0.9*dir} ${x+w*0.42},${y-t*dir}`;
+    d += ` C${x+w*0.46},${y-t*1.1*dir} ${x+w*0.54},${y-t*1.1*dir} ${x+w*0.58},${y-t*dir}`;
+    d += ` C${x+w*0.62},${y-t*0.9*dir} ${x+w*0.66},${y-t*0.4*dir} ${x+w*0.66},${y}`;
+    d += ` L${x+w},${y}`;
+  }
+  // Right edge
+  if (tabs.right === 0) {
+    d += ` L${x+w},${y+h}`;
+  } else {
+    const dir = tabs.right;
+    d += ` L${x+w},${y+h*0.34}`;
+    d += ` C${x+w+t*0.4*dir},${y+h*0.34} ${x+w+t*0.9*dir},${y+h*0.38} ${x+w+t*dir},${y+h*0.42}`;
+    d += ` C${x+w+t*1.1*dir},${y+h*0.46} ${x+w+t*1.1*dir},${y+h*0.54} ${x+w+t*dir},${y+h*0.58}`;
+    d += ` C${x+w+t*0.9*dir},${y+h*0.62} ${x+w+t*0.4*dir},${y+h*0.66} ${x+w},${y+h*0.66}`;
+    d += ` L${x+w},${y+h}`;
+  }
+  // Bottom edge (right to left)
+  if (tabs.bottom === 0) {
+    d += ` L${x},${y+h}`;
+  } else {
+    const dir = tabs.bottom;
+    d += ` L${x+w*0.66},${y+h}`;
+    d += ` C${x+w*0.66},${y+h+t*0.4*dir} ${x+w*0.62},${y+h+t*0.9*dir} ${x+w*0.58},${y+h+t*dir}`;
+    d += ` C${x+w*0.54},${y+h+t*1.1*dir} ${x+w*0.46},${y+h+t*1.1*dir} ${x+w*0.42},${y+h+t*dir}`;
+    d += ` C${x+w*0.38},${y+h+t*0.9*dir} ${x+w*0.34},${y+h+t*0.4*dir} ${x+w*0.34},${y+h}`;
+    d += ` L${x},${y+h}`;
+  }
+  // Left edge (bottom to top)
+  if (tabs.left === 0) {
+    d += ` L${x},${y}`;
+  } else {
+    const dir = tabs.left;
+    d += ` L${x},${y+h*0.66}`;
+    d += ` C${x-t*0.4*dir},${y+h*0.66} ${x-t*0.9*dir},${y+h*0.62} ${x-t*dir},${y+h*0.58}`;
+    d += ` C${x-t*1.1*dir},${y+h*0.54} ${x-t*1.1*dir},${y+h*0.46} ${x-t*dir},${y+h*0.42}`;
+    d += ` C${x-t*0.9*dir},${y+h*0.38} ${x-t*0.4*dir},${y+h*0.34} ${x},${y+h*0.34}`;
+    d += ` L${x},${y}`;
+  }
+  d += 'Z';
+  return d;
+}
+
+function generatePuzzleGrid(containerId, cols, rows, vb) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const ns = 'http://www.w3.org/2000/svg';
+  const pw = vb / cols, ph = vb / rows;
+
+  // Colors inspired by the user's image (blue dominant with accents)
+  const palette = [
+    '#0ea5e9','#38bdf8','#0284c7','#06b6d4',
+    '#4ade80','#22c55e','#34d399',
+    '#f97316','#facc15','#fb923c',
+    '#22d3ee','#4ade80','#ef4444',
+    '#facc15','#22c55e','#a78bfa'
+  ];
+  // Color assignment: ensure no two adjacent pieces share the same color
+  const colorGrid = [];
   for (let r = 0; r < rows; r++) {
     const row = [];
     for (let c = 0; c < cols; c++) {
-      row.push(palette[(r*3 + c*2 + r*c) % 4]);
+      // Collect colors of adjacent already-placed pieces
+      const forbidden = new Set();
+      if (r > 0) forbidden.add(colorGrid[r-1][c]);
+      if (c > 0) forbidden.add(row[c-1]);
+      if (r > 0 && c > 0) forbidden.add(colorGrid[r-1][c-1]);
+      if (r > 0 && c < cols-1) forbidden.add(colorGrid[r-1][c+1]);
+      // Pick from palette, skipping forbidden, using deterministic seed
+      const seed = (r * 7 + c * 11 + r * c * 5 + 3) % palette.length;
+      let pick = palette[seed];
+      if (forbidden.has(pick)) {
+        for (let i = 1; i < palette.length; i++) {
+          const candidate = palette[(seed + i) % palette.length];
+          if (!forbidden.has(candidate)) { pick = candidate; break; }
+        }
+      }
+      row.push(pick);
     }
-    colors.push(row);
+    colorGrid.push(row);
   }
-  const pw = W / cols, ph = H / rows;
 
+  // Tab pattern: alternating tabs/holes that interlock
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
+      const d = (r + c) % 2 === 0 ? 1 : -1;
       const tabs = {
-        top: r === 0 ? 0 : ((r+c) % 2 === 0 ? 1 : -1),
-        bottom: r === rows-1 ? 0 : ((r+c) % 2 === 0 ? -1 : 1),
-        left: c === 0 ? 0 : ((r+c) % 2 === 0 ? 1 : -1),
-        right: c === cols-1 ? 0 : ((r+c) % 2 === 0 ? -1 : 1)
+        top:    r === 0 ? 0 : d,
+        bottom: r === rows - 1 ? 0 : d,
+        left:   c === 0 ? 0 : d,
+        right:  c === cols - 1 ? 0 : d
       };
-      drawPuzzlePiece(ctx, c*pw, r*ph, pw, ph, colors[r][c], tabs);
+      const path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', puzzlePiecePath(c * pw, r * ph, pw, ph, tabs));
+      path.setAttribute('fill', colorGrid[r][c]);
+      path.setAttribute('stroke', 'rgba(0,0,0,0.15)');
+      path.setAttribute('stroke-width', '0.8');
+      container.appendChild(path);
     }
   }
-  ctx.restore();
-
-  // Draw head outline
-  getHeadPath(ctx, 0, 0, sf);
-  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-  ctx.lineWidth = W * 0.008;
-  ctx.stroke();
-}
-
-function drawFloatingPiece(canvasId, color, darkColor) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width, h = canvas.height;
-  const tab = w * 0.18;
-  ctx.clearRect(0,0,w,h);
-  const m = w*0.08; // margin for tabs
-  const bx=m, by=m, bw=w-2*m, bh=h-2*m;
-
-  ctx.beginPath();
-  ctx.moveTo(bx, by);
-  // top with tab
-  ctx.lineTo(bx+bw*0.35, by);
-  ctx.bezierCurveTo(bx+bw*0.35,by-tab, bx+bw*0.65,by-tab, bx+bw*0.65,by);
-  ctx.lineTo(bx+bw, by);
-  // right with tab
-  ctx.lineTo(bx+bw, by+bh*0.35);
-  ctx.bezierCurveTo(bx+bw+tab,by+bh*0.35, bx+bw+tab,by+bh*0.65, bx+bw,by+bh*0.65);
-  ctx.lineTo(bx+bw, by+bh);
-  // bottom with hole
-  ctx.lineTo(bx+bw*0.65, by+bh);
-  ctx.bezierCurveTo(bx+bw*0.65,by+bh-tab, bx+bw*0.35,by+bh-tab, bx+bw*0.35,by+bh);
-  ctx.lineTo(bx, by+bh);
-  // left with hole
-  ctx.lineTo(bx, by+bh*0.65);
-  ctx.bezierCurveTo(bx-tab,by+bh*0.65, bx-tab,by+bh*0.35, bx,by+bh*0.35);
-  ctx.lineTo(bx, by);
-  ctx.closePath();
-  ctx.fillStyle = color;
-  ctx.fill();
-  ctx.strokeStyle = darkColor;
-  ctx.lineWidth = 2;
-  ctx.stroke();
 }
 
 // ===== INIT =====
 renderHome();
-// Draw head illustrations
-drawPuzzleHead(document.getElementById('hero-head-canvas'));
-drawPuzzleHead(document.getElementById('header-logo-canvas'));
-// Draw floating pieces
-drawFloatingPiece('fp1','#e74c3c','#a93226');
-drawFloatingPiece('fp2','#3498db','#2471a3');
-drawFloatingPiece('fp3','#f5c842','#c9a515');
-drawFloatingPiece('fp4','#2ecc71','#1e8449');
+// Generate puzzle pieces inside head silhouettes
+generatePuzzleGrid('puzzle-pieces-main', 6, 7, 222);
+generatePuzzleGrid('puzzle-pieces-icon', 5, 5, 222);
 </script>
 </body>
 </html>
