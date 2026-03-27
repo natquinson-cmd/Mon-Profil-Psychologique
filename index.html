@@ -1294,7 +1294,7 @@ function renderHome() {
     card.innerHTML = `
       <div class="card-icon">${m.icon}</div>
       <span class="badge ${done ? 'badge-done' : m.available ? 'badge-available' : 'badge-soon'}">
-        ${done ? '&#x2705; Fait' : m.available ? 'A faire' : 'Bientot'}
+        ${done ? '&#x2705; Fait' : m.available ? '▶ Commencer' : 'Bientot'}
       </span>
       <h3>${m.name}</h3>
       <p>${m.description}</p>
