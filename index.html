@@ -498,6 +498,18 @@ body::before {
 }
 .likert-btn.selected .likert-num { color:var(--purple-light); }
 .likert-btn.selected .likert-label { color:var(--purple-light); }
+.options-list { display:grid; gap:0.6rem; margin-top:1rem; }
+.option-btn {
+  display:block; width:100%; text-align:left; padding:0.9rem 1.1rem;
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px; color:var(--text); font-size:0.9rem;
+  cursor:pointer; transition:all 0.2s;
+}
+.option-btn:hover { border-color:rgba(124,58,237,0.4); background:rgba(124,58,237,0.08); }
+.option-btn.selected {
+  border-color:var(--purple); background:rgba(124,58,237,0.18);
+  color:var(--purple-light); font-weight:600;
+}
 .progress-bar.bf-progress {
   background:linear-gradient(90deg,#8b5cf6,#3498db,#f39c12,#2ecc71,#dc2626);
 }
@@ -959,6 +971,9 @@ body::before {
       <button class="btn btn-secondary btn-sm" id="vark-prev" onclick="varkPrev()">Précédent</button>
       <button class="btn btn-primary btn-sm" id="vark-next" onclick="varkNext()">Suivant</button>
     </div>
+    <div style="text-align:center;margin-top:2rem;">
+      <button class="btn btn-danger btn-sm" onclick="confirmQuitTest()">Quitter le test</button>
+    </div>
   </div>
 </div>
 <div id="page-vark-results" class="page">
@@ -989,6 +1004,9 @@ body::before {
     <div class="test-nav">
       <button class="btn btn-secondary btn-sm" id="chapman-prev" onclick="chapmanPrev()">Précédent</button>
       <button class="btn btn-primary btn-sm" id="chapman-next" onclick="chapmanNext()">Suivant</button>
+    </div>
+    <div style="text-align:center;margin-top:2rem;">
+      <button class="btn btn-danger btn-sm" onclick="confirmQuitTest()">Quitter le test</button>
     </div>
   </div>
 </div>
