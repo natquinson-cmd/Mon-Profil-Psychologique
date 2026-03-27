@@ -1150,12 +1150,25 @@ const APP = {
 };
 
 // ===== NAVIGATION =====
-function navigateTo(page) {
+function navigateTo(page, pushHistory) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const el = document.getElementById('page-' + page);
   if (el) { el.classList.add('active'); APP.currentPage = page; }
   window.scrollTo({top:0,behavior:'smooth'});
+  if (pushHistory !== false) {
+    history.pushState({ page: page }, '', '#' + page);
+  }
 }
+
+// Handle browser back/forward buttons
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.page) {
+    navigateTo(e.state.page, false);
+  } else {
+    navigateTo('home', false);
+  }
+});
+history.replaceState({ page: 'home' }, '', '#home');
 
 // ===== METHODOLOGIES REGISTRY =====
 const METHODOLOGIES = {
