@@ -209,6 +209,10 @@ body::before {
 .enne-type-card p { font-size:0.75rem; color:var(--text-muted); }
 .card-ei { border-left:3px solid #9b59b6; }
 .card-ei .card-icon { background:rgba(155,89,182,0.12); }
+.card-vark { border-left:3px solid #06b6d4; }
+.card-vark .card-icon { background:rgba(6,182,212,0.12); }
+.card-chapman { border-left:3px solid #ec4899; }
+.card-chapman .card-icon { background:rgba(236,72,153,0.12); }
 .ei-progress { background:linear-gradient(90deg,#e91e63,#c2185b); }
 .ei-dims-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:0.8rem; margin:1.5rem 0; }
 .ei-dim-card { background:var(--card); border-radius:10px; padding:0.8rem; border-left:3px solid; }
@@ -931,6 +935,67 @@ body::before {
   <div class="results-container" id="ei-results-container"></div>
 </div>
 
+<!-- VARK INTRO PAGE -->
+<div id="page-vark-intro" class="page">
+  <div class="intro-content">
+    <h2>Test VARK</h2>
+    <p style="color:var(--text-muted);margin-bottom:1.5rem;">Le modele VARK identifie 4 styles d'apprentissage préférés. Comprendre le votre vous aide a mieux assimiler et retenir l'information.</p>
+    <div style="display:flex;gap:1rem;margin:2rem 0;flex-wrap:wrap;justify-content:center;">
+      <div style="background:rgba(6,182,212,0.12);padding:1rem;border-radius:12px;flex:1;min-width:140px;text-align:center"><div style="font-size:1.5rem">👁️</div><strong style="color:#06b6d4">Visuel</strong><p style="font-size:0.8rem;color:var(--text-muted)">Images, graphiques, diagrammes</p></div>
+      <div style="background:rgba(139,92,246,0.12);padding:1rem;border-radius:12px;flex:1;min-width:140px;text-align:center"><div style="font-size:1.5rem">👂</div><strong style="color:#8b5cf6">Auditif</strong><p style="font-size:0.8rem;color:var(--text-muted)">Écouter, discuter, expliquer</p></div>
+      <div style="background:rgba(52,152,219,0.12);padding:1rem;border-radius:12px;flex:1;min-width:140px;text-align:center"><div style="font-size:1.5rem">📝</div><strong style="color:#3498db">Lecture/Écriture</strong><p style="font-size:0.8rem;color:var(--text-muted)">Lire, écrire, prendre des notes</p></div>
+      <div style="background:rgba(46,204,113,0.12);padding:1rem;border-radius:12px;flex:1;min-width:140px;text-align:center"><div style="font-size:1.5rem">🤲</div><strong style="color:#2ecc71">Kinesthésique</strong><p style="font-size:0.8rem;color:var(--text-muted)">Pratiquer, toucher, expérimenter</p></div>
+    </div>
+    <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;">16 questions · ~8 minutes</p>
+    <button class="btn btn-primary" onclick="startVARKTest()">Commencer le test</button>
+  </div>
+</div>
+<div id="page-vark-test" class="page">
+  <div class="test-container">
+    <div class="progress-bar"><div class="progress-fill" id="vark-progress"></div></div>
+    <div class="progress-text" id="vark-progress-text"></div>
+    <div id="vark-question-area"></div>
+    <div class="test-nav">
+      <button class="btn btn-secondary btn-sm" id="vark-prev" onclick="varkPrev()">Précédent</button>
+      <button class="btn btn-primary btn-sm" id="vark-next" onclick="varkNext()">Suivant</button>
+    </div>
+  </div>
+</div>
+<div id="page-vark-results" class="page">
+  <div class="results-container" id="vark-results-container"></div>
+</div>
+
+<!-- CHAPMAN INTRO PAGE -->
+<div id="page-chapman-intro" class="page">
+  <div class="intro-content">
+    <h2>Les 5 Langages de l'Amour</h2>
+    <p style="color:var(--text-muted);margin-bottom:1.5rem;">Selon Gary Chapman, chacun exprime et recoit l'amour différemment. Découvrez votre langage affectif dominant.</p>
+    <div style="display:flex;gap:1rem;margin:2rem 0;flex-wrap:wrap;justify-content:center;">
+      <div style="background:rgba(236,72,153,0.12);padding:1rem;border-radius:12px;flex:1;min-width:130px;text-align:center"><div style="font-size:1.5rem">💬</div><strong style="color:#ec4899">Paroles</strong></div>
+      <div style="background:rgba(249,115,22,0.12);padding:1rem;border-radius:12px;flex:1;min-width:130px;text-align:center"><div style="font-size:1.5rem">🛠️</div><strong style="color:#f97316">Services</strong></div>
+      <div style="background:rgba(234,179,8,0.12);padding:1rem;border-radius:12px;flex:1;min-width:130px;text-align:center"><div style="font-size:1.5rem">🎁</div><strong style="color:#eab308">Cadeaux</strong></div>
+      <div style="background:rgba(139,92,246,0.12);padding:1rem;border-radius:12px;flex:1;min-width:130px;text-align:center"><div style="font-size:1.5rem">⏰</div><strong style="color:#8b5cf6">Temps</strong></div>
+      <div style="background:rgba(239,68,68,0.12);padding:1rem;border-radius:12px;flex:1;min-width:130px;text-align:center"><div style="font-size:1.5rem">🤗</div><strong style="color:#ef4444">Toucher</strong></div>
+    </div>
+    <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.5rem;">20 questions · ~8 minutes</p>
+    <button class="btn btn-primary" onclick="startChapmanTest()">Commencer le test</button>
+  </div>
+</div>
+<div id="page-chapman-test" class="page">
+  <div class="test-container">
+    <div class="progress-bar"><div class="progress-fill" id="chapman-progress"></div></div>
+    <div class="progress-text" id="chapman-progress-text"></div>
+    <div id="chapman-question-area"></div>
+    <div class="test-nav">
+      <button class="btn btn-secondary btn-sm" id="chapman-prev" onclick="chapmanPrev()">Précédent</button>
+      <button class="btn btn-primary btn-sm" id="chapman-next" onclick="chapmanNext()">Suivant</button>
+    </div>
+  </div>
+</div>
+<div id="page-chapman-results" class="page">
+  <div class="results-container" id="chapman-results-container"></div>
+</div>
+
 <!-- DISC RESULTS PAGE -->
 <div id="page-disc-results" class="page">
   <div class="results-container" id="disc-results-container">
@@ -1092,6 +1157,16 @@ const METHODOLOGIES = {
     id:'ei', name:'Intelligence Émotionnelle', icon:'\u{2764}\u{FE0F}',
     description:'Évaluez votre quotient émotionnel a travers 5 dimensions clés.',
     cardClass:'card-ei', available:true, duration:'~12 min'
+  },
+  vark: {
+    id:'vark', name:'VARK - Styles d\'apprentissage', icon:'\u{1F4D6}',
+    description:'Découvrez comment vous apprenez le mieux : Visuel, Auditif, Lecture/Écriture ou Kinesthésique.',
+    cardClass:'card-vark', available:true, duration:'~8 min'
+  },
+  chapman: {
+    id:'chapman', name:'Langages de l\'amour', icon:'\u{1F495}',
+    description:'Identifiez votre langage affectif dominant parmi les 5 langages de l\'amour de Chapman.',
+    cardClass:'card-chapman', available:true, duration:'~8 min'
   }
 };
 
@@ -1346,7 +1421,9 @@ function renderHome() {
     const savedVIA = JSON.parse(localStorage.getItem('psyProfile_via') || 'null');
     const savedEnne = JSON.parse(localStorage.getItem('psyProfile_enneagramme') || 'null');
     const savedEI = JSON.parse(localStorage.getItem('psyProfile_ei') || 'null');
-    const done = (m.id === 'disc' && savedDisc) || (m.id === 'bigfive' && savedBF) || (m.id === 'via' && savedVIA) || (m.id === 'enneagramme' && savedEnne) || (m.id === 'ei' && savedEI);
+    const savedVARK = JSON.parse(localStorage.getItem('psyProfile_vark') || 'null');
+    const savedChapman = JSON.parse(localStorage.getItem('psyProfile_chapman') || 'null');
+    const done = (m.id === 'disc' && savedDisc) || (m.id === 'bigfive' && savedBF) || (m.id === 'via' && savedVIA) || (m.id === 'enneagramme' && savedEnne) || (m.id === 'ei' && savedEI) || (m.id === 'vark' && savedVARK) || (m.id === 'chapman' && savedChapman);
     const card = document.createElement('div');
     card.className = `card ${m.cardClass} ${!m.available ? 'locked' : ''}`;
     const introPage = m.id + '-intro';
@@ -1371,6 +1448,8 @@ function renderHome() {
         else if (m.id === 'via') showVIAResults(data);
         else if (m.id === 'enneagramme') showEnneResults(data);
         else if (m.id === 'ei') showEIResults(data);
+        else if (m.id === 'vark') showVARKResults(data);
+        else if (m.id === 'chapman') showChapmanResults(data);
       };
       card.querySelector('.btn-restart').onclick = (e) => {
         e.stopPropagation();
@@ -1388,7 +1467,9 @@ function renderHome() {
   const savedVIA = JSON.parse(localStorage.getItem('psyProfile_via') || 'null');
   const savedEnne = JSON.parse(localStorage.getItem('psyProfile_enneagramme') || 'null');
   const savedEI = JSON.parse(localStorage.getItem('psyProfile_ei') || 'null');
-  const hasCompleted = savedDisc || savedBF || savedVIA || savedEnne || savedEI;
+  const savedVARK = JSON.parse(localStorage.getItem('psyProfile_vark') || 'null');
+  const savedChapman = JSON.parse(localStorage.getItem('psyProfile_chapman') || 'null');
+  const hasCompleted = savedDisc || savedBF || savedVIA || savedEnne || savedEI || savedVARK || savedChapman;
   if (hasCompleted) {
     compSection.style.display = 'block';
     compList.innerHTML = '';
@@ -1476,6 +1557,38 @@ function renderHome() {
         </div>
       `;
       compList.appendChild(cc5);
+    }
+
+    if (savedVARK) {
+      const cc6 = document.createElement('div');
+      cc6.className = 'completed-card';
+      cc6.onclick = () => showVARKResults(savedVARK);
+      const varkNames = {V:'Visuel',A:'Auditif',R:'Lecture/Écriture',K:'Kinesthésique'};
+      cc6.innerHTML = `
+        <div class="mini-chart" style="width:70px;height:70px;display:flex;align-items:center;justify-content:center;font-size:2rem;background:rgba(6,182,212,0.13);border-radius:50%;">📖</div>
+        <div class="info">
+          <h4>VARK — ${varkNames[savedVARK.primary]}</h4>
+          <p>${Object.entries(savedVARK.percentages).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([d,p]) => `${varkNames[d]}: ${p}%`).join(' · ')}</p>
+          <p style="font-size:0.78rem;margin-top:0.3rem;">Completé le ${savedVARK.date}</p>
+        </div>
+      `;
+      compList.appendChild(cc6);
+    }
+
+    if (savedChapman) {
+      const cc7 = document.createElement('div');
+      cc7.className = 'completed-card';
+      cc7.onclick = () => showChapmanResults(savedChapman);
+      const chapNames = {PA:'Paroles valorisantes',SE:'Services rendus',CA:'Cadeaux',TQ:'Temps de qualité',TC:'Toucher physique'};
+      cc7.innerHTML = `
+        <div class="mini-chart" style="width:70px;height:70px;display:flex;align-items:center;justify-content:center;font-size:2rem;background:rgba(236,72,153,0.13);border-radius:50%;">💕</div>
+        <div class="info">
+          <h4>Chapman — ${chapNames[savedChapman.primary]}</h4>
+          <p>${Object.entries(savedChapman.percentages).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([d,p]) => `${chapNames[d]}: ${p}%`).join(' · ')}</p>
+          <p style="font-size:0.78rem;margin-top:0.3rem;">Completé le ${savedChapman.date}</p>
+        </div>
+      `;
+      compList.appendChild(cc7);
     }
   } else {
     compSection.style.display = 'none';
@@ -2692,7 +2805,31 @@ function shareResults(testId) {
     Object.entries(data.percentages).sort((a,b) => b[1] - a[1]).forEach(([d, pct]) => {
       text += `${eiDimNames[d]} : ${pct}%\n`;
     });
-    text += `\nCompletó le ${data.date}`;
+    text += `\nCompleté le ${data.date}`;
+  }
+
+  else if (testId === 'vark') {
+    const data = JSON.parse(localStorage.getItem('psyProfile_vark') || 'null');
+    if (!data) return;
+    const varkNames = {V:'Visuel',A:'Auditif',R:'Lecture/Écriture',K:'Kinesthésique'};
+    text = `Mon Style d'Apprentissage VARK\n\n`;
+    text += `Style dominant : ${varkNames[data.primary]}\n\n`;
+    Object.entries(data.percentages).sort((a,b) => b[1] - a[1]).forEach(([d, pct]) => {
+      text += `${varkNames[d]} : ${pct}%\n`;
+    });
+    text += `\nCompleté le ${data.date}`;
+  }
+
+  else if (testId === 'chapman') {
+    const data = JSON.parse(localStorage.getItem('psyProfile_chapman') || 'null');
+    if (!data) return;
+    const chapNames = {PA:'Paroles valorisantes',SE:'Services rendus',CA:'Cadeaux',TQ:'Temps de qualité',TC:'Toucher physique'};
+    text = `Mes Langages de l'Amour\n\n`;
+    text += `Langage dominant : ${chapNames[data.primary]}\n\n`;
+    Object.entries(data.percentages).sort((a,b) => b[1] - a[1]).forEach(([d, pct]) => {
+      text += `${chapNames[d]} : ${pct}%\n`;
+    });
+    text += `\nCompleté le ${data.date}`;
   }
 
   text += `\n\nFaites le test : ${url}`;
@@ -3496,6 +3633,407 @@ function generatePuzzleGrid(containerId, cols, rows, vb) {
   }
 }
 
+// ===== VARK MODULE =====
+const VARK = {
+  questions: [
+    {id:1, text:"Pour apprendre un nouveau logiciel, je préfère...", options:[
+      {dim:'V', text:"Regarder des tutoriels vidéo ou des captures d'écran"},
+      {dim:'A', text:"Écouter quelqu'un m'expliquer comment faire"},
+      {dim:'R', text:"Lire le manuel ou la documentation"},
+      {dim:'K', text:"Essayer moi-même en manipulant le logiciel"}
+    ]},
+    {id:2, text:"Quand je dois mémoriser une information importante...", options:[
+      {dim:'V', text:"Je visualise l'information sous forme de schéma"},
+      {dim:'A', text:"Je me la répète à voix haute ou en discute"},
+      {dim:'R', text:"Je l'écris plusieurs fois ou prends des notes"},
+      {dim:'K', text:"Je l'associe à une sensation ou un geste"}
+    ]},
+    {id:3, text:"Pour m'orienter dans un endroit inconnu...", options:[
+      {dim:'V', text:"Je regarde une carte ou un plan"},
+      {dim:'A', text:"Je demande des indications à quelqu'un"},
+      {dim:'R', text:"Je lis les instructions écrites ou le GPS"},
+      {dim:'K', text:"J'explore par moi-même en marchant"}
+    ]},
+    {id:4, text:"En réunion, je retiens mieux quand...", options:[
+      {dim:'V', text:"Il y a des slides, graphiques ou schémas"},
+      {dim:'A', text:"Les gens expliquent clairement à l'oral"},
+      {dim:'R', text:"J'ai un support écrit ou un compte-rendu"},
+      {dim:'K', text:"On fait des exercices pratiques ou des démos"}
+    ]},
+    {id:5, text:"Pour expliquer quelque chose à quelqu'un...", options:[
+      {dim:'V', text:"Je dessine un schéma ou montre une image"},
+      {dim:'A', text:"Je lui explique avec des mots, des exemples parlés"},
+      {dim:'R', text:"Je lui envoie un texte ou un document écrit"},
+      {dim:'K', text:"Je lui montre en faisant la démonstration"}
+    ]},
+    {id:6, text:"Quand je lis un livre, je suis plus attiré par...", options:[
+      {dim:'V', text:"Les illustrations, photos et mises en page visuelles"},
+      {dim:'A', text:"Les dialogues et les descriptions sonores"},
+      {dim:'R', text:"Le texte et le style d'écriture"},
+      {dim:'K', text:"Les scènes d'action et les descriptions physiques"}
+    ]},
+    {id:7, text:"Pour résoudre un problème complexe...", options:[
+      {dim:'V', text:"Je fais un diagramme ou un mind map"},
+      {dim:'A', text:"J'en parle avec quelqu'un pour réfléchir à voix haute"},
+      {dim:'R', text:"J'écris le problème et les solutions possibles"},
+      {dim:'K', text:"Je manipule des objets ou simule des scénarios"}
+    ]},
+    {id:8, text:"En cours ou en formation, je préfère...", options:[
+      {dim:'V', text:"Les présentations visuelles avec des images"},
+      {dim:'A', text:"Les conférences et discussions de groupe"},
+      {dim:'R', text:"Les polycopiés et lectures à faire"},
+      {dim:'K', text:"Les travaux pratiques et mises en situation"}
+    ]},
+    {id:9, text:"Pour me souvenir d'un numéro de téléphone...", options:[
+      {dim:'V', text:"Je le visualise mentalement"},
+      {dim:'A', text:"Je le répète à voix haute"},
+      {dim:'R', text:"Je le note quelque part"},
+      {dim:'K', text:"Je le tape sur le clavier pour le mémoriser"}
+    ]},
+    {id:10, text:"Quand je cuisine un nouveau plat...", options:[
+      {dim:'V', text:"Je regarde des photos ou vidéos du plat"},
+      {dim:'A', text:"Je demande à quelqu'un de m'expliquer la recette"},
+      {dim:'R', text:"Je suis la recette écrite étape par étape"},
+      {dim:'K', text:"J'improvise en goûtant et ajustant"}
+    ]},
+    {id:11, text:"Ce qui me déconcentre le plus...", options:[
+      {dim:'V', text:"Un environnement visuel désordonné ou surchargé"},
+      {dim:'A', text:"Le bruit, les conversations autour de moi"},
+      {dim:'R', text:"Des instructions floues ou mal rédigées"},
+      {dim:'K', text:"Rester assis trop longtemps sans bouger"}
+    ]},
+    {id:12, text:"Pour choisir un produit en ligne...", options:[
+      {dim:'V', text:"Je regarde les photos et vidéos du produit"},
+      {dim:'A', text:"J'écoute des podcasts ou avis vidéo"},
+      {dim:'R', text:"Je lis les descriptions et avis clients"},
+      {dim:'K', text:"Je préfère aller le voir et le toucher en magasin"}
+    ]},
+    {id:13, text:"Quand je suis stressé, je me calme en...", options:[
+      {dim:'V', text:"Regardant un paysage apaisant ou fermant les yeux"},
+      {dim:'A', text:"Écoutant de la musique ou parlant à quelqu'un"},
+      {dim:'R', text:"Écrivant ce que je ressens dans un journal"},
+      {dim:'K', text:"Faisant du sport, marchant ou respirant profondément"}
+    ]},
+    {id:14, text:"Pour monter un meuble en kit...", options:[
+      {dim:'V', text:"Je regarde les schémas de montage"},
+      {dim:'A', text:"Je demande à quelqu'un de me guider"},
+      {dim:'R', text:"Je lis les instructions étape par étape"},
+      {dim:'K', text:"Je commence à assembler et j'ajuste au fur et à mesure"}
+    ]},
+    {id:15, text:"Je retiens mieux une personne par...", options:[
+      {dim:'V', text:"Son visage, sa tenue, son apparence"},
+      {dim:'A', text:"Sa voix, sa façon de parler"},
+      {dim:'R', text:"Son nom, ce qu'elle m'a écrit"},
+      {dim:'K', text:"La poignée de main, l'énergie ressentie"}
+    ]},
+    {id:16, text:"Mon activité préférée serait plutot...", options:[
+      {dim:'V', text:"Visiter un musée ou une exposition"},
+      {dim:'A', text:"Aller à un concert ou écouter un podcast"},
+      {dim:'R', text:"Lire un bon livre ou écrire"},
+      {dim:'K', text:"Faire du sport ou une activité manuelle"}
+    ]}
+  ],
+  answers: {},
+  currentQ: 0,
+  styles: {
+    V: {name:'Visuel', hex:'#06b6d4', icon:'👁️',
+        desc:"Vous apprenez le mieux par les images, diagrammes, couleurs et représentations spatiales.",
+        tips:["Utilisez des mind maps et schémas","Surlignez avec des couleurs différentes","Regardez des vidéos et tutoriels visuels","Créez des tableaux et infographies","Visualisez mentalement les concepts"]},
+    A: {name:'Auditif', hex:'#8b5cf6', icon:'👂',
+        desc:"Vous apprenez le mieux en écoutant, en discutant et en expliquant à voix haute.",
+        tips:["Écoutez des podcasts et livres audio","Expliquez les concepts à quelqu'un d'autre","Enregistrez-vous et réécoutez","Participez à des discussions de groupe","Utilisez des moyens mnémotechniques verbaux"]},
+    R: {name:'Lecture/Écriture', hex:'#3498db', icon:'📝',
+        desc:"Vous apprenez le mieux en lisant, écrivant, prenant des notes et rédigeant des résumés.",
+        tips:["Prenez des notes détaillées","Réécrivez les concepts avec vos propres mots","Faites des listes et des résumés","Lisez des articles et des manuels","Tenez un journal d'apprentissage"]},
+    K: {name:'Kinesthésique', hex:'#2ecc71', icon:'🤲',
+        desc:"Vous apprenez le mieux par la pratique, l'expérimentation et le mouvement.",
+        tips:["Faites des exercices pratiques","Apprenez en faisant, pas en regardant","Utilisez des objets physiques pour manipuler","Prenez des pauses actives régulières","Associez les concepts à des sensations physiques"]}
+  }
+};
+
+function startVARKTest() {
+  VARK.currentQ = 0; VARK.answers = {};
+  navigateTo('vark-test'); renderVARKQuestion();
+}
+
+function renderVARKQuestion() {
+  const q = VARK.questions[VARK.currentQ];
+  const ans = VARK.answers[q.id];
+  const total = VARK.questions.length;
+  const pct = Math.round((VARK.currentQ / total) * 100);
+  document.getElementById('vark-progress').style.width = pct + '%';
+  document.getElementById('vark-progress-text').textContent = `Question ${VARK.currentQ+1} / ${total}`;
+  const area = document.getElementById('vark-question-area');
+  area.innerHTML = `<div class="question-card">
+    <p class="question-text">${q.text}</p>
+    <div class="options-list">${q.options.map(o => `
+      <button class="option-btn ${ans === o.dim ? 'selected' : ''}" onclick="selectVARK('${q.id}','${o.dim}')">${o.text}</button>
+    `).join('')}</div>
+  </div>`;
+  document.getElementById('vark-prev').style.display = VARK.currentQ === 0 ? 'none' : 'inline-block';
+  document.getElementById('vark-next').textContent = VARK.currentQ === total - 1 ? 'Voir résultats' : 'Suivant';
+}
+
+function selectVARK(id, dim) {
+  VARK.answers[parseInt(id)] = dim;
+  renderVARKQuestion();
+}
+
+function varkPrev() { if (VARK.currentQ > 0) { VARK.currentQ--; renderVARKQuestion(); window.scrollTo({top:0,behavior:'smooth'}); } }
+
+function varkNext() {
+  const q = VARK.questions[VARK.currentQ];
+  if (!VARK.answers[q.id]) { document.querySelector('.question-card').style.borderColor = '#e74c3c'; return; }
+  if (VARK.currentQ < VARK.questions.length - 1) {
+    VARK.currentQ++; renderVARKQuestion(); window.scrollTo({top:0,behavior:'smooth'});
+  } else { calculateVARKResults(); }
+}
+
+function calculateVARKResults() {
+  const scores = {V:0, A:0, R:0, K:0};
+  Object.values(VARK.answers).forEach(dim => { scores[dim]++; });
+  const total = Object.values(scores).reduce((s,v) => s+v, 0) || 1;
+  const percentages = {};
+  ['V','A','R','K'].forEach(d => { percentages[d] = Math.round((scores[d] / total) * 100); });
+  const sorted = Object.entries(percentages).sort((a,b) => b[1] - a[1]);
+  const result = {
+    scores, percentages, primary: sorted[0][0], secondary: sorted[1][0],
+    date: new Date().toLocaleDateString('fr-FR'), answers: VARK.answers
+  };
+  localStorage.setItem('psyProfile_vark', JSON.stringify(result));
+  saveToFirebase('vark', result);
+  showVARKResults(result);
+}
+
+function showVARKResults(result) {
+  navigateTo('vark-results');
+  const container = document.getElementById('vark-results-container');
+  const pcts = result.percentages;
+  const s = VARK.styles;
+  const primary = s[result.primary];
+  const secondary = s[result.secondary];
+  const sorted = Object.entries(pcts).sort((a,b) => b[1] - a[1]);
+
+  container.innerHTML = `
+  <div class="results-header"><h2>Votre Style d'Apprentissage VARK</h2><p>Découvrez comment vous apprenez le mieux</p></div>
+  <div class="profile-summary" style="border-left:4px solid ${primary.hex}">
+    <div class="primary-label" style="color:${primary.hex}">${primary.icon} Style dominant : ${primary.name}</div>
+    <div class="secondary-label">${primary.desc}</div>
+    <div style="margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem">Style secondaire : <strong style="color:${secondary.hex}">${secondary.icon} ${secondary.name}</strong></div>
+  </div>
+  <div style="margin:1.5rem 0">
+    ${sorted.map(([d,p]) => `<div class="diag-trait" style="margin-bottom:0.6rem">
+      <span class="diag-trait-label">${s[d].icon} ${s[d].name}</span>
+      <div class="diag-trait-bar"><div class="diag-trait-fill" style="width:${p}%;background:${s[d].hex}"></div></div>
+      <span class="diag-trait-val" style="color:${s[d].hex}">${p}%</span>
+    </div>`).join('')}
+  </div>
+  <div style="margin:1.5rem 0">
+    <h3 style="color:var(--text-bright);margin-bottom:1rem">💡 Conseils pour votre style ${primary.name}</h3>
+    <div style="display:grid;gap:0.5rem">
+      ${primary.tips.map(t => `<div style="padding:0.6rem;background:rgba(255,255,255,0.03);border-radius:8px;border-left:3px solid ${primary.hex};font-size:0.88rem;color:var(--text)">✅ ${t}</div>`).join('')}
+    </div>
+  </div>
+  <div style="text-align:center;margin:2rem 0">
+    <button class="btn btn-primary" onclick="shareResults('vark')" style="margin-right:0.5rem">📤 Partager</button>
+    <button class="btn btn-secondary" onclick="navigateTo('home');renderHome()">🏠 Retour</button>
+  </div>`;
+}
+
+// ===== CHAPMAN MODULE =====
+const CHAPMAN = {
+  questions: [
+    {id:1, text:"Je me sens le plus aimé(e) quand...", options:[
+      {dim:'PA', text:"On me dit des mots tendres et encourageants"},
+      {dim:'TQ', text:"On passe du temps de qualité rien qu'avec moi"}
+    ]},
+    {id:2, text:"Dans une relation, j'apprécie surtout quand...", options:[
+      {dim:'SE', text:"Mon partenaire m'aide dans mes taches quotidiennes"},
+      {dim:'TC', text:"On se prend dans les bras ou on se touche tendrement"}
+    ]},
+    {id:3, text:"Un cadeau attentionné me touche...", options:[
+      {dim:'CA', text:"Énormément, c'est une preuve d'amour pour moi"},
+      {dim:'PA', text:"Moins que des mots sincères et personnels"}
+    ]},
+    {id:4, text:"Je préfère...", options:[
+      {dim:'TQ', text:"Une soirée tranquille en tête-à-tête"},
+      {dim:'SE', text:"Que quelqu'un prenne en charge une corvée pour moi"}
+    ]},
+    {id:5, text:"Je me sens négligé(e) quand...", options:[
+      {dim:'TC', text:"Il n'y a pas de contact physique ou de tendresse"},
+      {dim:'PA', text:"On ne me dit jamais qu'on m'apprécie"}
+    ]},
+    {id:6, text:"Ce qui me fait le plus plaisir...", options:[
+      {dim:'CA', text:"Recevoir un petit cadeau surprise"},
+      {dim:'TQ', text:"Avoir l'attention totale de quelqu'un"}
+    ]},
+    {id:7, text:"Pour montrer mon amour, je...", options:[
+      {dim:'SE', text:"Fais des choses concrètes pour aider l'autre"},
+      {dim:'PA', text:"Exprime mes sentiments avec des mots"}
+    ]},
+    {id:8, text:"Ce qui me blesse le plus...", options:[
+      {dim:'PA', text:"Les critiques blessantes ou le silence"},
+      {dim:'TC', text:"Le rejet physique ou l'absence de tendresse"}
+    ]},
+    {id:9, text:"Je préfère recevoir...", options:[
+      {dim:'CA', text:"Un cadeau bien choisi qui montre qu'on me connait"},
+      {dim:'SE', text:"Un coup de main quand je suis débordé(e)"}
+    ]},
+    {id:10, text:"Je me sens connecté(e) quand...", options:[
+      {dim:'TQ', text:"On fait une activité ensemble sans distraction"},
+      {dim:'TC', text:"On se tient la main ou on est proches physiquement"}
+    ]},
+    {id:11, text:"Un anniversaire parfait inclurait...", options:[
+      {dim:'PA', text:"Une lettre ou un message sincère et personnel"},
+      {dim:'CA', text:"Un cadeau qui montre qu'on a pensé à moi"}
+    ]},
+    {id:12, text:"Au quotidien, ce qui compte le plus...", options:[
+      {dim:'SE', text:"Les petites attentions pratiques (café préparé, courses faites)"},
+      {dim:'TQ', text:"Prendre le temps de discuter et d'être vraiment ensemble"}
+    ]},
+    {id:13, text:"Je me sens le plus en sécurité quand...", options:[
+      {dim:'TC', text:"On me prend dans les bras ou on me touche l'épaule"},
+      {dim:'SE', text:"On s'occupe de moi concrètement quand je vais mal"}
+    ]},
+    {id:14, text:"Une relation idéale pour moi c'est...", options:[
+      {dim:'PA', text:"Beaucoup de communication et de mots doux"},
+      {dim:'TQ', text:"Des moments de qualité partagés régulièrement"}
+    ]},
+    {id:15, text:"Ce qui me manque le plus à distance...", options:[
+      {dim:'TC', text:"Le contact physique et la proximité"},
+      {dim:'CA', text:"Recevoir de petites attentions ou surprises"}
+    ]},
+    {id:16, text:"Pour me réconforter, le mieux c'est...", options:[
+      {dim:'SE', text:"Quelqu'un qui m'aide concrètement à résoudre le problème"},
+      {dim:'PA', text:"Quelqu'un qui me dit des mots rassurants"}
+    ]},
+    {id:17, text:"Je suis touché(e) quand...", options:[
+      {dim:'CA', text:"On me ramène un petit quelque chose en pensant à moi"},
+      {dim:'TC', text:"On vient se blottir contre moi spontanément"}
+    ]},
+    {id:18, text:"Pour une soirée idéale...", options:[
+      {dim:'TQ', text:"Une activité à deux, sans téléphone"},
+      {dim:'SE', text:"Mon partenaire prépare tout sans que j'aie à m'en occuper"}
+    ]},
+    {id:19, text:"Je montre mon affection en...", options:[
+      {dim:'TC', text:"Multipliant les gestes de tendresse"},
+      {dim:'CA', text:"Offrant des cadeaux ou petites attentions"}
+    ]},
+    {id:20, text:"Ce que j'attends le plus dans une relation...", options:[
+      {dim:'PA', text:"Être valorisé(e) et encouragé(e) verbalement"},
+      {dim:'SE', text:"Être soutenu(e) par des actes concrets"}
+    ]}
+  ],
+  answers: {},
+  currentQ: 0,
+  langages: {
+    PA: {name:'Paroles valorisantes', hex:'#ec4899', icon:'💬',
+         desc:"Les mots comptent énormément pour vous. Les compliments sincères, les encouragements et les expressions d'amour verbales vous touchent profondément.",
+         tips:["Dites régulièrement à vos proches ce que vous appréciez chez eux","Écrivez des lettres ou messages sincères","Les mots blessants vous affectent plus que la moyenne — communiquez-le","Tenez un journal de gratitude pour ceux que vous aimez"]},
+    SE: {name:'Services rendus', hex:'#f97316', icon:'🛠️',
+         desc:"Pour vous, les actes parlent plus fort que les mots. Quand quelqu'un vous aide concrètement, vous vous sentez profondément aimé(e).",
+         tips:["Proposez votre aide concrète à ceux que vous aimez","Remarquez les petits services que les autres vous rendent","Ne prenez pas l'aide de vos proches pour acquise","Demandez de l'aide quand vous en avez besoin — ce n'est pas de la faiblesse"]},
+    CA: {name:'Cadeaux', hex:'#eab308', icon:'🎁',
+         desc:"Ce n'est pas le prix qui compte, mais l'attention. Un cadeau bien choisi est pour vous un symbole d'amour, de présence et de connexion.",
+         tips:["Gardez une liste de ce que vos proches aiment ou mentionnent","Les cadeaux faits main ont une valeur particulière","L'emballage et la présentation comptent pour vous","Votre présence physique dans les moments clés est aussi un 'cadeau'"]},
+    TQ: {name:'Temps de qualité', hex:'#8b5cf6', icon:'⏰',
+         desc:"Vous avez besoin d'attention exclusive. Les moments partagés sans distraction sont pour vous la plus belle preuve d'amour.",
+         tips:["Planifiez des moments en tête-à-tête réguliers","Rangez le téléphone quand vous êtes avec vos proches","Proposez des activités à faire ensemble","L'écoute active est votre super-pouvoir — offrez-la aussi"]},
+    TC: {name:'Toucher physique', hex:'#ef4444', icon:'🤗',
+         desc:"Le contact physique est essentiel pour vous. Les câlins, les poignées de main chaleureuses et la proximité physique vous font sentir aimé(e) et en sécurité.",
+         tips:["Exprimez votre besoin de contact à vos proches","Les petits gestes quotidiens (main sur l'épaule, câlin) comptent beaucoup","Le manque de toucher peut vous rendre anxieux — identifiez ce besoin","Respectez aussi les limites des autres en matière de contact"]}
+  }
+};
+
+function startChapmanTest() {
+  CHAPMAN.currentQ = 0; CHAPMAN.answers = {};
+  navigateTo('chapman-test'); renderChapmanQuestion();
+}
+
+function renderChapmanQuestion() {
+  const q = CHAPMAN.questions[CHAPMAN.currentQ];
+  const ans = CHAPMAN.answers[q.id];
+  const total = CHAPMAN.questions.length;
+  const pct = Math.round((CHAPMAN.currentQ / total) * 100);
+  document.getElementById('chapman-progress').style.width = pct + '%';
+  document.getElementById('chapman-progress-text').textContent = `Question ${CHAPMAN.currentQ+1} / ${total}`;
+  const area = document.getElementById('chapman-question-area');
+  area.innerHTML = `<div class="question-card">
+    <p class="question-text">${q.text}</p>
+    <div class="options-list">${q.options.map(o => `
+      <button class="option-btn ${ans === o.dim ? 'selected' : ''}" onclick="selectChapman('${q.id}','${o.dim}')">${o.text}</button>
+    `).join('')}</div>
+  </div>`;
+  document.getElementById('chapman-prev').style.display = CHAPMAN.currentQ === 0 ? 'none' : 'inline-block';
+  document.getElementById('chapman-next').textContent = CHAPMAN.currentQ === total - 1 ? 'Voir résultats' : 'Suivant';
+}
+
+function selectChapman(id, dim) {
+  CHAPMAN.answers[parseInt(id)] = dim;
+  renderChapmanQuestion();
+}
+
+function chapmanPrev() { if (CHAPMAN.currentQ > 0) { CHAPMAN.currentQ--; renderChapmanQuestion(); window.scrollTo({top:0,behavior:'smooth'}); } }
+
+function chapmanNext() {
+  const q = CHAPMAN.questions[CHAPMAN.currentQ];
+  if (!CHAPMAN.answers[q.id]) { document.querySelector('.question-card').style.borderColor = '#e74c3c'; return; }
+  if (CHAPMAN.currentQ < CHAPMAN.questions.length - 1) {
+    CHAPMAN.currentQ++; renderChapmanQuestion(); window.scrollTo({top:0,behavior:'smooth'});
+  } else { calculateChapmanResults(); }
+}
+
+function calculateChapmanResults() {
+  const scores = {PA:0, SE:0, CA:0, TQ:0, TC:0};
+  Object.values(CHAPMAN.answers).forEach(dim => { scores[dim]++; });
+  const total = Object.values(scores).reduce((s,v) => s+v, 0) || 1;
+  const percentages = {};
+  ['PA','SE','CA','TQ','TC'].forEach(d => { percentages[d] = Math.round((scores[d] / total) * 100); });
+  const sorted = Object.entries(percentages).sort((a,b) => b[1] - a[1]);
+  const result = {
+    scores, percentages, primary: sorted[0][0], secondary: sorted[1][0],
+    date: new Date().toLocaleDateString('fr-FR'), answers: CHAPMAN.answers
+  };
+  localStorage.setItem('psyProfile_chapman', JSON.stringify(result));
+  saveToFirebase('chapman', result);
+  showChapmanResults(result);
+}
+
+function showChapmanResults(result) {
+  navigateTo('chapman-results');
+  const container = document.getElementById('chapman-results-container');
+  const pcts = result.percentages;
+  const l = CHAPMAN.langages;
+  const primary = l[result.primary];
+  const secondary = l[result.secondary];
+  const sorted = Object.entries(pcts).sort((a,b) => b[1] - a[1]);
+
+  container.innerHTML = `
+  <div class="results-header"><h2>Vos Langages de l'Amour</h2><p>Découvrez comment vous exprimez et recevez l'amour</p></div>
+  <div class="profile-summary" style="border-left:4px solid ${primary.hex}">
+    <div class="primary-label" style="color:${primary.hex}">${primary.icon} Langage dominant : ${primary.name}</div>
+    <div class="secondary-label">${primary.desc}</div>
+    <div style="margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem">Langage secondaire : <strong style="color:${secondary.hex}">${secondary.icon} ${secondary.name}</strong></div>
+  </div>
+  <div style="margin:1.5rem 0">
+    ${sorted.map(([d,p]) => `<div class="diag-trait" style="margin-bottom:0.6rem">
+      <span class="diag-trait-label">${l[d].icon} ${l[d].name}</span>
+      <div class="diag-trait-bar"><div class="diag-trait-fill" style="width:${p}%;background:${l[d].hex}"></div></div>
+      <span class="diag-trait-val" style="color:${l[d].hex}">${p}%</span>
+    </div>`).join('')}
+  </div>
+  <div style="margin:1.5rem 0">
+    <h3 style="color:var(--text-bright);margin-bottom:1rem">💡 Conseils pour votre langage ${primary.name}</h3>
+    <div style="display:grid;gap:0.5rem">
+      ${primary.tips.map(t => `<div style="padding:0.6rem;background:rgba(255,255,255,0.03);border-radius:8px;border-left:3px solid ${primary.hex};font-size:0.88rem;color:var(--text)">✅ ${t}</div>`).join('')}
+    </div>
+  </div>
+  <div style="text-align:center;margin:2rem 0">
+    <button class="btn btn-primary" onclick="shareResults('chapman')" style="margin-right:0.5rem">📤 Partager</button>
+    <button class="btn btn-secondary" onclick="navigateTo('home');renderHome()">🏠 Retour</button>
+  </div>`;
+}
+
 // ===== DIAGNOSTIC COMPLET =====
 function getDiagData() {
   return {
@@ -3503,7 +4041,9 @@ function getDiagData() {
     bigfive: JSON.parse(localStorage.getItem('psyProfile_bigfive') || 'null'),
     via: JSON.parse(localStorage.getItem('psyProfile_via') || 'null'),
     enne: JSON.parse(localStorage.getItem('psyProfile_enneagramme') || 'null'),
-    ei: JSON.parse(localStorage.getItem('psyProfile_ei') || 'null')
+    ei: JSON.parse(localStorage.getItem('psyProfile_ei') || 'null'),
+    vark: JSON.parse(localStorage.getItem('psyProfile_vark') || 'null'),
+    chapman: JSON.parse(localStorage.getItem('psyProfile_chapman') || 'null')
   };
 }
 
@@ -3514,33 +4054,36 @@ function updateDiagSection() {
     {key:'bigfive', name:'Big Five', done:!!d.bigfive},
     {key:'via', name:'VIA', done:!!d.via},
     {key:'enne', name:'Ennéagramme', done:!!d.enne},
-    {key:'ei', name:'Intelligence Émotionnelle', done:!!d.ei}
+    {key:'ei', name:'Intelligence Émotionnelle', done:!!d.ei},
+    {key:'vark', name:'VARK', done:!!d.vark},
+    {key:'chapman', name:'Langages de l\'amour', done:!!d.chapman}
   ];
   const completed = tests.filter(t => t.done).length;
+  const totalTests = tests.length;
   const section = document.getElementById('diag-home-section');
   const lockIcon = document.getElementById('diag-lock-icon');
   const title = document.getElementById('diag-home-title');
   const desc = document.getElementById('diag-home-desc');
   const area = document.getElementById('diag-progress-area');
 
-  if (completed === 5) {
+  if (completed === totalTests) {
     section.className = 'diagnostic-section unlocked';
     lockIcon.textContent = '🧠';
     lockIcon.style.opacity = '1';
     title.textContent = 'Diagnostic complet';
     desc.textContent = 'Votre synthèse globale est prête ! Cliquez pour découvrir votre profil croisé.';
     area.innerHTML = `<div class="diag-progress-bar"><div class="diag-progress-fill" style="width:100%"></div></div>
-      <div class="diag-progress-text">5/5 tests complétés — Diagnostic débloqué !</div>`;
+      <div class="diag-progress-text">${totalTests}/${totalTests} tests complétés — Diagnostic débloqué !</div>`;
     section.onclick = () => showDiagnostic();
   } else {
     section.className = 'diagnostic-section';
     lockIcon.textContent = '🔒';
     lockIcon.style.opacity = '0.4';
     title.textContent = 'Diagnostic complet';
-    desc.textContent = 'Completez les 5 tests pour débloquer votre synthèse globale.';
+    desc.textContent = `Completez les ${totalTests} tests pour débloquer votre synthèse globale.`;
     const missing = tests.filter(t => !t.done);
-    area.innerHTML = `<div class="diag-progress-bar"><div class="diag-progress-fill" style="width:${(completed/5)*100}%"></div></div>
-      <div class="diag-progress-text">${completed}/5 tests complétés</div>
+    area.innerHTML = `<div class="diag-progress-bar"><div class="diag-progress-fill" style="width:${(completed/totalTests)*100}%"></div></div>
+      <div class="diag-progress-text">${completed}/${totalTests} tests complétés</div>
       <div class="diag-missing">${missing.map(t => `<span class="diag-missing-tag">${t.name}</span>`).join('')}</div>`;
     section.onclick = null;
   }
@@ -3610,7 +4153,7 @@ function getProfileName(d, bf) {
 
 function showDiagnostic() {
   const d = getDiagData();
-  if (!d.disc || !d.bigfive || !d.via || !d.enne || !d.ei) return;
+  if (!d.disc || !d.bigfive || !d.via || !d.enne || !d.ei || !d.vark || !d.chapman) return;
   navigateTo('diagnostic');
   const container = document.getElementById('diagnostic-container');
 
@@ -3711,6 +4254,18 @@ function showDiagnostic() {
     <div class="diag-section-card">
       <div class="diag-section-title"><span class="diag-icon">🌱</span><h3>Axes de développement</h3></div>
       ${axes}
+    </div>
+
+    <!-- VARK -->
+    <div class="diag-section-card">
+      <div class="diag-section-title"><span class="diag-icon">📖</span><h3>Style d'apprentissage</h3></div>
+      ${buildDiagVARK(d)}
+    </div>
+
+    <!-- CHAPMAN -->
+    <div class="diag-section-card">
+      <div class="diag-section-title"><span class="diag-icon">💕</span><h3>Langages de l'amour</h3></div>
+      ${buildDiagChapman(d)}
     </div>
 
     <!-- SHARE -->
@@ -3974,6 +4529,96 @@ function buildAxes(d, discP, bf, ei, viaBottom5, enneT) {
 }
 
 // === RADAR CHART ===
+// === VARK DIAGNOSTIC BUILDER ===
+function buildDiagVARK(d) {
+  const v = VARK.styles;
+  const primary = v[d.vark.primary];
+  const secondary = v[d.vark.secondary];
+  const pcts = d.vark.percentages;
+  const sorted = Object.entries(pcts).sort((a,b) => b[1] - a[1]);
+
+  // Cross-reference with Big Five and DISC
+  const crossRef = [];
+  if (d.vark.primary === 'V' && d.bigfive.percentages.O >= 60) crossRef.push('Votre ouverture d\'esprit (Big Five) renforce votre apprentissage visuel — vous absorbez facilement les nouvelles représentations.');
+  if (d.vark.primary === 'A' && d.disc.percentages.I >= 25) crossRef.push('Votre profil Influence (DISC) et votre style auditif se complètent — vous apprenez et transmettez par la parole.');
+  if (d.vark.primary === 'R' && d.bigfive.percentages.C >= 60) crossRef.push('Votre conscienciosité (Big Five) et votre style lecture/écriture s\'alignent — vous excellez dans l\'apprentissage structuré.');
+  if (d.vark.primary === 'K' && d.disc.percentages.D >= 25) crossRef.push('Votre profil Dominance (DISC) et votre style kinesthésique convergent — vous apprenez en prenant les choses en main.');
+  if (d.vark.primary === 'K' && d.ei.percentages.MO >= 60) crossRef.push('Votre forte motivation (IE) nourrit votre apprentissage par l\'action — vous êtes dans le faire.');
+  if (crossRef.length === 0) crossRef.push(`Votre style ${primary.name} est un atout dans votre parcours d'apprentissage.`);
+
+  return `
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+      <div style="font-size:2.5rem">${primary.icon}</div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:700;color:${primary.hex}">${primary.name}</div>
+        <div style="font-size:0.85rem;color:var(--text-muted)">Style secondaire : ${secondary.icon} ${secondary.name}</div>
+      </div>
+    </div>
+    <p class="diag-portrait" style="margin-bottom:1rem">${primary.desc}</p>
+    <div style="display:grid;gap:0.4rem;margin-bottom:1rem">
+      ${sorted.map(([d,p]) => `<div class="diag-trait">
+        <span class="diag-trait-label">${v[d].icon} ${v[d].name}</span>
+        <div class="diag-trait-bar"><div class="diag-trait-fill" style="width:${p}%;background:${v[d].hex}"></div></div>
+        <span class="diag-trait-val" style="color:${v[d].hex}">${p}%</span>
+      </div>`).join('')}
+    </div>
+    <div style="padding:0.8rem;background:rgba(255,255,255,0.03);border-radius:10px;border-left:3px solid ${primary.hex}">
+      <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">🔗 Croisement avec vos autres tests</div>
+      <p style="font-size:0.83rem;color:var(--text-muted)">${crossRef[0]}</p>
+    </div>`;
+}
+
+// === CHAPMAN DIAGNOSTIC BUILDER ===
+function buildDiagChapman(d) {
+  const l = CHAPMAN.langages;
+  const primary = l[d.chapman.primary];
+  const secondary = l[d.chapman.secondary];
+  const pcts = d.chapman.percentages;
+  const sorted = Object.entries(pcts).sort((a,b) => b[1] - a[1]);
+
+  // Cross-reference
+  const crossRef = [];
+  if (d.chapman.primary === 'PA' && d.disc.percentages.I >= 25) crossRef.push('Votre profil Influence (DISC) et votre langage Paroles s\'alignent — la communication est au cœur de qui vous êtes.');
+  if (d.chapman.primary === 'SE' && d.bigfive.percentages.C >= 60) crossRef.push('Votre conscienciosité (Big Five) se traduit aussi dans vos relations — vous montrez votre amour par des actes concrets.');
+  if (d.chapman.primary === 'TQ' && d.bigfive.percentages.A >= 60) crossRef.push('Votre agréabilité (Big Five) et votre besoin de temps de qualité montrent l\'importance des connexions profondes pour vous.');
+  if (d.chapman.primary === 'TC' && d.ei.percentages.EM >= 60) crossRef.push('Votre empathie élevée (IE) et votre langage du toucher révèlent une sensibilité relationnelle profonde.');
+  if (d.chapman.primary === 'CA' && d.via.top5.includes('kindness')) crossRef.push('Votre force de gentillesse (VIA) se manifeste aussi dans vos relations — offrir est votre façon d\'aimer.');
+  if (crossRef.length === 0) crossRef.push(`Votre langage ${primary.name} enrichit vos relations et éclaire votre façon d'aimer.`);
+
+  // Ennéagramme connection
+  const enneLink = d.enne.dominant === 2 ? 'En tant que Type 2 (Altruiste), votre langage affectif est cohérent avec votre besoin profond d\'aimer et d\'être aimé(e).' :
+    d.enne.dominant === 4 ? 'En tant que Type 4 (Romantique), vos relations intimes sont un terrain d\'expression essentiel pour vous.' :
+    d.enne.dominant === 9 ? 'En tant que Type 9 (Médiateur), l\'harmonie relationnelle est une priorité — votre langage affectif en est le reflet.' :
+    `Votre Type ${d.enne.dominant} (${ENNE.types[d.enne.dominant].name}) influence la façon dont vous exprimez et recevez l'amour.`;
+
+  return `
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+      <div style="font-size:2.5rem">${primary.icon}</div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:700;color:${primary.hex}">${primary.name}</div>
+        <div style="font-size:0.85rem;color:var(--text-muted)">Langage secondaire : ${secondary.icon} ${secondary.name}</div>
+      </div>
+    </div>
+    <p class="diag-portrait" style="margin-bottom:1rem">${primary.desc}</p>
+    <div style="display:grid;gap:0.4rem;margin-bottom:1rem">
+      ${sorted.map(([d,p]) => `<div class="diag-trait">
+        <span class="diag-trait-label">${l[d].icon} ${l[d].name}</span>
+        <div class="diag-trait-bar"><div class="diag-trait-fill" style="width:${p}%;background:${l[d].hex}"></div></div>
+        <span class="diag-trait-val" style="color:${l[d].hex}">${p}%</span>
+      </div>`).join('')}
+    </div>
+    <div style="display:grid;gap:0.6rem">
+      <div style="padding:0.8rem;background:rgba(255,255,255,0.03);border-radius:10px;border-left:3px solid ${primary.hex}">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">🔗 Croisement avec vos autres tests</div>
+        <p style="font-size:0.83rem;color:var(--text-muted)">${crossRef[0]}</p>
+      </div>
+      <div style="padding:0.8rem;background:rgba(255,255,255,0.03);border-radius:10px;border-left:3px solid ${ENNE.types[d.enne.dominant].hex}">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">${ENNE.types[d.enne.dominant].icon} Lien Ennéagramme</div>
+        <p style="font-size:0.83rem;color:var(--text-muted)">${enneLink}</p>
+      </div>
+    </div>`;
+}
+
 function drawDiagRadar(dims) {
   const canvas = document.getElementById('diag-radar');
   if (!canvas) return;
@@ -4052,7 +4697,7 @@ function drawDiagRadar(dims) {
 // === SHARE DIAGNOSTIC ===
 function shareDiagnostic() {
   const d = getDiagData();
-  if (!d.disc || !d.bigfive || !d.via || !d.enne || !d.ei) return;
+  if (!d.disc || !d.bigfive || !d.via || !d.enne || !d.ei || !d.vark || !d.chapman) return;
 
   const discP = DISC.profiles[d.disc.primary];
   const enneT = ENNE.types[d.enne.dominant];
@@ -4072,6 +4717,12 @@ function shareDiagnostic() {
   text += `Désir: ${enneT.desir} | Peur: ${enneT.peur}\n\n`;
   text += `❤️ INTELLIGENCE ÉMOTIONNELLE : QE ${d.ei.qe}%\n`;
   text += `CS:${d.ei.percentages.CS}% MS:${d.ei.percentages.MS}% MO:${d.ei.percentages.MO}% EM:${d.ei.percentages.EM}% SO:${d.ei.percentages.SO}%\n\n`;
+  const varkNames = {V:'Visuel',A:'Auditif',R:'Lecture/Écriture',K:'Kinesthésique'};
+  text += `📖 STYLE D'APPRENTISSAGE (VARK) : ${varkNames[d.vark.primary]}\n`;
+  text += Object.entries(d.vark.percentages).sort((a,b)=>b[1]-a[1]).map(([k,v]) => `${varkNames[k]}: ${v}%`).join(' · ') + '\n\n';
+  const chapNames = {PA:'Paroles valorisantes',SE:'Services rendus',CA:'Cadeaux',TQ:'Temps de qualité',TC:'Toucher physique'};
+  text += `💕 LANGAGES DE L'AMOUR : ${chapNames[d.chapman.primary]}\n`;
+  text += Object.entries(d.chapman.percentages).sort((a,b)=>b[1]-a[1]).map(([k,v]) => `${chapNames[k]}: ${v}%`).join(' · ') + '\n\n';
   text += `🔗 https://natquinson-cmd.github.io/Mon-Profil-Psychologique/`;
 
   if (navigator.share) {
