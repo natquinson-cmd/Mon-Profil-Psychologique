@@ -226,14 +226,40 @@ body::before {
 .completed-card .mini-chart { width:70px; height:70px; flex-shrink:0; }
 .completed-card .info h4 { color:var(--text-bright); margin-bottom:0.3rem; }
 .completed-card .info p { font-size:0.85rem; color:var(--text-muted); }
-/* Diagnostic section */
+/* Diagnostic section on home */
 .diagnostic-section {
   margin-top:2.5rem; background:var(--card); border:1px solid var(--card-border);
-  border-radius:16px; padding:2rem; text-align:center;
+  border-radius:16px; padding:2rem; text-align:center; cursor:pointer; transition:var(--transition);
 }
+.diagnostic-section:hover { border-color:rgba(124,58,237,0.4); }
+.diagnostic-section.unlocked { border-color:rgba(46,204,113,0.4); background:rgba(46,204,113,0.05); }
 .diagnostic-section h3 { color:var(--text-bright); margin-bottom:0.5rem; }
 .diagnostic-section p { color:var(--text-muted); font-size:0.9rem; }
 .diagnostic-section .lock-icon { font-size:2rem; margin-bottom:1rem; opacity:0.4; }
+.diag-progress { margin-top:1rem; }
+.diag-progress-bar { background:rgba(255,255,255,0.1); border-radius:10px; height:8px; overflow:hidden; margin-top:0.5rem; }
+.diag-progress-fill { height:100%; background:linear-gradient(90deg,var(--purple),var(--green)); border-radius:10px; transition:width 0.5s ease; }
+.diag-progress-text { font-size:0.8rem; color:var(--text-muted); margin-top:0.4rem; }
+.diag-missing { display:flex; gap:0.4rem; flex-wrap:wrap; justify-content:center; margin-top:0.6rem; }
+.diag-missing-tag { font-size:0.72rem; padding:0.2rem 0.5rem; border-radius:10px; background:rgba(245,200,66,0.12); color:#f5c842; }
+/* Diagnostic results page */
+.diag-section-card {
+  background:var(--card); border:1px solid var(--card-border); border-radius:16px;
+  padding:1.5rem; margin-bottom:1.2rem; transition:var(--transition);
+}
+.diag-section-card:hover { border-color:rgba(124,58,237,0.3); }
+.diag-section-title { display:flex; align-items:center; gap:0.6rem; margin-bottom:1rem; }
+.diag-section-title .diag-icon { font-size:1.4rem; }
+.diag-section-title h3 { font-size:1.05rem; font-weight:700; color:var(--text-bright); }
+.diag-trait { display:flex; align-items:center; gap:0.8rem; margin-bottom:0.6rem; }
+.diag-trait-label { min-width:130px; font-size:0.85rem; color:var(--text); }
+.diag-trait-bar { flex:1; height:8px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden; }
+.diag-trait-fill { height:100%; border-radius:4px; transition:width 0.6s ease; }
+.diag-trait-val { font-size:0.8rem; font-weight:600; min-width:35px; text-align:right; }
+.diag-tags { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.5rem; }
+.diag-tag { font-size:0.78rem; padding:0.25rem 0.6rem; border-radius:10px; font-weight:500; }
+.diag-portrait { font-size:0.95rem; line-height:1.7; color:var(--text); }
+.diag-radar-container { display:flex; justify-content:center; margin:1.5rem 0; }
 /* Intro page */
 .intro-content { max-width:700px; margin:0 auto; }
 .intro-content h2 { font-size:1.8rem; font-weight:800; color:var(--text-bright); margin-bottom:1rem; }
@@ -584,11 +610,21 @@ body::before {
     <div id="completed-list"></div>
   </div>
 
-  <div class="diagnostic-section">
-    <div class="lock-icon">&#x1f512;</div>
-    <h3>Diagnostic complet</h3>
-    <p>Completez plusieurs tests pour debloquer une synthese globale de votre profil psychologique, croisant toutes les méthodologies.</p>
+  <div class="diagnostic-section" id="diag-home-section">
+    <div class="lock-icon" id="diag-lock-icon">&#x1f512;</div>
+    <h3 id="diag-home-title">Diagnostic complet</h3>
+    <p id="diag-home-desc">Completez les 5 tests pour debloquer une synthese globale de votre profil psychologique.</p>
+    <div class="diag-progress" id="diag-progress-area"></div>
   </div>
+
+</div>
+</div>
+
+<!-- DIAGNOSTIC RESULTS PAGE -->
+<div class="container">
+<div id="page-diagnostic" class="page">
+  <div class="intro-content" id="diagnostic-container"></div>
+</div>
 </div>
 
 <!-- DISC INTRO PAGE -->
@@ -1444,6 +1480,9 @@ function renderHome() {
   } else {
     compSection.style.display = 'none';
   }
+
+  // Update diagnostic section
+  updateDiagSection();
 }
 
 function drawMiniDisc(pcts) {
@@ -3454,6 +3493,479 @@ function generatePuzzleGrid(containerId, cols, rows, vb) {
       path.setAttribute('stroke-width', '0.8');
       container.appendChild(path);
     }
+  }
+}
+
+// ===== DIAGNOSTIC COMPLET =====
+function getDiagData() {
+  return {
+    disc: JSON.parse(localStorage.getItem('psyProfile_disc') || 'null'),
+    bigfive: JSON.parse(localStorage.getItem('psyProfile_bigfive') || 'null'),
+    via: JSON.parse(localStorage.getItem('psyProfile_via') || 'null'),
+    enne: JSON.parse(localStorage.getItem('psyProfile_enneagramme') || 'null'),
+    ei: JSON.parse(localStorage.getItem('psyProfile_ei') || 'null')
+  };
+}
+
+function updateDiagSection() {
+  const d = getDiagData();
+  const tests = [
+    {key:'disc', name:'DISC', done:!!d.disc},
+    {key:'bigfive', name:'Big Five', done:!!d.bigfive},
+    {key:'via', name:'VIA', done:!!d.via},
+    {key:'enne', name:'Ennéagramme', done:!!d.enne},
+    {key:'ei', name:'Intelligence Émotionnelle', done:!!d.ei}
+  ];
+  const completed = tests.filter(t => t.done).length;
+  const section = document.getElementById('diag-home-section');
+  const lockIcon = document.getElementById('diag-lock-icon');
+  const title = document.getElementById('diag-home-title');
+  const desc = document.getElementById('diag-home-desc');
+  const area = document.getElementById('diag-progress-area');
+
+  if (completed === 5) {
+    section.className = 'diagnostic-section unlocked';
+    lockIcon.textContent = '🧠';
+    lockIcon.style.opacity = '1';
+    title.textContent = 'Diagnostic complet';
+    desc.textContent = 'Votre synthèse globale est prête ! Cliquez pour découvrir votre profil croisé.';
+    area.innerHTML = `<div class="diag-progress-bar"><div class="diag-progress-fill" style="width:100%"></div></div>
+      <div class="diag-progress-text">5/5 tests complétés — Diagnostic débloqué !</div>`;
+    section.onclick = () => showDiagnostic();
+  } else {
+    section.className = 'diagnostic-section';
+    lockIcon.textContent = '🔒';
+    lockIcon.style.opacity = '0.4';
+    title.textContent = 'Diagnostic complet';
+    desc.textContent = 'Completez les 5 tests pour débloquer votre synthèse globale.';
+    const missing = tests.filter(t => !t.done);
+    area.innerHTML = `<div class="diag-progress-bar"><div class="diag-progress-fill" style="width:${(completed/5)*100}%"></div></div>
+      <div class="diag-progress-text">${completed}/5 tests complétés</div>
+      <div class="diag-missing">${missing.map(t => `<span class="diag-missing-tag">${t.name}</span>`).join('')}</div>`;
+    section.onclick = null;
+  }
+}
+
+function showDiagnostic() {
+  const d = getDiagData();
+  if (!d.disc || !d.bigfive || !d.via || !d.enne || !d.ei) return;
+  navigateTo('diagnostic');
+  const container = document.getElementById('diagnostic-container');
+
+  // === CROSS-ANALYSIS DATA ===
+  const discProfile = DISC.profiles[d.disc.primary];
+  const discSecondary = DISC.profiles[d.disc.secondary];
+  const enneType = ENNE.types[d.enne.dominant];
+  const bfPcts = d.bigfive.percentages;
+  const eiPcts = d.ei.percentages;
+  const viaPcts = d.via.percentages;
+  const viaTop5 = d.via.top5;
+  const viaBottom5 = d.via.bottom5;
+  const eiDims = EI.dimensions;
+
+  // === 1. PORTRAIT GLOBAL ===
+  const portrait = buildPortrait(d, discProfile, enneType, bfPcts, eiPcts);
+
+  // === 2. FORCES SIGNATURES (cross VIA + Big Five + DISC) ===
+  const forces = buildForces(d, discProfile, bfPcts, viaTop5);
+
+  // === 3. STYLE RELATIONNEL ===
+  const relationnel = buildRelationnel(d, discProfile, bfPcts, eiPcts);
+
+  // === 4. MOTIVATIONS PROFONDES ===
+  const motivations = buildMotivations(d, enneType, viaTop5, bfPcts);
+
+  // === 5. GESTION EMOTIONNELLE ===
+  const emotions = buildEmotions(d, enneType, bfPcts, eiPcts);
+
+  // === 6. AXES DE DEVELOPPEMENT ===
+  const axes = buildAxes(d, discProfile, bfPcts, eiPcts, viaBottom5, enneType);
+
+  // === RADAR DIMENSIONS ===
+  const radarDims = [
+    {label:'Leadership', val: Math.round((d.disc.percentages.D + (bfPcts.E || 0) + (viaPcts.leadership || 0)) / 3)},
+    {label:'Empathie', val: Math.round(((bfPcts.A || 0) + (eiPcts.EM || 0) + (viaPcts.kindness || 0)) / 3)},
+    {label:'Rigueur', val: Math.round(((bfPcts.C || 0) + d.disc.percentages.C + (viaPcts.perseverance || 0)) / 3)},
+    {label:'Créativité', val: Math.round(((bfPcts.O || 0) + (viaPcts.creativity || 0) + d.disc.percentages.I) / 3)},
+    {label:'Résilience', val: Math.round(((eiPcts.MS || 0) + (eiPcts.MO || 0) + (100 - (bfPcts.N || 50))) / 3)},
+    {label:'Sociabilité', val: Math.round(((bfPcts.E || 0) + d.disc.percentages.I + (eiPcts.SO || 0)) / 3)}
+  ];
+
+  container.innerHTML = `
+    <h2 style="font-size:1.8rem;font-weight:800;color:var(--text-bright);margin-bottom:0.5rem">🧠 Diagnostic Complet</h2>
+    <p style="color:var(--text-muted);margin-bottom:2rem">Synthèse croisée de vos 5 tests de personnalité</p>
+
+    <!-- RADAR GLOBAL -->
+    <div class="diag-section-card">
+      <div class="diag-section-title"><span class="diag-icon">📊</span><h3>Vue d'ensemble</h3></div>
+      <div class="diag-radar-container"><canvas id="diag-radar" width="300" height="300"></canvas></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.5rem;margin-top:1rem">
+        ${radarDims.map(r => `<div class="diag-trait">
+          <span class="diag-trait-label">${r.label}</span>
+          <div class="diag-trait-bar"><div class="diag-trait-fill" style="width:${r.val}%;background:${r.val >= 70 ? 'var(--green)' : r.val >= 40 ? 'var(--blue)' : 'var(--orange)'}"></div></div>
+          <span class="diag-trait-val" style="color:${r.val >= 70 ? 'var(--green)' : r.val >= 40 ? 'var(--blue)' : 'var(--orange)'}">${r.val}%</span>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- 1. PORTRAIT -->
+    <div class="diag-section-card">
+      <div class="diag-section-title"><span class="diag-icon">🎭</span><h3>Portrait global</h3></div>
+      <div class="diag-portrait">${portrait}</div>
+    </div>
+
+    <!-- 2. FORCES -->
+    <div class="diag-section-card">
+      <div class="diag-section-title"><span class="diag-icon">💎</span><h3>Forces signatures</h3></div>
+      ${forces}
+    </div>
+
+    <!-- 3. RELATIONNEL -->
+    <div class="diag-section-card">
+      <div class="diag-section-title"><span class="diag-icon">🤝</span><h3>Style relationnel & communication</h3></div>
+      ${relationnel}
+    </div>
+
+    <!-- 4. MOTIVATIONS -->
+    <div class="diag-section-card">
+      <div class="diag-section-title"><span class="diag-icon">🔥</span><h3>Motivations profondes</h3></div>
+      ${motivations}
+    </div>
+
+    <!-- 5. EMOTIONS -->
+    <div class="diag-section-card">
+      <div class="diag-section-title"><span class="diag-icon">💜</span><h3>Gestion émotionnelle</h3></div>
+      ${emotions}
+    </div>
+
+    <!-- 6. AXES -->
+    <div class="diag-section-card">
+      <div class="diag-section-title"><span class="diag-icon">🌱</span><h3>Axes de développement</h3></div>
+      ${axes}
+    </div>
+
+    <!-- SHARE -->
+    <div style="text-align:center;margin:2rem 0">
+      <button class="btn btn-primary" onclick="shareDiagnostic()" style="padding:0.8rem 2rem;font-size:1rem">📤 Partager mon diagnostic</button>
+      <button class="btn btn-secondary" onclick="navigateTo('home');renderHome()" style="padding:0.8rem 2rem;font-size:1rem;margin-left:0.5rem">🏠 Retour</button>
+    </div>
+  `;
+
+  setTimeout(() => drawDiagRadar(radarDims), 100);
+}
+
+// === PORTRAIT BUILDER ===
+function buildPortrait(d, discP, enneT, bf, ei) {
+  const extraversion = bf.E >= 60 ? 'extraverti(e)' : bf.E <= 40 ? 'introverti(e)' : 'ambivert(e)';
+  const stability = bf.N <= 35 ? 'émotionnellement stable' : bf.N >= 65 ? 'sensible aux émotions' : 'modérément sensible';
+  const approach = bf.C >= 60 ? 'organisé(e) et méthodique' : bf.C <= 40 ? 'spontané(e) et flexible' : 'équilibré(e) entre méthode et spontanéité';
+  const openness = bf.O >= 60 ? 'curieux(se) et ouvert(e) aux idées nouvelles' : bf.O <= 40 ? 'pragmatique et concret(e)' : 'ouvert(e) tout en restant ancré(e)';
+
+  return `<p>Vous êtes une personne <strong>${extraversion}</strong>, <strong>${approach}</strong> et <strong>${openness}</strong>.
+  Votre profil DISC dominant <strong>${discP.color} (${discP.name})</strong> révèle ${d.disc.primary === 'D' ? 'un leadership naturel et une orientation résultats' : d.disc.primary === 'I' ? 'un talent pour la communication et les relations' : d.disc.primary === 'S' ? 'une stabilité rassurante et un esprit coopératif' : 'une rigueur analytique et un souci du détail'}.</p>
+  <p style="margin-top:0.8rem">En tant que <strong>Type ${d.enne.dominant} — ${enneT.name}</strong> de l'Ennéagramme, votre moteur profond est le désir de <em>${enneT.desir.toLowerCase()}</em>, tandis que vous cherchez à éviter <em>${enneT.peur.toLowerCase()}</em>.</p>
+  <p style="margin-top:0.8rem">Votre intelligence émotionnelle (QE : <strong>${d.ei.qe}%</strong>) vous permet d'être <strong>${ei.EM >= 60 ? 'très empathique' : 'attentif(ve) aux autres'}</strong> et <strong>${ei.MS >= 60 ? 'maître de vos réactions' : 'en développement sur la régulation émotionnelle'}</strong>. Vous êtes <strong>${stability}</strong>.</p>`;
+}
+
+// === FORCES BUILDER ===
+function buildForces(d, discP, bf, viaTop5) {
+  // Map convergences between tests
+  const forceMap = [];
+
+  // Check convergences
+  if (bf.O >= 60 && viaTop5.includes('creativity')) forceMap.push({name:'Créativité', sources:['Big Five: Ouverture élevée','VIA: Créativité top 5'], color:'var(--violet)', pct: Math.round((bf.O + d.via.percentages.creativity) / 2)});
+  if (bf.C >= 60 && viaTop5.includes('perseverance')) forceMap.push({name:'Persévérance', sources:['Big Five: Conscienciosité élevée','VIA: Persévérance top 5'], color:'var(--blue)', pct: Math.round((bf.C + d.via.percentages.perseverance) / 2)});
+  if (bf.E >= 60 && d.disc.percentages.I >= 25) forceMap.push({name:'Influence sociale', sources:['Big Five: Extraversion élevée','DISC: forte composante Influence'], color:'var(--orange)', pct: Math.round((bf.E + d.disc.percentages.I) / 2)});
+  if (bf.A >= 60 && viaTop5.includes('kindness')) forceMap.push({name:'Bienveillance', sources:['Big Five: Agréabilité élevée','VIA: Gentillesse top 5'], color:'var(--green)', pct: Math.round((bf.A + d.via.percentages.kindness) / 2)});
+  if (d.disc.percentages.D >= 25 && viaTop5.includes('leadership')) forceMap.push({name:'Leadership', sources:['DISC: forte Dominance','VIA: Leadership top 5'], color:'var(--red)', pct: Math.round((d.disc.percentages.D + d.via.percentages.leadership) / 2)});
+  if (d.ei.percentages.EM >= 60 && bf.A >= 50) forceMap.push({name:'Empathie', sources:['IE: Empathie élevée','Big Five: Agréabilité élevée'], color:'#e91e63', pct: Math.round((d.ei.percentages.EM + bf.A) / 2)});
+  if (d.ei.percentages.MO >= 60 && bf.C >= 50) forceMap.push({name:'Motivation', sources:['IE: Motivation élevée','Big Five: Conscienciosité'], color:'var(--yellow)', pct: Math.round((d.ei.percentages.MO + bf.C) / 2)});
+
+  // Add top VIA forces not already covered
+  viaTop5.forEach(k => {
+    const s = VIA.strengths[k];
+    if (!forceMap.find(f => f.name === s.name) && forceMap.length < 6) {
+      forceMap.push({name: s.name, sources:[`VIA: Force signature (${d.via.percentages[k]}%)`], color: s.hex, pct: d.via.percentages[k]});
+    }
+  });
+
+  // Add DISC primary if not covered
+  if (forceMap.length < 6) {
+    discP.pointsForts.slice(0, 2).forEach(f => {
+      if (!forceMap.find(fm => fm.name === f) && forceMap.length < 6) {
+        forceMap.push({name: f, sources:[`DISC: Profil ${discP.name}`], color: discP.hex, pct: d.disc.percentages[d.disc.primary]});
+      }
+    });
+  }
+
+  forceMap.sort((a,b) => b.pct - a.pct);
+
+  return forceMap.slice(0, 6).map(f => `
+    <div style="margin-bottom:1rem;padding:0.8rem;background:rgba(255,255,255,0.03);border-radius:10px;border-left:3px solid ${f.color}">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong style="color:var(--text-bright)">${f.name}</strong>
+        <span style="color:${f.color};font-weight:700;font-size:0.9rem">${f.pct}%</span>
+      </div>
+      <div class="diag-trait-bar" style="margin:0.4rem 0"><div class="diag-trait-fill" style="width:${f.pct}%;background:${f.color}"></div></div>
+      <div class="diag-tags">${f.sources.map(s => `<span class="diag-tag" style="background:rgba(255,255,255,0.06);color:var(--text-muted)">${s}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+// === STYLE RELATIONNEL BUILDER ===
+function buildRelationnel(d, discP, bf, ei) {
+  const discComm = discP.communication;
+  const social = ei.SO >= 60 ? 'Vous avez d\'excellentes compétences sociales.' : ei.SO >= 40 ? 'Vos compétences sociales sont dans la moyenne.' : 'Vous pouvez développer vos compétences sociales.';
+  const empathie = ei.EM >= 60 ? 'Très empathique, vous percevez intuitivement les émotions des autres.' : ei.EM >= 40 ? 'Vous êtes attentif(ve) aux émotions des autres.' : 'Vous pouvez gagner à développer votre empathie.';
+  const extraversion = bf.E >= 60 ? 'Votre extraversion vous rend naturellement sociable et communicatif(ve).' : bf.E <= 40 ? 'Votre introversion fait de vous un(e) auditeur(trice) attentif(ve) qui préfère les échanges en petit comité.' : 'Vous naviguez aisément entre moments sociaux et temps de réflexion.';
+  const agreabilite = bf.A >= 60 ? 'Votre agréabilité élevée vous rend diplomate et coopératif(ve).' : bf.A <= 40 ? 'Votre franchise et votre esprit critique vous permettent de dire les choses directement.' : 'Vous savez être à la fois diplomate et franc(he) selon le contexte.';
+
+  return `
+    <div style="margin-bottom:1rem">
+      <h4 style="color:${discP.hex};margin-bottom:0.5rem">Communication DISC : Style ${discP.color}</h4>
+      <p class="diag-portrait">${discComm}</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-top:1rem">
+      <div style="background:rgba(255,255,255,0.03);padding:0.8rem;border-radius:10px">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">🎯 Sociabilité</div>
+        <p style="font-size:0.83rem;color:var(--text-muted)">${extraversion}</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);padding:0.8rem;border-radius:10px">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">💜 Empathie</div>
+        <p style="font-size:0.83rem;color:var(--text-muted)">${empathie}</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);padding:0.8rem;border-radius:10px">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">🤝 Diplomatie</div>
+        <p style="font-size:0.83rem;color:var(--text-muted)">${agreabilite}</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);padding:0.8rem;border-radius:10px">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">🌐 Social</div>
+        <p style="font-size:0.83rem;color:var(--text-muted)">${social}</p>
+      </div>
+    </div>`;
+}
+
+// === MOTIVATIONS BUILDER ===
+function buildMotivations(d, enneT, viaTop5, bf) {
+  const viaMotivators = viaTop5.slice(0, 3).map(k => VIA.strengths[k]);
+
+  return `
+    <div style="margin-bottom:1.2rem;padding:1rem;background:rgba(255,255,255,0.03);border-radius:12px;border-left:3px solid ${enneT.hex}">
+      <h4 style="color:${enneT.hex};margin-bottom:0.5rem">${enneT.icon} Ennéagramme Type ${d.enne.dominant} — ${enneT.name}</h4>
+      <p class="diag-portrait"><strong>Désir fondamental :</strong> ${enneT.desir}</p>
+      <p class="diag-portrait"><strong>Peur fondamentale :</strong> ${enneT.peur}</p>
+    </div>
+    <div style="margin-bottom:1rem">
+      <h4 style="color:var(--text-bright);margin-bottom:0.5rem">Ce qui vous fait avancer (convergence VIA + Big Five)</h4>
+      <div style="display:grid;gap:0.6rem">
+        ${viaMotivators.map(s => `<div style="display:flex;align-items:center;gap:0.6rem;padding:0.6rem;background:rgba(255,255,255,0.03);border-radius:8px">
+          <span style="font-size:1.2rem">${s.icon}</span>
+          <div><strong style="color:var(--text-bright)">${s.name}</strong> <span style="color:${s.hex};font-size:0.8rem">(${s.virtue})</span>
+          <p style="font-size:0.82rem;color:var(--text-muted);margin-top:0.2rem">${s.desc}</p></div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap">
+      <div style="flex:1;min-width:200px;padding:0.8rem;background:rgba(255,255,255,0.03);border-radius:10px">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">📈 Ouverture aux expériences</div>
+        <div class="diag-trait-bar"><div class="diag-trait-fill" style="width:${bf.O}%;background:var(--violet)"></div></div>
+        <span style="font-size:0.8rem;color:var(--text-muted)">${bf.O >= 60 ? 'Très curieux(se) et avide de nouveautés' : bf.O <= 40 ? 'Préfère les approches éprouvées' : 'Ouvert(e) mais ancré(e)'}</span>
+      </div>
+      <div style="flex:1;min-width:200px;padding:0.8rem;background:rgba(255,255,255,0.03);border-radius:10px">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">⚡ Autodiscipline</div>
+        <div class="diag-trait-bar"><div class="diag-trait-fill" style="width:${bf.C}%;background:var(--blue)"></div></div>
+        <span style="font-size:0.8rem;color:var(--text-muted)">${bf.C >= 60 ? 'Très discipliné(e) et persévérant(e)' : bf.C <= 40 ? 'Flexible et spontané(e)' : 'Équilibré(e)'}</span>
+      </div>
+    </div>`;
+}
+
+// === GESTION EMOTIONNELLE BUILDER ===
+function buildEmotions(d, enneT, bf, ei) {
+  const qe = d.ei.qe;
+  const qeLevel = qe >= 70 ? 'Élevé' : qe >= 40 ? 'Moyen' : 'En développement';
+  const qeColor = qe >= 70 ? 'var(--green)' : qe >= 40 ? 'var(--blue)' : 'var(--orange)';
+  const nevro = bf.N;
+  const stab = nevro <= 35 ? 'Très stable émotionnellement' : nevro >= 65 ? 'Sensibilité émotionnelle élevée' : 'Stabilité émotionnelle modérée';
+
+  const eiDims = [
+    {key:'CS', name:'Conscience de soi', icon:'🪞'},
+    {key:'MS', name:'Maîtrise de soi', icon:'🧘'},
+    {key:'MO', name:'Motivation', icon:'🔥'},
+    {key:'EM', name:'Empathie', icon:'💜'},
+    {key:'SO', name:'Compétences sociales', icon:'🌐'}
+  ];
+
+  return `
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:2.5rem;font-weight:800;color:${qeColor}">${qe}%</div>
+      <div style="font-size:0.9rem;color:var(--text-muted)">Quotient Émotionnel — ${qeLevel}</div>
+    </div>
+    <div style="display:grid;gap:0.5rem;margin-bottom:1.2rem">
+      ${eiDims.map(dim => `<div class="diag-trait">
+        <span class="diag-trait-label">${dim.icon} ${dim.name}</span>
+        <div class="diag-trait-bar"><div class="diag-trait-fill" style="width:${ei[dim.key]}%;background:${ei[dim.key] >= 60 ? 'var(--green)' : ei[dim.key] >= 40 ? 'var(--blue)' : 'var(--orange)'}"></div></div>
+        <span class="diag-trait-val" style="color:${ei[dim.key] >= 60 ? 'var(--green)' : ei[dim.key] >= 40 ? 'var(--blue)' : 'var(--orange)'}">${ei[dim.key]}%</span>
+      </div>`).join('')}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem">
+      <div style="padding:0.8rem;background:rgba(255,255,255,0.03);border-radius:10px">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">🌊 Névrosisme (Big Five)</div>
+        <div class="diag-trait-bar"><div class="diag-trait-fill" style="width:${nevro}%;background:${nevro <= 35 ? 'var(--green)' : nevro >= 65 ? 'var(--orange)' : 'var(--blue)'}"></div></div>
+        <span style="font-size:0.8rem;color:var(--text-muted)">${stab}</span>
+      </div>
+      <div style="padding:0.8rem;background:rgba(255,255,255,0.03);border-radius:10px">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--text-bright);margin-bottom:0.3rem">⚔️ Sous stress (Ennéagramme)</div>
+        <p style="font-size:0.82rem;color:var(--text-muted)">${enneT.pointsFaibles.slice(0, 3).join(', ')}</p>
+      </div>
+    </div>`;
+}
+
+// === AXES DE DEVELOPPEMENT BUILDER ===
+function buildAxes(d, discP, bf, ei, viaBottom5, enneT) {
+  const axes = [];
+
+  // Low EI dimensions
+  ['CS','MS','MO','EM','SO'].forEach(dim => {
+    if (ei[dim] < 45) axes.push({area: EI.dimensions[dim].name, source:'IE', pct:ei[dim], conseil: EI.dimensions[dim].descLow, icon: EI.dimensions[dim].icon});
+  });
+
+  // Low Big Five traits (except N which is inverse)
+  if (bf.O < 40) axes.push({area:'Ouverture', source:'Big Five', pct:bf.O, conseil:'Explorer de nouvelles activités, cultures et idées pourrait enrichir votre perspective.', icon:'🔭'});
+  if (bf.C < 40) axes.push({area:'Organisation', source:'Big Five', pct:bf.C, conseil:'Mettre en place des routines et des outils de planification pourrait vous aider.', icon:'📋'});
+  if (bf.E < 35) axes.push({area:'Expression sociale', source:'Big Five', pct:bf.E, conseil:'Pratiquer des interactions sociales graduelles peut renforcer votre aisance.', icon:'💬'});
+  if (bf.A < 35) axes.push({area:'Coopération', source:'Big Five', pct:bf.A, conseil:'Développer l\'écoute active et la bienveillance peut améliorer vos relations.', icon:'🤝'});
+  if (bf.N > 65) axes.push({area:'Stabilité émotionnelle', source:'Big Five', pct:100-bf.N, conseil:'Des techniques de relaxation et de mindfulness peuvent vous aider à mieux gérer le stress.', icon:'🧘'});
+
+  // DISC weaknesses
+  discP.pointsFaibles.slice(0, 2).forEach(f => {
+    if (!axes.find(a => a.area === f)) axes.push({area:f, source:'DISC', pct:null, conseil:`Point d'attention lié à votre profil ${discP.name}.`, icon:'⚠️'});
+  });
+
+  // Ennéagramme weaknesses
+  enneT.pointsFaibles.slice(0, 2).forEach(f => {
+    if (!axes.find(a => a.area === f) && axes.length < 8) axes.push({area:f, source:'Ennéagramme', pct:null, conseil:`Tendance naturelle du Type ${d.enne.dominant} à travailler.`, icon:'🔄'});
+  });
+
+  // VIA bottom forces
+  viaBottom5.slice(0, 2).forEach(k => {
+    const s = VIA.strengths[k];
+    if (axes.length < 8) axes.push({area: s.name, source:'VIA', pct:d.via.percentages[k], conseil:`Force moins développée : ${s.desc}`, icon: s.icon});
+  });
+
+  return axes.slice(0, 6).map(a => `
+    <div style="padding:0.8rem;background:rgba(255,255,255,0.03);border-radius:10px;margin-bottom:0.6rem;border-left:3px solid var(--orange)">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong style="color:var(--text-bright)">${a.icon} ${a.area}</strong>
+        <span class="diag-tag" style="background:rgba(255,255,255,0.06);color:var(--text-muted)">${a.source}${a.pct !== null ? ` (${a.pct}%)` : ''}</span>
+      </div>
+      <p style="font-size:0.83rem;color:var(--text-muted);margin-top:0.3rem">${a.conseil}</p>
+    </div>
+  `).join('');
+}
+
+// === RADAR CHART ===
+function drawDiagRadar(dims) {
+  const canvas = document.getElementById('diag-radar');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cx = 150, cy = 150, r = 110;
+  ctx.clearRect(0, 0, 300, 300);
+
+  const n = dims.length;
+  const angleStep = (Math.PI * 2) / n;
+
+  // Grid
+  for (let level = 1; level <= 4; level++) {
+    ctx.beginPath();
+    const lr = (r * level) / 4;
+    for (let i = 0; i <= n; i++) {
+      const angle = (i % n) * angleStep - Math.PI / 2;
+      const x = cx + lr * Math.cos(angle);
+      const y = cy + lr * Math.sin(angle);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.stroke();
+  }
+
+  // Axes
+  dims.forEach((d, i) => {
+    const angle = i * angleStep - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + r * Math.cos(angle), cy + r * Math.sin(angle));
+    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+    ctx.stroke();
+  });
+
+  // Data polygon
+  ctx.beginPath();
+  dims.forEach((d, i) => {
+    const angle = i * angleStep - Math.PI / 2;
+    const dr = (r * d.val) / 100;
+    const x = cx + dr * Math.cos(angle);
+    const y = cy + dr * Math.sin(angle);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(124,58,237,0.25)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(124,58,237,0.8)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Points + labels
+  dims.forEach((d, i) => {
+    const angle = i * angleStep - Math.PI / 2;
+    const dr = (r * d.val) / 100;
+    const x = cx + dr * Math.cos(angle);
+    const y = cy + dr * Math.sin(angle);
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#7c3aed';
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Label
+    const lx = cx + (r + 20) * Math.cos(angle);
+    const ly = cy + (r + 20) * Math.sin(angle);
+    ctx.font = '11px Inter, sans-serif';
+    ctx.fillStyle = '#d4c8e8';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(d.label, lx, ly);
+  });
+}
+
+// === SHARE DIAGNOSTIC ===
+function shareDiagnostic() {
+  const d = getDiagData();
+  if (!d.disc || !d.bigfive || !d.via || !d.enne || !d.ei) return;
+
+  const discP = DISC.profiles[d.disc.primary];
+  const enneT = ENNE.types[d.enne.dominant];
+  const bf = d.bigfive.percentages;
+  const userName = currentUser ? currentUser.prenom : 'Utilisateur';
+
+  let text = `🧠 DIAGNOSTIC PSYCHOLOGIQUE COMPLET — ${userName}\n\n`;
+  text += `📊 PROFIL DISC : ${discP.name} (${discP.color})\n`;
+  text += `D:${d.disc.percentages.D}% I:${d.disc.percentages.I}% S:${d.disc.percentages.S}% C:${d.disc.percentages.C}%\n\n`;
+  text += `🌊 BIG FIVE (OCEAN) :\n`;
+  text += `O:${bf.O}% C:${bf.C}% E:${bf.E}% A:${bf.A}% N:${bf.N}%\n\n`;
+  text += `💪 TOP 5 FORCES VIA :\n`;
+  text += d.via.top5.map(k => `• ${VIA.strengths[k].name} (${d.via.percentages[k]}%)`).join('\n') + '\n\n';
+  text += `⭐ ENNÉAGRAMME : Type ${d.enne.dominant} — ${enneT.name}\n`;
+  text += `Désir: ${enneT.desir} | Peur: ${enneT.peur}\n\n`;
+  text += `❤️ INTELLIGENCE ÉMOTIONNELLE : QE ${d.ei.qe}%\n`;
+  text += `CS:${d.ei.percentages.CS}% MS:${d.ei.percentages.MS}% MO:${d.ei.percentages.MO}% EM:${d.ei.percentages.EM}% SO:${d.ei.percentages.SO}%\n\n`;
+  text += `🔗 https://natquinson-cmd.github.io/Mon-Profil-Psychologique/`;
+
+  if (navigator.share) {
+    navigator.share({title:'Mon Diagnostic Psychologique', text}).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text).then(() => alert('Diagnostic copié dans le presse-papier !')).catch(() => {});
   }
 }
 
