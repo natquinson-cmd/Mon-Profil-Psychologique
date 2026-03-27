@@ -1335,6 +1335,7 @@ function showDiscResults(result) {
 
   <div class="results-actions">
     <button class="btn btn-secondary" onclick="navigateTo('home');renderHome();">Retour a l'accueil</button>
+    <button class="btn btn-primary btn-sm" onclick="shareResults('disc')">&#x1F4E4; Partager</button>
     <button class="btn btn-danger btn-sm" onclick="retakeDisc()">Refaire le test</button>
   </div>`;
 
@@ -1760,6 +1761,7 @@ function showBigFiveResults(result) {
   html += `
   <div class="results-actions">
     <button class="btn btn-secondary" onclick="navigateTo('home');renderHome();">Retour a l'accueil</button>
+    <button class="btn btn-primary btn-sm" onclick="shareResults('bigfive')">&#x1F4E4; Partager</button>
     <button class="btn btn-danger btn-sm" onclick="retakeBigFive()">Refaire le test</button>
   </div>`;
 
@@ -2225,6 +2227,7 @@ function showVIAResults(result) {
 
   <div class="results-actions">
     <button class="btn btn-secondary" onclick="navigateTo('home');renderHome();">Retour a l'accueil</button>
+    <button class="btn btn-primary btn-sm" onclick="shareResults('via')">&#x1F4E4; Partager</button>
     <button class="btn btn-danger btn-sm" onclick="retakeVIA()">Refaire le test</button>
   </div>`;
 
@@ -2236,6 +2239,67 @@ function retakeVIA() {
   VIA.answers = {};
   VIA.currentQ = 0;
   navigateTo('via-intro');
+}
+
+// ===== SHARE RESULTS =====
+function shareResults(testId) {
+  let text = '';
+  const url = 'https://natquinson-cmd.github.io/Mon-Profil-Psychologique/';
+
+  if (testId === 'disc') {
+    const data = JSON.parse(localStorage.getItem('psyProfile_disc') || 'null');
+    if (!data) return;
+    const primary = DISC.profiles[data.primary];
+    text = `Mon Profil DISC\n\n`;
+    text += `Profil dominant : ${primary.name} (${primary.color})\n\n`;
+    text += `D (Dominance) : ${data.percentages.D}%\n`;
+    text += `I (Influence) : ${data.percentages.I}%\n`;
+    text += `S (Stabilité) : ${data.percentages.S}%\n`;
+    text += `C (Conformité) : ${data.percentages.C}%\n\n`;
+    text += `Points forts : ${primary.pointsForts.slice(0,3).join(', ')}\n`;
+    text += `Completé le ${data.date}`;
+  }
+
+  else if (testId === 'bigfive') {
+    const data = JSON.parse(localStorage.getItem('psyProfile_bigfive') || 'null');
+    if (!data) return;
+    const dimNames = {O:'Ouverture',C:'Conscienciosité',E:'Extraversion',A:'Agréabilité',N:'Névrosisme'};
+    const sorted = Object.entries(data.percentages).sort((a,b) => b[1] - a[1]);
+    text = `Mon Profil Big Five (OCEAN)\n\n`;
+    text += `Trait dominant : ${dimNames[sorted[0][0]]}\n\n`;
+    sorted.forEach(([d, pct]) => { text += `${dimNames[d]} : ${pct}%\n`; });
+    text += `\nCompletó le ${data.date}`;
+  }
+
+  else if (testId === 'via') {
+    const data = JSON.parse(localStorage.getItem('psyProfile_via') || 'null');
+    if (!data) return;
+    text = `Mes Forces de Caractere (VIA)\n\n`;
+    text += `Top 5 :\n`;
+    data.top5.forEach((k, i) => {
+      const s = VIA.strengths[k];
+      text += `${i+1}. ${s.name} (${s.virtue}) — ${data.percentages[k]}%\n`;
+    });
+    text += `\nCompletó le ${data.date}`;
+  }
+
+  text += `\n\nFaites le test : ${url}`;
+
+  // Use Web Share API if available (mobile), otherwise copy to clipboard
+  if (navigator.share) {
+    navigator.share({ title: 'Mon Profil Psychologique', text: text, url: url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = event.target;
+      const orig = btn.innerHTML;
+      btn.innerHTML = '&#x2705; Copié !';
+      btn.style.background = 'var(--green)';
+      setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 2000);
+    }).catch(() => {
+      // Fallback: prompt
+      prompt('Copiez vos résultats :', text);
+    });
+  }
 }
 
 // ===== PUZZLE HEAD — SVG puzzle piece generator =====
