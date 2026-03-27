@@ -534,11 +534,11 @@ body::before {
 <div class="profile-modal" id="profile-modal">
   <div class="profile-box">
     <h3>Mon Profil</h3>
-    <p>Entrez votre prénom et nom pour sauvegarder vos résultats</p>
+    <p id="profile-subtitle">Entrez votre prénom et nom pour sauvegarder vos résultats</p>
     <input type="text" id="profile-prenom" placeholder="Prénom" autocomplete="given-name">
     <input type="text" id="profile-nom" placeholder="Nom" autocomplete="family-name">
     <div class="profile-actions">
-      <button class="btn btn-secondary btn-sm" onclick="closeProfileModal()">Annuler</button>
+      <button class="btn btn-secondary btn-sm" id="btn-cancel-profile" onclick="closeProfileModal()">Annuler</button>
       <button class="btn btn-primary btn-sm" onclick="saveProfile()">Enregistrer</button>
       <button class="btn btn-danger btn-sm" id="btn-logout" style="display:none" onclick="logoutProfile()">Déconnexion</button>
     </div>
@@ -925,21 +925,28 @@ function getUserKey() {
   return (currentUser.prenom + '_' + currentUser.nom).toLowerCase().replace(/[^a-z0-9_]/g, '');
 }
 
-function showProfileModal() {
+function showProfileModal(forced) {
   const modal = document.getElementById('profile-modal');
   modal.classList.add('show');
+  const cancelBtn = document.getElementById('btn-cancel-profile');
+  const subtitle = document.getElementById('profile-subtitle');
   if (currentUser) {
     document.getElementById('profile-prenom').value = currentUser.prenom;
     document.getElementById('profile-nom').value = currentUser.nom;
     document.getElementById('btn-logout').style.display = 'inline-block';
+    cancelBtn.style.display = 'inline-block';
+    subtitle.textContent = 'Modifiez votre profil';
   } else {
     document.getElementById('profile-prenom').value = '';
     document.getElementById('profile-nom').value = '';
     document.getElementById('btn-logout').style.display = 'none';
+    cancelBtn.style.display = forced ? 'none' : 'inline-block';
+    subtitle.textContent = 'Connectez-vous pour sauvegarder vos résultats';
   }
 }
 
 function closeProfileModal() {
+  if (!currentUser) return; // Cannot close without being logged in
   document.getElementById('profile-modal').classList.remove('show');
 }
 
@@ -1003,7 +1010,11 @@ function loadUserData() {
 
 // Init user display on load
 updateUserDisplay();
-if (currentUser) loadUserData();
+if (currentUser) {
+  loadUserData();
+} else {
+  showProfileModal(true);
+}
 
 // ===== APP STATE =====
 const APP = {
