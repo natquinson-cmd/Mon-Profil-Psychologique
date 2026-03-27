@@ -174,6 +174,17 @@ body::before {
 .badge-available { background:rgba(245,200,66,0.15); color:#f5c842; }
 .badge-soon { background:rgba(136,136,170,0.15); color:var(--text-muted); }
 .badge-done { background:rgba(46,204,113,0.2); color:var(--green); }
+.card-actions {
+  display:flex; gap:0.5rem; margin-top:0.8rem; flex-wrap:wrap;
+}
+.card-actions button {
+  flex:1; min-width:0; padding:0.45rem 0.6rem; border-radius:8px; font-size:0.78rem;
+  font-weight:600; font-family:inherit; cursor:pointer; transition:var(--transition); border:none;
+}
+.btn-results { background:rgba(46,204,113,0.15); color:var(--green); }
+.btn-results:hover { background:rgba(46,204,113,0.3); }
+.btn-restart { background:rgba(124,58,237,0.12); color:var(--purple-light); }
+.btn-restart:hover { background:rgba(124,58,237,0.25); }
 /* DISC specific card colors */
 .card-disc { border-left:3px solid var(--red); }
 .card-disc .card-icon { background:var(--red-bg); }
@@ -1291,32 +1302,35 @@ function renderHome() {
     const done = (m.id === 'disc' && savedDisc) || (m.id === 'bigfive' && savedBF) || (m.id === 'via' && savedVIA) || (m.id === 'enneagramme' && savedEnne) || (m.id === 'ei' && savedEI);
     const card = document.createElement('div');
     card.className = `card ${m.cardClass} ${!m.available ? 'locked' : ''}`;
+    const introPage = m.id + '-intro';
     card.innerHTML = `
       <div class="card-icon">${m.icon}</div>
       <span class="badge ${done ? 'badge-done' : m.available ? 'badge-available' : 'badge-soon'}">
-        ${done ? '&#x2705; Fait' : m.available ? '▶ Commencer' : 'Bientot'}
+        ${done ? '✅ Terminé' : m.available ? '▶ Commencer' : 'Bientot'}
       </span>
       <h3>${m.name}</h3>
       <p>${m.description}</p>
-      <p style="margin-top:0.6rem;font-size:0.8rem;color:var(--text-muted)">${m.available ? m.duration : '\u{1F512} Bientot disponible'}</p>
+      ${done ? `<div class="card-actions">
+        <button class="btn-results" data-action="results">📊 Voir résultats</button>
+        <button class="btn-restart" data-action="restart">🔄 Recommencer</button>
+      </div>` : `<p style="margin-top:0.6rem;font-size:0.8rem;color:var(--text-muted)">${m.available ? m.duration : '\u{1F512} Bientot disponible'}</p>`}
     `;
-    if (m.available) {
-      card.onclick = () => {
-        if (m.id === 'disc') {
-          if (savedDisc) showDiscResults(savedDisc); else navigateTo('disc-intro');
-        } else if (m.id === 'bigfive') {
-          if (savedBF) showBigFiveResults(savedBF); else navigateTo('bigfive-intro');
-        } else if (m.id === 'via') {
-          const savedVIAClick = JSON.parse(localStorage.getItem('psyProfile_via') || 'null');
-          if (savedVIAClick) showVIAResults(savedVIAClick); else navigateTo('via-intro');
-        } else if (m.id === 'enneagramme') {
-          const savedEnneClick = JSON.parse(localStorage.getItem('psyProfile_enneagramme') || 'null');
-          if (savedEnneClick) showEnneResults(savedEnneClick); else navigateTo('enneagramme-intro');
-        } else if (m.id === 'ei') {
-          const savedEI = JSON.parse(localStorage.getItem('psyProfile_ei') || 'null');
-          if (savedEI) showEIResults(savedEI); else navigateTo('ei-intro');
-        }
+    if (m.available && done) {
+      card.querySelector('.btn-results').onclick = (e) => {
+        e.stopPropagation();
+        const data = JSON.parse(localStorage.getItem('psyProfile_' + m.id) || 'null');
+        if (m.id === 'disc') showDiscResults(data);
+        else if (m.id === 'bigfive') showBigFiveResults(data);
+        else if (m.id === 'via') showVIAResults(data);
+        else if (m.id === 'enneagramme') showEnneResults(data);
+        else if (m.id === 'ei') showEIResults(data);
       };
+      card.querySelector('.btn-restart').onclick = (e) => {
+        e.stopPropagation();
+        navigateTo(introPage);
+      };
+    } else if (m.available) {
+      card.onclick = () => navigateTo(introPage);
     }
     grid.appendChild(card);
   });
