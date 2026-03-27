@@ -252,10 +252,10 @@ body::before {
 .diag-section-title .diag-icon { font-size:1.4rem; }
 .diag-section-title h3 { font-size:1.05rem; font-weight:700; color:var(--text-bright); }
 .diag-trait { display:flex; align-items:center; gap:0.8rem; margin-bottom:0.6rem; }
-.diag-trait-label { min-width:130px; font-size:0.85rem; color:var(--text); }
+.diag-trait-label { min-width:130px; font-size:0.85rem; color:var(--text); padding-right:0.6rem; }
 .diag-trait-bar { flex:1; height:8px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden; }
 .diag-trait-fill { height:100%; border-radius:4px; transition:width 0.6s ease; }
-.diag-trait-val { font-size:0.8rem; font-weight:600; min-width:35px; text-align:right; }
+.diag-trait-val { font-size:0.8rem; font-weight:600; min-width:45px; text-align:right; padding-left:0.6rem; }
 .diag-tags { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.5rem; }
 .diag-tag { font-size:0.78rem; padding:0.25rem 0.6rem; border-radius:10px; font-weight:500; }
 .diag-portrait { font-size:0.95rem; line-height:1.7; color:var(--text); }
@@ -3599,7 +3599,7 @@ function showDiagnostic() {
     <div class="diag-section-card">
       <div class="diag-section-title"><span class="diag-icon">📊</span><h3>Vue d'ensemble</h3></div>
       <div class="diag-radar-container"><canvas id="diag-radar" width="300" height="300"></canvas></div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.5rem;margin-top:1rem">
+      <div style="display:grid;gap:0.5rem;margin-top:1rem">
         ${radarDims.map(r => `<div class="diag-trait">
           <span class="diag-trait-label">${r.label}</span>
           <div class="diag-trait-bar"><div class="diag-trait-fill" style="width:${r.val}%;background:${r.val >= 70 ? 'var(--green)' : r.val >= 40 ? 'var(--blue)' : 'var(--orange)'}"></div></div>
@@ -3660,11 +3660,52 @@ function buildPortrait(d, discP, enneT, bf, ei) {
   const stability = bf.N <= 35 ? 'émotionnellement stable' : bf.N >= 65 ? 'sensible aux émotions' : 'modérément sensible';
   const approach = bf.C >= 60 ? 'organisé(e) et méthodique' : bf.C <= 40 ? 'spontané(e) et flexible' : 'équilibré(e) entre méthode et spontanéité';
   const openness = bf.O >= 60 ? 'curieux(se) et ouvert(e) aux idées nouvelles' : bf.O <= 40 ? 'pragmatique et concret(e)' : 'ouvert(e) tout en restant ancré(e)';
+  const agreabilite = bf.A >= 60 ? 'naturellement bienveillant(e) et coopératif(ve)' : bf.A <= 40 ? 'franc(he) et direct(e) dans vos rapports' : 'capable de diplomatie tout en sachant vous affirmer';
 
-  return `<p>Vous êtes une personne <strong>${extraversion}</strong>, <strong>${approach}</strong> et <strong>${openness}</strong>.
-  Votre profil DISC dominant <strong>${discP.color} (${discP.name})</strong> révèle ${d.disc.primary === 'D' ? 'un leadership naturel et une orientation résultats' : d.disc.primary === 'I' ? 'un talent pour la communication et les relations' : d.disc.primary === 'S' ? 'une stabilité rassurante et un esprit coopératif' : 'une rigueur analytique et un souci du détail'}.</p>
-  <p style="margin-top:0.8rem">En tant que <strong>Type ${d.enne.dominant} — ${enneT.name}</strong> de l'Ennéagramme, votre moteur profond est le désir de <em>${enneT.desir.toLowerCase()}</em>, tandis que vous cherchez à éviter <em>${enneT.peur.toLowerCase()}</em>.</p>
-  <p style="margin-top:0.8rem">Votre intelligence émotionnelle (QE : <strong>${d.ei.qe}%</strong>) vous permet d'être <strong>${ei.EM >= 60 ? 'très empathique' : 'attentif(ve) aux autres'}</strong> et <strong>${ei.MS >= 60 ? 'maître de vos réactions' : 'en développement sur la régulation émotionnelle'}</strong>. Vous êtes <strong>${stability}</strong>.</p>`;
+  // DISC secondary
+  const discSec = DISC.profiles[d.disc.secondary];
+  const discBlend = `Votre profil secondaire <strong>${discSec.color} (${discSec.name})</strong> vient nuancer ce style : ${d.disc.secondary === 'D' ? 'vous savez prendre les commandes quand il le faut' : d.disc.secondary === 'I' ? 'vous savez aussi communiquer et fédérer' : d.disc.secondary === 'S' ? 'vous apportez également stabilité et écoute' : 'vous apportez aussi rigueur et analyse'}.`;
+
+  // VIA top force
+  const topVIA = VIA.strengths[d.via.top5[0]];
+  const topVIA2 = VIA.strengths[d.via.top5[1]];
+
+  // Ennéagramme wings
+  const wingLeft = d.enne.dominant === 1 ? 9 : d.enne.dominant - 1;
+  const wingRight = d.enne.dominant === 9 ? 1 : d.enne.dominant + 1;
+  const wingPcts = d.enne.percentages;
+  const strongerWing = wingPcts[wingLeft] >= wingPcts[wingRight] ? wingLeft : wingRight;
+  const wingInfo = ENNE.types[strongerWing];
+
+  // Environnement idéal
+  const envTraits = [];
+  if (d.disc.percentages.D >= 25) envTraits.push('stimulant avec des défis');
+  if (d.disc.percentages.I >= 25) envTraits.push('collaboratif et dynamique');
+  if (d.disc.percentages.S >= 25) envTraits.push('stable et prévisible');
+  if (d.disc.percentages.C >= 25) envTraits.push('structuré et rigoureux');
+  if (bf.O >= 60) envTraits.push('ouvert à l\'innovation');
+  if (bf.E <= 40) envTraits.push('avec des moments de calme');
+  const envText = envTraits.length > 0 ? envTraits.slice(0, 3).join(', ') : 'équilibré';
+
+  // QE level description
+  const qeDesc = d.ei.qe >= 75 ? 'Votre quotient émotionnel élevé est un atout majeur dans vos relations personnelles et professionnelles.' :
+    d.ei.qe >= 55 ? 'Votre quotient émotionnel solide vous donne de bonnes bases pour naviguer les situations interpersonnelles.' :
+    'Développer votre intelligence émotionnelle pourrait significativement enrichir vos interactions.';
+
+  return `<p>Vous êtes une personne <strong>${extraversion}</strong>, <strong>${approach}</strong> et <strong>${openness}</strong>. Vous êtes également <strong>${agreabilite}</strong>.</p>
+
+  <p style="margin-top:0.8rem">Votre profil DISC dominant <strong>${discP.color} (${discP.name})</strong> révèle ${d.disc.primary === 'D' ? 'un leadership naturel et une orientation résultats' : d.disc.primary === 'I' ? 'un talent pour la communication et les relations' : d.disc.primary === 'S' ? 'une stabilité rassurante et un esprit coopératif' : 'une rigueur analytique et un souci du détail'}. ${discBlend}</p>
+
+  <p style="margin-top:0.8rem">En tant que <strong>Type ${d.enne.dominant} — ${enneT.name}</strong> de l'Ennéagramme (avec une aile ${strongerWing} — ${wingInfo.name}), votre moteur profond est le désir de <em>${enneT.desir.toLowerCase()}</em>, tandis que vous cherchez à éviter <em>${enneT.peur.toLowerCase()}</em>. Cette dynamique influence profondément vos choix et votre comportement au quotidien.</p>
+
+  <p style="margin-top:0.8rem">Vos forces de caractère dominantes — <strong>${topVIA.icon} ${topVIA.name}</strong> et <strong>${topVIA2.icon} ${topVIA2.name}</strong> — constituent le socle de votre identité. Ce sont les qualités sur lesquelles vous pouvez vous appuyer naturellement dans les moments de défi.</p>
+
+  <p style="margin-top:0.8rem">Votre intelligence émotionnelle (QE : <strong>${d.ei.qe}%</strong>) vous permet d'être <strong>${ei.EM >= 60 ? 'très empathique' : ei.EM >= 40 ? 'attentif(ve) aux autres' : 'en développement sur la lecture des émotions'}</strong> et <strong>${ei.MS >= 60 ? 'maître de vos réactions' : ei.MS >= 40 ? 'globalement posé(e) face au stress' : 'en progression sur la régulation émotionnelle'}</strong>. Vous êtes <strong>${stability}</strong>. ${qeDesc}</p>
+
+  <div style="margin-top:1.2rem;padding:1rem;background:rgba(124,58,237,0.08);border-radius:12px;border-left:3px solid var(--purple)">
+    <h4 style="color:var(--purple-light);margin-bottom:0.4rem">🎯 En résumé</h4>
+    <p>Vous fonctionnez le mieux dans un environnement <strong>${envText}</strong>. Votre combinaison unique ${discP.name}/${enneT.name} fait de vous quelqu'un qui ${d.disc.primary === 'D' && d.enne.dominant <= 3 ? 'vise l\'excellence et sait mener les projets à terme' : d.disc.primary === 'I' ? 'sait fédérer et inspirer les autres autour d\'une vision' : d.disc.primary === 'S' ? 'apporte une présence rassurante et une fiabilité à toute épreuve' : d.disc.primary === 'C' ? 'allie profondeur d\'analyse et exigence de qualité' : 'combine plusieurs talents complémentaires'}. Votre moteur émotionnel (${ei.MO >= 60 ? 'forte motivation intrinsèque' : 'motivation en construction'}) et votre ${bf.A >= 50 ? 'sens de l\'humain' : 'sens de l\'efficacité'} sont des atouts précieux pour votre développement personnel et professionnel.</p>
+  </div>`;
 }
 
 // === FORCES BUILDER ===
