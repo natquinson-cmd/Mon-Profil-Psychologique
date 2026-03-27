@@ -3546,6 +3546,68 @@ function updateDiagSection() {
   }
 }
 
+function getProfileName(d, bf) {
+  const disc = d.disc.primary;
+  const enne = d.enne.dominant;
+  const ei = d.ei.qe;
+
+  // Archetype based on DISC primary + Ennéagramme type
+  const archetypes = {
+    'D-1': {name:'Le Commandant Perfectionniste', desc:'Un leader exigeant qui vise l\'excellence en toute chose'},
+    'D-2': {name:'Le Capitaine Bienveillant', desc:'Un meneur qui prend soin de son équipe tout en gardant le cap'},
+    'D-3': {name:'Le Conquérant Stratège', desc:'Ambitieux et déterminé, vous transformez chaque défi en victoire'},
+    'D-4': {name:'Le Visionnaire Passionné', desc:'Un leader créatif qui apporte profondeur et authenticité'},
+    'D-5': {name:'Le Stratège Analytique', desc:'Un esprit brillant qui combine leadership et expertise'},
+    'D-6': {name:'Le Protecteur Résolu', desc:'Un leader fiable qui sécurise son entourage avec détermination'},
+    'D-7': {name:'Le Pionnier Audacieux', desc:'Un aventurier né qui ouvre la voie avec énergie et optimisme'},
+    'D-8': {name:'Le Titan Indomptable', desc:'Une force de la nature qui avance sans compromis'},
+    'D-9': {name:'Le Sage Décisif', desc:'Un leader calme dont la sérénité inspire le respect'},
+    'I-1': {name:'L\'Ambassadeur Éthique', desc:'Un communicant intègre qui inspire par ses valeurs'},
+    'I-2': {name:'Le Soleil Généreux', desc:'Votre chaleur humaine et votre énergie illuminent tout votre entourage'},
+    'I-3': {name:'L\'Étoile Charismatique', desc:'Un talent naturel pour briller et entraîner les autres dans votre élan'},
+    'I-4': {name:'L\'Artiste Magnétique', desc:'Créatif et expressif, vous touchez les gens par votre authenticité'},
+    'I-5': {name:'Le Sage Éloquent', desc:'Un esprit profond qui sait transmettre ses idées avec passion'},
+    'I-6': {name:'Le Rallié Enthousiaste', desc:'Loyal et communicatif, vous fédérez les gens autour de causes communes'},
+    'I-7': {name:'L\'Explorateur Joyeux', desc:'Un esprit libre qui transforme chaque moment en aventure'},
+    'I-8': {name:'Le Catalyseur Audacieux', desc:'Votre énergie et votre franchise créent un mouvement autour de vous'},
+    'I-9': {name:'L\'Harmonisateur Solaire', desc:'Vous apportez lumière et cohésion partout où vous allez'},
+    'S-1': {name:'Le Gardien Consciencieux', desc:'Fiable et méthodique, vous êtes le pilier sur lequel tout repose'},
+    'S-2': {name:'L\'Ange Gardien', desc:'Votre dévouement et votre patience font de vous un soutien inestimable'},
+    'S-3': {name:'Le Bâtisseur Patient', desc:'Vous construisez le succès pas à pas, avec constance et détermination'},
+    'S-4': {name:'L\'Âme Sensible', desc:'Profond et attentionné, vous apportez une humanité rare'},
+    'S-5': {name:'Le Sage Tranquille', desc:'Votre calme et votre savoir font de vous un repère pour les autres'},
+    'S-6': {name:'Le Roc Loyal', desc:'Solide comme un roc, votre fidélité est une force inébranlable'},
+    'S-7': {name:'L\'Optimiste Serein', desc:'Vous combinez joie de vivre et stabilité rassurante'},
+    'S-8': {name:'Le Bouclier Protecteur', desc:'Fort et bienveillant, vous protégez les vôtres avec détermination'},
+    'S-9': {name:'Le Médiateur Zen', desc:'Votre paix intérieure et votre patience apaisent tout votre entourage'},
+    'C-1': {name:'L\'Architecte Rigoureux', desc:'Précision et éthique : vous construisez des systèmes impeccables'},
+    'C-2': {name:'Le Mentor Attentif', desc:'Votre expertise au service des autres, avec patience et générosité'},
+    'C-3': {name:'L\'Expert Ambitieux', desc:'Vous excellez en combinant maîtrise technique et vision stratégique'},
+    'C-4': {name:'Le Créateur Méticuleux', desc:'L\'art et la précision se rencontrent dans tout ce que vous faites'},
+    'C-5': {name:'Le Chercheur Érudit', desc:'Un esprit analytique d\'exception qui explore en profondeur'},
+    'C-6': {name:'L\'Analyste Vigilant', desc:'Méthodique et prévoyant, rien ne vous échappe'},
+    'C-7': {name:'L\'Inventeur Curieux', desc:'Vous alliez rigueur scientifique et soif de découvertes'},
+    'C-8': {name:'Le Stratège de Fer', desc:'Votre analyse froide et votre détermination sont redoutables'},
+    'C-9': {name:'Le Philosophe Posé', desc:'Sagesse et précision se combinent en une présence apaisante'}
+  };
+
+  const key = disc + '-' + enne;
+  let profile = archetypes[key] || {name:'Le Profil Unique', desc:'Une combinaison rare qui fait votre singularité'};
+
+  // Add modifier based on dominant Big Five or EI
+  let modifier = '';
+  if (bf.O >= 75) modifier = ' à l\'Esprit Libre';
+  else if (bf.N <= 20) modifier = ' au Sang-Froid';
+  else if (ei >= 80) modifier = ' au Grand Cœur';
+  else if (bf.C >= 80) modifier = ' Infatigable';
+
+  if (modifier && profile.name.length + modifier.length < 40) {
+    profile = {...profile, name: profile.name + modifier};
+  }
+
+  return profile;
+}
+
 function showDiagnostic() {
   const d = getDiagData();
   if (!d.disc || !d.bigfive || !d.via || !d.enne || !d.ei) return;
@@ -3591,9 +3653,16 @@ function showDiagnostic() {
     {label:'Sociabilité', val: Math.round(((bfPcts.E || 0) + d.disc.percentages.I + (eiPcts.SO || 0)) / 3)}
   ];
 
+  const profileName = getProfileName(d, bfPcts);
+  const userName = currentUser ? currentUser.prenom : '';
+
   container.innerHTML = `
-    <h2 style="font-size:1.8rem;font-weight:800;color:var(--text-bright);margin-bottom:0.5rem">🧠 Diagnostic Complet</h2>
-    <p style="color:var(--text-muted);margin-bottom:2rem">Synthèse croisée de vos 5 tests de personnalité</p>
+    <h2 style="font-size:1.8rem;font-weight:800;color:var(--text-bright);margin-bottom:0.3rem">🧠 Diagnostic Complet</h2>
+    <div style="margin:1rem 0 2rem;padding:1.2rem;background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(46,204,113,0.1));border:1px solid rgba(124,58,237,0.3);border-radius:16px;text-align:center">
+      <div style="font-size:0.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.3rem">${userName ? userName + ', vous êtes' : 'Votre profil'}</div>
+      <div style="font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--purple-light),var(--green),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${profileName.name}</div>
+      <div style="font-size:0.85rem;color:var(--text);margin-top:0.4rem">${profileName.desc}</div>
+    </div>
 
     <!-- RADAR GLOBAL -->
     <div class="diag-section-card">
@@ -3990,7 +4059,9 @@ function shareDiagnostic() {
   const bf = d.bigfive.percentages;
   const userName = currentUser ? currentUser.prenom : 'Utilisateur';
 
-  let text = `🧠 DIAGNOSTIC PSYCHOLOGIQUE COMPLET — ${userName}\n\n`;
+  const profileName = getProfileName(d, bf);
+  let text = `🧠 DIAGNOSTIC PSYCHOLOGIQUE COMPLET — ${userName}\n`;
+  text += `✨ ${profileName.name}\n${profileName.desc}\n\n`;
   text += `📊 PROFIL DISC : ${discP.name} (${discP.color})\n`;
   text += `D:${d.disc.percentages.D}% I:${d.disc.percentages.I}% S:${d.disc.percentages.S}% C:${d.disc.percentages.C}%\n\n`;
   text += `🌊 BIG FIVE (OCEAN) :\n`;
