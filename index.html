@@ -164,8 +164,18 @@ body::before {
 .via-bar-grid { display:grid; gap:0.5rem; margin:1rem 0; }
 .card-enneagramme { border-left:3px solid var(--yellow); }
 .card-enneagramme .card-icon { background:var(--yellow-bg); }
+.enne-progress { background:linear-gradient(90deg,#f39c12,#e67e22); }
+.enne-types-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:0.7rem; margin:1.5rem 0; }
+.enne-type-card { background:var(--card); border-radius:10px; padding:0.7rem; text-align:center; border-top:3px solid; }
+.enne-type-card h4 { font-size:1.1rem; margin-bottom:0.2rem; }
+.enne-type-card p { font-size:0.75rem; color:var(--text-muted); }
 .card-ei { border-left:3px solid #9b59b6; }
 .card-ei .card-icon { background:rgba(155,89,182,0.12); }
+.ei-progress { background:linear-gradient(90deg,#e91e63,#c2185b); }
+.ei-dims-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:0.8rem; margin:1.5rem 0; }
+.ei-dim-card { background:var(--card); border-radius:10px; padding:0.8rem; border-left:3px solid; }
+.ei-dim-card h4 { font-size:0.9rem; margin-bottom:0.3rem; }
+.ei-dim-card p { font-size:0.78rem; color:var(--text-muted); line-height:1.4; }
 /* Completed test mini card */
 .completed-section { margin-top:2.5rem; }
 .completed-section h3 { font-size:1.1rem; color:var(--text-bright); margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
@@ -716,6 +726,116 @@ body::before {
   <div class="results-container" id="via-results-container"></div>
 </div>
 
+<!-- ENNEAGRAMME INTRO PAGE -->
+<div id="page-enneagramme-intro" class="page">
+  <div class="intro-content">
+    <h2>Ennéagramme</h2>
+    <p>L'Ennéagramme est un modele de personnalité qui décrit 9 types fondamentaux, chacun avec une motivation profonde, une peur fondamentale et un désir fondamental. Découvrez quel type vous correspond le mieux.</p>
+
+    <div class="enne-types-grid">
+      <div class="enne-type-card" style="border-color:#e74c3c"><h4 style="color:#e74c3c">1</h4><p>Perfectionniste</p></div>
+      <div class="enne-type-card" style="border-color:#e91e63"><h4 style="color:#e91e63">2</h4><p>Altruiste</p></div>
+      <div class="enne-type-card" style="border-color:#f39c12"><h4 style="color:#f39c12">3</h4><p>Battant</p></div>
+      <div class="enne-type-card" style="border-color:#8b5cf6"><h4 style="color:#8b5cf6">4</h4><p>Romantique</p></div>
+      <div class="enne-type-card" style="border-color:#3498db"><h4 style="color:#3498db">5</h4><p>Observateur</p></div>
+      <div class="enne-type-card" style="border-color:#06b6d4"><h4 style="color:#06b6d4">6</h4><p>Loyaliste</p></div>
+      <div class="enne-type-card" style="border-color:#2ecc71"><h4 style="color:#2ecc71">7</h4><p>Épicurien</p></div>
+      <div class="enne-type-card" style="border-color:#dc2626"><h4 style="color:#dc2626">8</h4><p>Chef</p></div>
+      <div class="enne-type-card" style="border-color:#22c55e"><h4 style="color:#22c55e">9</h4><p>Médiateur</p></div>
+    </div>
+
+    <div class="intro-info">
+      <h4>Comment ca marche ?</h4>
+      <ul>
+        <li>45 affirmations vous seront présentées (5 par type)</li>
+        <li>Pour chacune, indiquez votre degré d'accord de 1 a 5</li>
+        <li>Répondez spontanément et honnêtement</li>
+        <li>Durée estimée : environ 15 minutes</li>
+      </ul>
+    </div>
+
+    <div class="btn-center" style="gap:1rem;flex-wrap:wrap;">
+      <button class="btn btn-secondary" onclick="navigateTo('home')">Retour</button>
+      <button class="btn btn-primary" onclick="startEnneTest()">Commencer le test</button>
+    </div>
+  </div>
+</div>
+
+<!-- ENNEAGRAMME TEST PAGE -->
+<div id="page-enneagramme-test" class="page">
+  <div class="test-header">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h3 style="margin:0;">Test Ennéagramme</h3>
+      <button class="btn btn-danger btn-sm" onclick="confirmQuitTest()">Quitter le test</button>
+    </div>
+    <div class="progress-container"><div class="progress-bar enne-progress" id="enne-progress" style="width:0%"></div></div>
+    <div class="progress-text" id="enne-progress-text">Question 1 / 45</div>
+  </div>
+  <div id="enne-question-area"></div>
+  <div class="test-nav">
+    <button class="btn btn-secondary btn-sm" id="enne-btn-prev" onclick="ennePrev()">&#8592; Précédent</button>
+    <button class="btn btn-primary btn-sm" id="enne-btn-next" onclick="enneNext()">Suivant &#8594;</button>
+  </div>
+</div>
+
+<!-- ENNEAGRAMME RESULTS PAGE -->
+<div id="page-enneagramme-results" class="page">
+  <div class="results-container" id="enne-results-container"></div>
+</div>
+
+<!-- EI INTRO PAGE -->
+<div id="page-ei-intro" class="page">
+  <div class="intro-content">
+    <h2>Intelligence Émotionnelle</h2>
+    <p>Basé sur le modele de Daniel Goleman, ce test évalue votre quotient émotionnel (QE) a travers 5 dimensions clés qui déterminent votre capacité a percevoir, comprendre et gérer les émotions.</p>
+
+    <div class="ei-dims-grid">
+      <div class="ei-dim-card" style="border-color:#8b5cf6"><h4 style="color:#8b5cf6">Conscience de soi</h4><p>Reconnaître ses émotions</p></div>
+      <div class="ei-dim-card" style="border-color:#3498db"><h4 style="color:#3498db">Maîtrise de soi</h4><p>Gérer ses émotions</p></div>
+      <div class="ei-dim-card" style="border-color:#f39c12"><h4 style="color:#f39c12">Motivation</h4><p>Se motiver et persévérer</p></div>
+      <div class="ei-dim-card" style="border-color:#2ecc71"><h4 style="color:#2ecc71">Empathie</h4><p>Comprendre les émotions des autres</p></div>
+      <div class="ei-dim-card" style="border-color:#e91e63"><h4 style="color:#e91e63">Compétences sociales</h4><p>Gérer les relations</p></div>
+    </div>
+
+    <div class="intro-info">
+      <h4>Comment ca marche ?</h4>
+      <ul>
+        <li>40 affirmations vous seront présentées une par une</li>
+        <li>Pour chacune, indiquez votre degré d'accord sur une échelle de 1 a 5</li>
+        <li>Répondez spontanément, il n'y a pas de bonne ou mauvaise réponse</li>
+        <li>Durée estimée : environ 12 minutes</li>
+      </ul>
+    </div>
+
+    <div class="btn-center" style="gap:1rem;flex-wrap:wrap;">
+      <button class="btn btn-secondary" onclick="navigateTo('home')">Retour</button>
+      <button class="btn btn-primary" onclick="startEITest()">Commencer le test</button>
+    </div>
+  </div>
+</div>
+
+<!-- EI TEST PAGE -->
+<div id="page-ei-test" class="page">
+  <div class="test-header">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h3 style="margin:0;">Test Intelligence Émotionnelle</h3>
+      <button class="btn btn-danger btn-sm" onclick="confirmQuitTest()">Quitter le test</button>
+    </div>
+    <div class="progress-container"><div class="progress-bar ei-progress" id="ei-progress" style="width:0%"></div></div>
+    <div class="progress-text" id="ei-progress-text">Question 1 / 40</div>
+  </div>
+  <div id="ei-question-area"></div>
+  <div class="test-nav">
+    <button class="btn btn-secondary btn-sm" id="ei-btn-prev" onclick="eiPrev()">&#8592; Précédent</button>
+    <button class="btn btn-primary btn-sm" id="ei-btn-next" onclick="eiNext()">Suivant &#8594;</button>
+  </div>
+</div>
+
+<!-- EI RESULTS PAGE -->
+<div id="page-ei-results" class="page">
+  <div class="results-container" id="ei-results-container"></div>
+</div>
+
 <!-- DISC RESULTS PAGE -->
 <div id="page-disc-results" class="page">
   <div class="results-container" id="disc-results-container">
@@ -759,12 +879,12 @@ const METHODOLOGIES = {
   enneagramme: {
     id:'enneagramme', name:'Ennéagramme', icon:'\u{2B50}',
     description:'Explorez les 9 types de personnalité de l\'Ennéagramme et trouvez votre type dominant.',
-    cardClass:'card-enneagramme', available:false, duration:'~15 min'
+    cardClass:'card-enneagramme', available:true, duration:'~15 min'
   },
   ei: {
     id:'ei', name:'Intelligence Émotionnelle', icon:'\u{2764}\u{FE0F}',
     description:'Évaluez votre quotient émotionnel a travers 5 dimensions clés.',
-    cardClass:'card-ei', available:false, duration:'~12 min'
+    cardClass:'card-ei', available:true, duration:'~12 min'
   }
 };
 
@@ -1017,7 +1137,9 @@ function renderHome() {
 
   Object.values(METHODOLOGIES).forEach(m => {
     const savedVIA = JSON.parse(localStorage.getItem('psyProfile_via') || 'null');
-    const done = (m.id === 'disc' && savedDisc) || (m.id === 'bigfive' && savedBF) || (m.id === 'via' && savedVIA);
+    const savedEnne = JSON.parse(localStorage.getItem('psyProfile_enneagramme') || 'null');
+    const savedEI = JSON.parse(localStorage.getItem('psyProfile_ei') || 'null');
+    const done = (m.id === 'disc' && savedDisc) || (m.id === 'bigfive' && savedBF) || (m.id === 'via' && savedVIA) || (m.id === 'enneagramme' && savedEnne) || (m.id === 'ei' && savedEI);
     const card = document.createElement('div');
     card.className = `card ${m.cardClass} ${!m.available ? 'locked' : ''}`;
     card.innerHTML = `
@@ -1038,6 +1160,12 @@ function renderHome() {
         } else if (m.id === 'via') {
           const savedVIAClick = JSON.parse(localStorage.getItem('psyProfile_via') || 'null');
           if (savedVIAClick) showVIAResults(savedVIAClick); else navigateTo('via-intro');
+        } else if (m.id === 'enneagramme') {
+          const savedEnneClick = JSON.parse(localStorage.getItem('psyProfile_enneagramme') || 'null');
+          if (savedEnneClick) showEnneResults(savedEnneClick); else navigateTo('enneagramme-intro');
+        } else if (m.id === 'ei') {
+          const savedEI = JSON.parse(localStorage.getItem('psyProfile_ei') || 'null');
+          if (savedEI) showEIResults(savedEI); else navigateTo('ei-intro');
         }
       };
     }
@@ -1048,7 +1176,9 @@ function renderHome() {
   const compSection = document.getElementById('completed-section');
   const compList = document.getElementById('completed-list');
   const savedVIA = JSON.parse(localStorage.getItem('psyProfile_via') || 'null');
-  const hasCompleted = savedDisc || savedBF || savedVIA;
+  const savedEnne = JSON.parse(localStorage.getItem('psyProfile_enneagramme') || 'null');
+  const savedEI = JSON.parse(localStorage.getItem('psyProfile_ei') || 'null');
+  const hasCompleted = savedDisc || savedBF || savedVIA || savedEnne || savedEI;
   if (hasCompleted) {
     compSection.style.display = 'block';
     compList.innerHTML = '';
@@ -1102,6 +1232,40 @@ function renderHome() {
         </div>
       `;
       compList.appendChild(cc3);
+    }
+
+    if (savedEnne) {
+      const cc4 = document.createElement('div');
+      cc4.className = 'completed-card';
+      cc4.onclick = () => showEnneResults(savedEnne);
+      const dominantType = ENNE.types[savedEnne.dominant];
+      const sorted3 = Object.entries(savedEnne.percentages).sort((a,b) => b[1] - a[1]).slice(0, 3);
+      cc4.innerHTML = `
+        <div class="mini-chart" style="width:70px;height:70px;display:flex;align-items:center;justify-content:center;font-size:2rem;background:${dominantType.hex}22;border-radius:50%;">${dominantType.icon}</div>
+        <div class="info">
+          <h4>Ennéagramme — Type ${savedEnne.dominant} ${dominantType.name}</h4>
+          <p>${sorted3.map(([t, p]) => `T${t}: ${p}%`).join(' · ')}</p>
+          <p style="font-size:0.78rem;margin-top:0.3rem;">Completé le ${savedEnne.date}</p>
+        </div>
+      `;
+      compList.appendChild(cc4);
+    }
+
+    if (savedEI) {
+      const cc5 = document.createElement('div');
+      cc5.className = 'completed-card';
+      cc5.onclick = () => showEIResults(savedEI);
+      const eiDimNames = {CS:'Conscience de soi',MS:'Maitrise de soi',MO:'Motivation',EM:'Empathie',SO:'Compétences sociales'};
+      const eiSorted = Object.entries(savedEI.percentages).sort((a,b) => b[1] - a[1]);
+      cc5.innerHTML = `
+        <div class="mini-chart" style="width:70px;height:70px;display:flex;align-items:center;justify-content:center;font-size:2rem;background:rgba(233,30,99,0.13);border-radius:50%;">❤️</div>
+        <div class="info">
+          <h4>IE — QE ${savedEI.qe}%</h4>
+          <p>${eiSorted.slice(0,3).map(([d, p]) => `${eiDimNames[d]}: ${p}%`).join(' · ')}</p>
+          <p style="font-size:0.78rem;margin-top:0.3rem;">Completé le ${savedEI.date}</p>
+        </div>
+      `;
+      compList.appendChild(cc5);
     }
   } else {
     compSection.style.display = 'none';
@@ -1481,7 +1645,13 @@ function closeQuitModal() {
 }
 function quitTest() {
   document.getElementById('quit-modal').style.display = 'none';
-  if (APP.currentPage.includes('via')) {
+  if (APP.currentPage.includes('ei-')) {
+    EI.answers = {};
+    EI.currentQ = 0;
+  } else if (APP.currentPage.includes('ennea')) {
+    ENNE.answers = {};
+    ENNE.currentQ = 0;
+  } else if (APP.currentPage.includes('via')) {
     VIA.answers = {};
     VIA.currentQ = 0;
   } else if (APP.currentPage.includes('bigfive')) {
@@ -2283,6 +2453,32 @@ function shareResults(testId) {
     text += `\nCompletó le ${data.date}`;
   }
 
+  else if (testId === 'enneagramme') {
+    const data = JSON.parse(localStorage.getItem('psyProfile_enneagramme') || 'null');
+    if (!data) return;
+    const dom = ENNE.types[data.dominant];
+    const sorted3 = Object.entries(data.percentages).sort((a,b) => b[1] - a[1]).slice(0, 3);
+    text = `Mon Profil Ennéagramme\n\n`;
+    text += `Type dominant : Type ${data.dominant} — ${dom.name}\n\n`;
+    text += `Top 3 :\n`;
+    sorted3.forEach(([t, pct]) => {
+      text += `Type ${t} ${ENNE.types[parseInt(t)].name} : ${pct}%\n`;
+    });
+    text += `\nCompletó le ${data.date}`;
+  }
+
+  else if (testId === 'ei') {
+    const data = JSON.parse(localStorage.getItem('psyProfile_ei') || 'null');
+    if (!data) return;
+    const eiDimNames = {CS:'Conscience de soi',MS:'Maitrise de soi',MO:'Motivation',EM:'Empathie',SO:'Compétences sociales'};
+    text = `Mon Intelligence Émotionnelle\n\n`;
+    text += `QE (Quotient Émotionnel) : ${data.qe}%\n\n`;
+    Object.entries(data.percentages).sort((a,b) => b[1] - a[1]).forEach(([d, pct]) => {
+      text += `${eiDimNames[d]} : ${pct}%\n`;
+    });
+    text += `\nCompletó le ${data.date}`;
+  }
+
   text += `\n\nFaites le test : ${url}`;
 
   // Use Web Share API if available (mobile), otherwise copy to clipboard
@@ -2300,6 +2496,673 @@ function shareResults(testId) {
       prompt('Copiez vos résultats :', text);
     });
   }
+}
+
+// ===== ENNEAGRAMME MODULE =====
+const ENNE = {
+  questions: [
+    // Type 1 - Perfectionniste
+    {id:1, type:1, text:"Je m'efforce de faire les choses parfaitement", reverse:false},
+    {id:2, type:1, text:"J'ai un sens aigu du bien et du mal", reverse:false},
+    {id:3, type:1, text:"Je suis critique envers moi-meme et les autres", reverse:false},
+    {id:4, type:1, text:"Je me détends facilement sans me soucier des détails", reverse:true},
+    {id:5, type:1, text:"J'ai des standards élevés pour tout ce que je fais", reverse:false},
+    // Type 2 - Altruiste
+    {id:6, type:2, text:"J'aime prendre soin des autres", reverse:false},
+    {id:7, type:2, text:"Je devine facilement ce dont les autres ont besoin", reverse:false},
+    {id:8, type:2, text:"J'ai du mal a dire non quand on me demande de l'aide", reverse:false},
+    {id:9, type:2, text:"Je pense rarement aux besoins des autres", reverse:true},
+    {id:10, type:2, text:"Je me sens utile quand je peux aider quelqu'un", reverse:false},
+    // Type 3 - Battant
+    {id:11, type:3, text:"La réussite et les accomplissements sont tres importants pour moi", reverse:false},
+    {id:12, type:3, text:"Je m'adapte pour faire bonne impression", reverse:false},
+    {id:13, type:3, text:"Je suis motivé par les objectifs et les résultats", reverse:false},
+    {id:14, type:3, text:"Le statut social ne m'intéresse pas vraiment", reverse:true},
+    {id:15, type:3, text:"J'aime etre reconnu pour mes accomplissements", reverse:false},
+    // Type 4 - Romantique
+    {id:16, type:4, text:"Je me sens souvent différent des autres", reverse:false},
+    {id:17, type:4, text:"Mes émotions sont intenses et profondes", reverse:false},
+    {id:18, type:4, text:"Je suis attiré par ce qui est unique et authentique", reverse:false},
+    {id:19, type:4, text:"Je me contente facilement de ce que j'ai", reverse:true},
+    {id:20, type:4, text:"La mélancolie fait partie de ma vie intérieure", reverse:false},
+    // Type 5 - Observateur
+    {id:21, type:5, text:"J'ai besoin de temps seul pour recharger mon énergie", reverse:false},
+    {id:22, type:5, text:"J'observe et analyse avant de participer", reverse:false},
+    {id:23, type:5, text:"Je préfere comprendre en profondeur plutot qu'en surface", reverse:false},
+    {id:24, type:5, text:"Je partage facilement mes émotions avec les autres", reverse:true},
+    {id:25, type:5, text:"J'accumule des connaissances sur les sujets qui m'intéressent", reverse:false},
+    // Type 6 - Loyaliste
+    {id:26, type:6, text:"La sécurité et la stabilité sont essentielles pour moi", reverse:false},
+    {id:27, type:6, text:"J'anticipe souvent les problemes potentiels", reverse:false},
+    {id:28, type:6, text:"Je suis loyal envers les personnes et les groupes auxquels j'appartiens", reverse:false},
+    {id:29, type:6, text:"Je fais facilement confiance aux inconnus", reverse:true},
+    {id:30, type:6, text:"Je cherche des reperes fiables avant de m'engager", reverse:false},
+    // Type 7 - Épicurien
+    {id:31, type:7, text:"J'aime avoir plein de projets et d'options", reverse:false},
+    {id:32, type:7, text:"Je fuis l'ennui et la routine", reverse:false},
+    {id:33, type:7, text:"Je suis optimiste et enthousiaste par nature", reverse:false},
+    {id:34, type:7, text:"Je me concentre facilement sur une seule chose a la fois", reverse:true},
+    {id:35, type:7, text:"J'ai du mal a rester en place longtemps", reverse:false},
+    // Type 8 - Chef
+    {id:36, type:8, text:"Je prends naturellement le controle des situations", reverse:false},
+    {id:37, type:8, text:"Je n'ai pas peur de la confrontation", reverse:false},
+    {id:38, type:8, text:"Je protege les personnes qui me sont cheres", reverse:false},
+    {id:39, type:8, text:"J'évite les positions de pouvoir", reverse:true},
+    {id:40, type:8, text:"Je dis les choses directement, meme si ca dérange", reverse:false},
+    // Type 9 - Médiateur
+    {id:41, type:9, text:"J'évite les conflits autant que possible", reverse:false},
+    {id:42, type:9, text:"Je m'adapte facilement aux souhaits des autres", reverse:false},
+    {id:43, type:9, text:"Je suis une personne calme et paisible", reverse:false},
+    {id:44, type:9, text:"Je m'affirme facilement face aux autres", reverse:true},
+    {id:45, type:9, text:"J'ai tendance a remettre les choses a plus tard", reverse:false}
+  ],
+  answers: {},
+  currentQ: 0,
+  types: {
+    1: {name:'Perfectionniste', hex:'#e74c3c', icon:'\u2728', wing:'Réformateur',
+        desc:"Vous etes une personne principled, éthique et consciencieuse. Vous avez un fort sens du bien et du mal et cherchez constamment a vous améliorer.",
+        peur:"Etre corrompu ou défectueux", desir:"Etre bon et integre",
+        pointsForts:["Intégrité","Sens de la justice","Organisation","Fiabilité","Amélioration continue","Éthique forte"],
+        pointsFaibles:["Perfectionnisme","Critique excessive","Rigidité","Frustration","Difficulté a se détendre","Intolérance"]},
+    2: {name:'Altruiste', hex:'#e91e63', icon:'\uD83D\uDC9D', wing:'Aidant',
+        desc:"Vous etes une personne chaleureuse, généreuse et attentionnée. Vous avez un don pour percevoir les besoins des autres et y répondre.",
+        peur:"Ne pas etre aimé", desir:"Se sentir aimé et apprécié",
+        pointsForts:["Empathie","Générosité","Dévouement","Chaleur humaine","Intuition relationnelle","Encouragement"],
+        pointsFaibles:["Difficulté a dire non","Oubli de ses propres besoins","Possessivité","Manipulation affective","Épuisement","Besoin de reconnaissance"]},
+    3: {name:'Battant', hex:'#f39c12', icon:'\uD83C\uDFC6', wing:'Performeur',
+        desc:"Vous etes une personne ambitieuse, adaptable et orientée vers le succes. Vous savez vous fixer des objectifs et les atteindre.",
+        peur:"Etre sans valeur", desir:"Se sentir estimé et admiré",
+        pointsForts:["Ambition","Efficacité","Adaptabilité","Charisme","Motivation","Leadership"],
+        pointsFaibles:["Image de facade","Compétitivité excessive","Workaholic","Déconnexion émotionnelle","Impatience","Vanité"]},
+    4: {name:'Romantique', hex:'#8b5cf6', icon:'\uD83C\uDFAD', wing:'Individualiste',
+        desc:"Vous etes une personne sensible, créative et profonde. Vous recherchez l'authenticité et l'expression de votre identité unique.",
+        peur:"Ne pas avoir d'identité propre", desir:"Etre unique et authentique",
+        pointsForts:["Créativité","Profondeur émotionnelle","Authenticité","Sensibilité artistique","Compassion","Introspection"],
+        pointsFaibles:["Mélancolie","Envie","Hypersensibilité","Dramatisation","Repli sur soi","Sentiment d'incompréhension"]},
+    5: {name:'Observateur', hex:'#3498db', icon:'\uD83D\uDD2C', wing:'Investigateur',
+        desc:"Vous etes une personne curieuse, perspicace et indépendante. Vous cherchez a comprendre le monde en profondeur.",
+        peur:"Etre incompétent ou envahi", desir:"Etre compétent et capable",
+        pointsForts:["Intelligence analytique","Objectivité","Indépendance","Expertise","Vision claire","Calme"],
+        pointsFaibles:["Détachement émotionnel","Isolement","Avarice d'énergie","Arrogance intellectuelle","Difficulté relationnelle","Retrait social"]},
+    6: {name:'Loyaliste', hex:'#06b6d4', icon:'\uD83D\uDEE1\uFE0F', wing:'Loyal',
+        desc:"Vous etes une personne responsable, fiable et engagée. Vous valorisez la sécurité et la loyauté dans vos relations.",
+        peur:"Etre sans soutien ni guidance", desir:"Avoir sécurité et soutien",
+        pointsForts:["Loyauté","Sens des responsabilités","Courage","Prévoyance","Fiabilité","Esprit d'équipe"],
+        pointsFaibles:["Anxiété","Doute de soi","Méfiance","Indécision","Pessimisme","Dépendance"]},
+    7: {name:'Épicurien', hex:'#2ecc71', icon:'\uD83C\uDF89', wing:'Enthousiaste',
+        desc:"Vous etes une personne optimiste, versatile et spontanée. Vous cherchez le bonheur et les expériences positives.",
+        peur:"Etre privé ou souffrir", desir:"Etre satisfait et comblé",
+        pointsForts:["Optimisme","Enthousiasme","Polyvalence","Créativité","Joie de vivre","Vision positive"],
+        pointsFaibles:["Fuite de la douleur","Superficialité","Dispersion","Impulsivité","Difficulté d'engagement","Exces"]},
+    8: {name:'Chef', hex:'#dc2626', icon:'\uD83D\uDC4A', wing:'Protecteur',
+        desc:"Vous etes une personne forte, décisive et protectrice. Vous n'avez pas peur de prendre les choses en main.",
+        peur:"Etre controlé ou vulnérable", desir:"Se protéger et controler sa vie",
+        pointsForts:["Force de caractere","Leadership","Protection","Détermination","Franchise","Courage"],
+        pointsFaibles:["Domination","Intimidation","Colere","Excessivité","Insensibilité apparente","Controle excessif"]},
+    9: {name:'Médiateur', hex:'#22c55e', icon:'\u262E\uFE0F', wing:'Pacificateur',
+        desc:"Vous etes une personne paisible, réceptive et conciliante. Vous recherchez l'harmonie et la paix intérieure.",
+        peur:"La perte et la séparation", desir:"Avoir la paix intérieure",
+        pointsForts:["Diplomatie","Patience","Acceptation","Empathie","Stabilité","Médiation"],
+        pointsFaibles:["Passivité","Procrastination","Oubli de soi","Entetement passif","Résignation","Évitement"]}
+  }
+};
+
+function startEnneTest() {
+  ENNE.currentQ = 0;
+  ENNE.answers = {};
+  navigateTo('enneagramme-test');
+  renderEnneQuestion();
+}
+
+function renderEnneQuestion() {
+  const q = ENNE.questions[ENNE.currentQ];
+  const ans = ENNE.answers[q.id];
+  const total = ENNE.questions.length;
+  const pct = Math.round((ENNE.currentQ / total) * 100);
+  document.getElementById('enne-progress').style.width = pct + '%';
+  document.getElementById('enne-progress-text').textContent = `Question ${ENNE.currentQ+1} / ${total}`;
+
+  const labels = ["Pas du tout\nd'accord","Pas\nd'accord","Neutre","D'accord","Tout a fait\nd'accord"];
+  const area = document.getElementById('enne-question-area');
+  const typeInfo = ENNE.types[q.type];
+  let html = `<div class="question-card">
+    <div style="font-size:0.8rem;color:${typeInfo.hex};margin-bottom:0.5rem;opacity:0.7">Type ${q.type} — ${typeInfo.name}</div>
+    <h3>Question ${ENNE.currentQ+1}</h3>
+    <p class="likert-question">${q.text}</p>
+    <div class="likert-scale">`;
+
+  for (let v = 1; v <= 5; v++) {
+    html += `<button class="likert-btn ${ans === v ? 'selected' : ''}" onclick="selectEnne(${q.id},${v})">
+      <span class="likert-num">${v}</span>
+      <span class="likert-label">${labels[v-1].replace('\n','<br>')}</span>
+    </button>`;
+  }
+
+  html += `</div></div>`;
+  area.innerHTML = html;
+
+  document.getElementById('enne-btn-prev').style.visibility = ENNE.currentQ === 0 ? 'hidden' : 'visible';
+  const btnNext = document.getElementById('enne-btn-next');
+  btnNext.textContent = ENNE.currentQ === total - 1 ? 'Voir les résultats \u2192' : 'Suivant \u2192';
+}
+
+function selectEnne(qId, value) {
+  ENNE.answers[qId] = value;
+  renderEnneQuestion();
+}
+
+function ennePrev() {
+  if (ENNE.currentQ > 0) { ENNE.currentQ--; renderEnneQuestion(); }
+}
+
+function enneNext() {
+  const q = ENNE.questions[ENNE.currentQ];
+  if (!ENNE.answers[q.id]) {
+    const card = document.querySelector('.question-card');
+    card.style.animation = 'none';
+    card.offsetHeight;
+    card.style.animation = 'shake 0.4s ease';
+    return;
+  }
+  const total = ENNE.questions.length;
+  if (ENNE.currentQ < total - 1) {
+    ENNE.currentQ++;
+    renderEnneQuestion();
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else {
+    calculateEnneResults();
+  }
+}
+
+function calculateEnneResults() {
+  const scores = {};
+  for (let t = 1; t <= 9; t++) { scores[t] = 0; }
+
+  ENNE.questions.forEach(q => {
+    let val = ENNE.answers[q.id] || 3;
+    if (q.reverse) val = 6 - val;
+    scores[q.type] += val;
+  });
+
+  // Convert to percentages: min=5 (all 1s), max=25 (all 5s) per type (5 questions each)
+  const percentages = {};
+  for (let t = 1; t <= 9; t++) {
+    percentages[t] = Math.round(((scores[t] - 5) / 20) * 100);
+  }
+
+  const sorted = Object.entries(percentages).sort((a,b) => b[1] - a[1]);
+  const dominant = parseInt(sorted[0][0]);
+
+  const result = {
+    scores, percentages, dominant,
+    sorted: sorted.map(s => parseInt(s[0])),
+    date: new Date().toLocaleDateString('fr-FR'),
+    answers: ENNE.answers
+  };
+
+  localStorage.setItem('psyProfile_enneagramme', JSON.stringify(result));
+  showEnneResults(result);
+}
+
+function showEnneResults(result) {
+  navigateTo('enneagramme-results');
+  const container = document.getElementById('enne-results-container');
+  const pcts = result.percentages;
+  const dom = ENNE.types[result.dominant];
+  const sorted = Object.entries(pcts).sort((a,b) => b[1] - a[1]);
+
+  // Wings: adjacent types (wrapping 9->1)
+  const wingLeft = result.dominant === 1 ? 9 : result.dominant - 1;
+  const wingRight = result.dominant === 9 ? 1 : result.dominant + 1;
+
+  let html = `
+  <div class="results-header">
+    <h2>Vos Résultats Ennéagramme</h2>
+    <p>Découvrez votre type de personnalité parmi les 9 types</p>
+  </div>
+
+  <div class="profile-summary">
+    <div class="primary-label" style="color:${dom.hex}">
+      ${dom.icon} Type ${result.dominant} — ${dom.name}
+    </div>
+    <div class="secondary-label">${dom.desc}</div>
+  </div>
+
+  <div class="detail-section" style="border-left:3px solid ${dom.hex}">
+    <h3>Motivations profondes</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+      <div style="background:var(--card);border-radius:12px;padding:1rem;border-top:3px solid var(--red)">
+        <h4 style="color:var(--red);font-size:0.9rem;margin-bottom:0.5rem">Peur fondamentale</h4>
+        <p class="detail-text">${dom.peur}</p>
+      </div>
+      <div style="background:var(--card);border-radius:12px;padding:1rem;border-top:3px solid var(--green)">
+        <h4 style="color:var(--green);font-size:0.9rem;margin-bottom:0.5rem">Désir fondamental</h4>
+        <p class="detail-text">${dom.desir}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-section" style="border-left:3px solid var(--green)">
+    <h3>Points forts & Zones de vigilance</h3>
+    <div class="detail-grid">
+      <div>
+        <h4 style="color:var(--green)">Points forts</h4>
+        <ul>${dom.pointsForts.map(p => '<li><span class="dot" style="background:var(--green)"></span>' + p + '</li>').join('')}</ul>
+      </div>
+      <div>
+        <h4 style="color:var(--red)">Zones de vigilance</h4>
+        <ul>${dom.pointsFaibles.map(p => '<li><span class="dot" style="background:var(--red)"></span>' + p + '</li>').join('')}</ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-section" style="border-left:3px solid var(--orange)">
+    <h3>Profil des 9 types</h3>
+    <div class="via-bar-grid">`;
+
+  sorted.forEach(([t, score]) => {
+    const typeInfo = ENNE.types[parseInt(t)];
+    const isDominant = parseInt(t) === result.dominant;
+    html += `<div class="bar-item">
+      <div class="bar-label" style="background:${typeInfo.hex}22;color:${typeInfo.hex};min-width:130px;font-size:0.8rem">${typeInfo.icon} T${t} ${typeInfo.name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${score}%;background:${typeInfo.hex}${isDominant ? '' : 'aa'}"><span>${score}%</span></div></div>
+    </div>`;
+  });
+
+  html += `</div></div>
+
+  <div class="detail-section" style="border-left:3px solid var(--purple)">
+    <h3>Vos Ailes</h3>
+    <p class="detail-text" style="margin-bottom:1rem">En Ennéagramme, vos "ailes" sont les deux types adjacents au votre. Ils influencent et nuancent votre type dominant.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div style="background:var(--card);border-radius:12px;padding:1rem;border-left:3px solid ${ENNE.types[wingLeft].hex}">
+        <h4 style="color:${ENNE.types[wingLeft].hex}">${ENNE.types[wingLeft].icon} Aile ${wingLeft} — ${ENNE.types[wingLeft].name}</h4>
+        <p class="detail-text" style="margin-top:0.5rem">${ENNE.types[wingLeft].desc}</p>
+        <div class="bar-track" style="margin-top:0.5rem"><div class="bar-fill" style="width:${pcts[wingLeft]}%;background:${ENNE.types[wingLeft].hex}"><span>${pcts[wingLeft]}%</span></div></div>
+      </div>
+      <div style="background:var(--card);border-radius:12px;padding:1rem;border-left:3px solid ${ENNE.types[wingRight].hex}">
+        <h4 style="color:${ENNE.types[wingRight].hex}">${ENNE.types[wingRight].icon} Aile ${wingRight} — ${ENNE.types[wingRight].name}</h4>
+        <p class="detail-text" style="margin-top:0.5rem">${ENNE.types[wingRight].desc}</p>
+        <div class="bar-track" style="margin-top:0.5rem"><div class="bar-fill" style="width:${pcts[wingRight]}%;background:${ENNE.types[wingRight].hex}"><span>${pcts[wingRight]}%</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-actions">
+    <button class="btn btn-secondary" onclick="navigateTo('home');renderHome();">Retour a l'accueil</button>
+    <button class="btn btn-primary btn-sm" onclick="shareResults('enneagramme')">&#x1F4E4; Partager</button>
+    <button class="btn btn-danger btn-sm" onclick="retakeEnne()">Refaire le test</button>
+  </div>`;
+
+  container.innerHTML = html;
+}
+
+function retakeEnne() {
+  localStorage.removeItem('psyProfile_enneagramme');
+  ENNE.answers = {};
+  ENNE.currentQ = 0;
+  navigateTo('enneagramme-intro');
+}
+
+// ===== EI (INTELLIGENCE ÉMOTIONNELLE) MODULE =====
+const EI = {
+  questions: [
+    // Conscience de soi (CS) - 8 questions
+    {id:1, dim:'CS', text:"Je sais identifier précisément ce que je ressens", reverse:false},
+    {id:2, dim:'CS', text:"Je comprends comment mes émotions influencent mon comportement", reverse:false},
+    {id:3, dim:'CS', text:"Je connais mes forces et mes limites", reverse:false},
+    {id:4, dim:'CS', text:"Il m'est difficile de mettre des mots sur mes émotions", reverse:true},
+    {id:5, dim:'CS', text:"Je suis conscient de l'impact de mon humeur sur les autres", reverse:false},
+    {id:6, dim:'CS', text:"Je reconnais rapidement quand je suis stressé", reverse:false},
+    {id:7, dim:'CS', text:"Je suis souvent surpris par mes propres réactions émotionnelles", reverse:true},
+    {id:8, dim:'CS', text:"J'ai confiance en mes capacités", reverse:false},
+    // Maîtrise de soi (MS) - 8 questions
+    {id:9, dim:'MS', text:"Je garde mon calme dans les situations stressantes", reverse:false},
+    {id:10, dim:'MS', text:"Je réfléchis avant de réagir sous le coup de l'émotion", reverse:false},
+    {id:11, dim:'MS', text:"Je m'adapte facilement aux changements imprévus", reverse:false},
+    {id:12, dim:'MS', text:"Je perds facilement patience", reverse:true},
+    {id:13, dim:'MS', text:"Je sais canaliser mes émotions négatives de facon constructive", reverse:false},
+    {id:14, dim:'MS', text:"Je reste positif meme face aux difficultés", reverse:false},
+    {id:15, dim:'MS', text:"J'ai du mal a contrôler ma colère", reverse:true},
+    {id:16, dim:'MS', text:"Je sais prendre du recul avant de prendre une décision importante", reverse:false},
+    // Motivation (MO) - 8 questions
+    {id:17, dim:'MO', text:"Je me fixe des objectifs ambitieux et je m'y tiens", reverse:false},
+    {id:18, dim:'MO', text:"Je rebondis rapidement après un échec", reverse:false},
+    {id:19, dim:'MO', text:"Je suis passionné par ce que je fais", reverse:false},
+    {id:20, dim:'MO', text:"J'abandonne facilement quand les choses deviennent difficiles", reverse:true},
+    {id:21, dim:'MO', text:"Je vois les obstacles comme des opportunités d'apprentissage", reverse:false},
+    {id:22, dim:'MO', text:"Je suis capable de me motiver sans aide extérieure", reverse:false},
+    {id:23, dim:'MO', text:"Je manque souvent de motivation pour atteindre mes objectifs", reverse:true},
+    {id:24, dim:'MO', text:"Je m'engage pleinement dans les projets qui me tiennent a coeur", reverse:false},
+    // Empathie (EM) - 8 questions
+    {id:25, dim:'EM', text:"Je ressens intuitivement les émotions des autres", reverse:false},
+    {id:26, dim:'EM', text:"J'écoute attentivement quand quelqu'un me parle de ses problèmes", reverse:false},
+    {id:27, dim:'EM', text:"Je comprends les points de vue différents du mien", reverse:false},
+    {id:28, dim:'EM', text:"Je ne remarque pas toujours quand quelqu'un est triste", reverse:true},
+    {id:29, dim:'EM', text:"Je sais me mettre a la place des autres", reverse:false},
+    {id:30, dim:'EM', text:"Je suis sensible aux besoins non exprimés des autres", reverse:false},
+    {id:31, dim:'EM', text:"Les émotions des autres ne m'affectent pas beaucoup", reverse:true},
+    {id:32, dim:'EM', text:"Je comprends pourquoi les gens réagissent comme ils le font", reverse:false},
+    // Compétences sociales (SO) - 8 questions
+    {id:33, dim:'SO', text:"Je communique clairement et efficacement", reverse:false},
+    {id:34, dim:'SO', text:"Je sais résoudre les conflits de manière constructive", reverse:false},
+    {id:35, dim:'SO', text:"Je crée facilement des liens avec les nouvelles personnes", reverse:false},
+    {id:36, dim:'SO', text:"J'ai du mal a travailler en équipe", reverse:true},
+    {id:37, dim:'SO', text:"J'inspire confiance aux autres", reverse:false},
+    {id:38, dim:'SO', text:"Je sais persuader et influencer positivement les autres", reverse:false},
+    {id:39, dim:'SO', text:"Je me sens mal a l'aise dans les situations sociales", reverse:true},
+    {id:40, dim:'SO', text:"Je sais donner des feedbacks constructifs", reverse:false}
+  ],
+  answers: {},
+  currentQ: 0,
+  dimensions: {
+    CS: {name:'Conscience de soi', hex:'#8b5cf6', icon:'\u{1FA9E}',
+         descHigh:"Vous avez une excellente connaissance de vos émotions, forces et limites. Cette conscience vous permet de prendre des décisions éclairées.",
+         descLow:"Vous pourriez gagner a mieux identifier et comprendre vos émotions au quotidien.",
+         pointsForts:["Introspection","Lucidité émotionnelle","Confiance en soi","Authenticité","Conscience de ses déclencheurs","Auto-évaluation juste"],
+         pointsFaibles:["Peut devenir trop introspectif","Risque de rumination","Peut se juger sévèrement","Paralysie par l'analyse","Hyper-conscience de ses faiblesses","Difficulté a lâcher prise"]},
+    MS: {name:'Maitrise de soi', hex:'#3498db', icon:'\u{1F9D8}',
+         descHigh:"Vous gérez remarquablement bien vos émotions et savez rester calme sous pression. Vous etes adaptable et résilient.",
+         descLow:"Vous pourriez bénéficier de techniques pour mieux réguler vos réactions émotionnelles.",
+         pointsForts:["Calme sous pression","Adaptabilité","Résilience","Self-control","Intégrité","Flexibilité"],
+         pointsFaibles:["Peut sembler froid ou distant","Répression émotionnelle","Contrôle excessif","Difficulté a exprimer ses besoins","Évitement des émotions fortes","Rigidité apparente"]},
+    MO: {name:'Motivation', hex:'#f39c12', icon:'\u{1F525}',
+         descHigh:"Vous etes profondément motivé par vos objectifs internes. Vous faites preuve d'optimisme et de persévérance face aux obstacles.",
+         descLow:"Vous pourriez travailler a renforcer votre motivation intrinsèque et votre résilience face aux échecs.",
+         pointsForts:["Drive personnel","Optimisme","Persévérance","Initiative","Engagement","Vision a long terme"],
+         pointsFaibles:["Risque de burnout","Frustration face aux obstacles","Impatience avec les autres","Perfectionnisme","Difficulté a se reposer","Obsession des résultats"]},
+    EM: {name:'Empathie', hex:'#2ecc71', icon:'\u{1F49A}',
+         descHigh:"Vous etes tres sensible aux émotions des autres et savez vous mettre a leur place. Vous comprenez naturellement les dynamiques humaines.",
+         descLow:"Vous pourriez développer votre capacité a percevoir et comprendre les émotions des autres.",
+         pointsForts:["Écoute active","Compréhension d'autrui","Sensibilité interculturelle","Intuition sociale","Bienveillance","Perception fine"],
+         pointsFaibles:["Absorption des émotions négatives","Épuisement empathique","Difficulté a mettre des limites","Prise de décision biaisée","Tendance a trop s'impliquer","Vulnérabilité émotionnelle"]},
+    SO: {name:'Compétences sociales', hex:'#e91e63', icon:'\u{1F91D}',
+         descHigh:"Vous excellez dans les interactions sociales, la communication et la gestion des relations. Vous savez inspirer et influencer positivement.",
+         descLow:"Vous pourriez développer vos compétences en communication et gestion des relations.",
+         pointsForts:["Communication efficace","Gestion des conflits","Influence positive","Travail d'équipe","Leadership","Networking"],
+         pointsFaibles:["Peut sembler manipulateur","Dépendance au social","Difficulté avec la solitude","Sur-adaptation","Épuisement social","Besoin d'approbation"]}
+  }
+};
+
+// ===== EI TEST LOGIC =====
+function startEITest() {
+  EI.currentQ = 0;
+  EI.answers = {};
+  navigateTo('ei-test');
+  renderEIQuestion();
+}
+
+function renderEIQuestion() {
+  const q = EI.questions[EI.currentQ];
+  const ans = EI.answers[q.id];
+  const total = EI.questions.length;
+  const pct = Math.round((EI.currentQ / total) * 100);
+  document.getElementById('ei-progress').style.width = pct + '%';
+  document.getElementById('ei-progress-text').textContent = `Question ${EI.currentQ+1} / ${total}`;
+
+  const dimInfo = EI.dimensions[q.dim];
+  const labels = ["Pas du tout\nd'accord","Pas\nd'accord","Neutre","D'accord","Tout a fait\nd'accord"];
+  const area = document.getElementById('ei-question-area');
+  let html = `<div class="question-card">
+    <p style="font-size:0.8rem;color:${dimInfo.hex};margin-bottom:0.3rem;">${dimInfo.icon} ${dimInfo.name}</p>
+    <h3>Question ${EI.currentQ+1}</h3>
+    <p class="likert-question">${q.text}</p>
+    <div class="likert-scale">`;
+
+  for (let v = 1; v <= 5; v++) {
+    html += `<button class="likert-btn ${ans === v ? 'selected' : ''}" onclick="selectEI(${q.id},${v})">
+      <span class="likert-num">${v}</span>
+      <span class="likert-label">${labels[v-1].replace('\n','<br>')}</span>
+    </button>`;
+  }
+
+  html += `</div></div>`;
+  area.innerHTML = html;
+
+  document.getElementById('ei-btn-prev').style.visibility = EI.currentQ === 0 ? 'hidden' : 'visible';
+  const btnNext = document.getElementById('ei-btn-next');
+  btnNext.textContent = EI.currentQ === total - 1 ? 'Voir les résultats \u{2192}' : 'Suivant \u{2192}';
+}
+
+function selectEI(qId, value) {
+  EI.answers[qId] = value;
+  renderEIQuestion();
+}
+
+function eiPrev() {
+  if (EI.currentQ > 0) { EI.currentQ--; renderEIQuestion(); }
+}
+
+function eiNext() {
+  const q = EI.questions[EI.currentQ];
+  if (!EI.answers[q.id]) {
+    const card = document.querySelector('.question-card');
+    card.style.animation = 'none';
+    card.offsetHeight;
+    card.style.animation = 'shake 0.4s ease';
+    return;
+  }
+  const total = EI.questions.length;
+  if (EI.currentQ < total - 1) {
+    EI.currentQ++;
+    renderEIQuestion();
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else {
+    calculateEIResults();
+  }
+}
+
+function calculateEIResults() {
+  const dims = ['CS','MS','MO','EM','SO'];
+  const scores = {};
+  dims.forEach(d => { scores[d] = 0; });
+
+  EI.questions.forEach(q => {
+    let val = EI.answers[q.id] || 3;
+    if (q.reverse) val = 6 - val;
+    scores[q.dim] += val;
+  });
+
+  // Convert to percentages: min=8 (all 1s), max=40 (all 5s)
+  const percentages = {};
+  dims.forEach(d => {
+    percentages[d] = Math.round(((scores[d] - 8) / 32) * 100);
+  });
+
+  const qe = Math.round(dims.reduce((s,d) => s + percentages[d], 0) / 5);
+  const sorted = Object.entries(percentages).sort((a,b) => b[1] - a[1]);
+
+  const result = {
+    scores, percentages, qe,
+    highest: sorted[0][0],
+    lowest: sorted[sorted.length-1][0],
+    date: new Date().toLocaleDateString('fr-FR'),
+    answers: EI.answers
+  };
+
+  localStorage.setItem('psyProfile_ei', JSON.stringify(result));
+  showEIResults(result);
+}
+
+function showEIResults(result) {
+  navigateTo('ei-results');
+  const container = document.getElementById('ei-results-container');
+  const dims = ['CS','MS','MO','EM','SO'];
+  const d = EI.dimensions;
+  const pcts = result.percentages;
+
+  let html = `
+  <div class="results-header">
+    <h2>Votre Intelligence Émotionnelle</h2>
+    <p>Découvrez votre quotient émotionnel et vos 5 dimensions</p>
+  </div>
+
+  <div class="profile-summary">
+    <div class="primary-label" style="color:#e91e63">
+      Quotient Émotionnel (QE) : ${result.qe}%
+    </div>
+    <div class="secondary-label">
+      ${result.qe >= 70 ? "Votre intelligence émotionnelle est élevée. Vous comprenez et gérez très bien vos émotions et celles des autres." :
+        result.qe >= 40 ? "Votre intelligence émotionnelle est dans la moyenne. Certaines dimensions sont bien développées, d'autres peuvent être renforcées." :
+        "Votre intelligence émotionnelle peut être développée. Des exercices ciblés sur chaque dimension vous aideront a progresser."}
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3>Profil IE</h3>
+      <canvas id="ei-radar-canvas" width="300" height="300"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Scores détaillés</h3>
+      <div class="bar-chart">
+        ${buildEIBar('CS','Conscience de soi',pcts.CS,'#8b5cf6')}
+        ${buildEIBar('MS','Maitrise de soi',pcts.MS,'#3498db')}
+        ${buildEIBar('MO','Motivation',pcts.MO,'#f39c12')}
+        ${buildEIBar('EM','Empathie',pcts.EM,'#2ecc71')}
+        ${buildEIBar('SO','Comp. sociales',pcts.SO,'#e91e63')}
+      </div>
+    </div>
+  </div>`;
+
+  // Detail per dimension
+  dims.forEach(dim => {
+    const prof = d[dim];
+    const level = pcts[dim] >= 60 ? 'Élevé' : pcts[dim] >= 40 ? 'Modéré' : 'Faible';
+    const desc = pcts[dim] >= 50 ? prof.descHigh : prof.descLow;
+    html += `
+    <div class="detail-section" style="border-left:3px solid ${prof.hex}">
+      <h3><span style="color:${prof.hex}">\u{25CF}</span> ${prof.name} — ${pcts[dim]}% (${level})</h3>
+      <p class="detail-text" style="margin-bottom:1.2rem">${desc}</p>
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h4 style="color:var(--green)">Points forts</h4>
+          <ul>${prof.pointsForts.map(f => `<li><span class="dot" style="background:var(--green)"></span>${f}</li>`).join('')}</ul>
+        </div>
+        <div class="detail-block">
+          <h4 style="color:var(--red)">Zones de vigilance</h4>
+          <ul>${prof.pointsFaibles.map(f => `<li><span class="dot" style="background:var(--red)"></span>${f}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  html += `
+  <div class="results-actions">
+    <button class="btn btn-secondary" onclick="navigateTo('home');renderHome();">Retour a l'accueil</button>
+    <button class="btn btn-primary btn-sm" onclick="shareResults('ei')">&#x1F4E4; Partager</button>
+    <button class="btn btn-danger btn-sm" onclick="retakeEI()">Refaire le test</button>
+  </div>`;
+
+  container.innerHTML = html;
+  setTimeout(() => drawEIRadarChart(pcts), 100);
+}
+
+function buildEIBar(letter, label, pct, color) {
+  return `<div class="bar-item">
+    <div class="bar-label" style="background:${color}22;color:${color}">${letter}</div>
+    <div class="bar-track">
+      <div class="bar-fill" style="width:${pct}%;background:${color}">
+        <span>${pct}%</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function drawEIRadarChart(pcts) {
+  const canvas = document.getElementById('ei-radar-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const cx = 150, cy = 150, maxR = 115;
+  const colors = {CS:'#8b5cf6',MS:'#3498db',MO:'#f39c12',EM:'#2ecc71',SO:'#e91e63'};
+  const dims = ['CS','MS','MO','EM','SO'];
+  const shortLabels = {CS:'CS',MS:'MS',MO:'MO',EM:'EM',SO:'SO'};
+  const labels = dims.map((d,i) => ({
+    dim:d, label:shortLabels[d], angle: -Math.PI/2 + (i * 2 * Math.PI / 5)
+  }));
+
+  // Background pentagons
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  [0.25,0.5,0.75,1].forEach(f => {
+    ctx.beginPath();
+    labels.forEach((l,i) => {
+      const x = cx + Math.cos(l.angle) * maxR * f;
+      const y = cy + Math.sin(l.angle) * maxR * f;
+      i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    });
+    ctx.closePath();
+    ctx.stroke();
+  });
+
+  // Axes
+  ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+  labels.forEach(l => {
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(l.angle)*maxR, cy+Math.sin(l.angle)*maxR);
+    ctx.stroke();
+  });
+
+  // Colored section backgrounds
+  labels.forEach((l,i) => {
+    const next = labels[(i+1) % 5];
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(l.angle)*maxR, cy+Math.sin(l.angle)*maxR);
+    ctx.lineTo(cx+Math.cos(next.angle)*maxR, cy+Math.sin(next.angle)*maxR);
+    ctx.closePath();
+    ctx.fillStyle = colors[l.dim] + '10';
+    ctx.fill();
+  });
+
+  // Data polygon
+  const points = labels.map(l => ({
+    x: cx + Math.cos(l.angle) * maxR * (pcts[l.dim] / 100),
+    y: cy + Math.sin(l.angle) * maxR * (pcts[l.dim] / 100),
+    dim: l.dim
+  }));
+
+  ctx.beginPath();
+  points.forEach((p,i) => i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y));
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(233,30,99,0.12)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(233,30,99,0.6)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Points
+  points.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,5,0,Math.PI*2);
+    ctx.fillStyle = colors[p.dim];
+    ctx.fill();
+    ctx.strokeStyle = '#1a0a2e';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+
+  // Labels
+  ctx.font = '700 14px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  labels.forEach(l => {
+    const lx = cx + Math.cos(l.angle) * (maxR + 20);
+    const ly = cy + Math.sin(l.angle) * (maxR + 20);
+    ctx.fillStyle = colors[l.dim];
+    ctx.fillText(l.label, lx, ly);
+    ctx.font = '500 10px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.fillText(pcts[l.dim]+'%', lx, ly+14);
+    ctx.font = '700 14px Inter, sans-serif';
+  });
+}
+
+function retakeEI() {
+  localStorage.removeItem('psyProfile_ei');
+  EI.answers = {};
+  EI.currentQ = 0;
+  navigateTo('ei-intro');
 }
 
 // ===== PUZZLE HEAD — SVG puzzle piece generator =====
